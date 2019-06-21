@@ -7,33 +7,21 @@ entities {
 }
 
 service basico {
-	entities{
-        entity pedido{
-            relationships{
-                OneToMany(itens){
-                    type: aggregation
-                }
-                ManyToOne(cliente){
-                    type: aggregation
-                }
-            }
-        }
-        
-        entity itemList {
-        	relationships{
+	entities {
+		entity itemList {
+			relationships{
         		ManyToOne(category) {
         			type: aggregation
     				fetchType: eager
         		}
         	}
         }
-        
-        entity shoppingList{
-            relationships{
+		entity shoppingList {
+			relationships{
                 OneToMany(items){
                     type: aggregation
                 }
             }
         }
-    }
+	}
 }
