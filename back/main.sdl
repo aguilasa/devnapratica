@@ -1,0 +1,200 @@
+domain furb
+
+service basico {
+    endpoints {
+        // add actions, queries, events and signals here
+        query helloWorld {
+            in {
+                who : string
+            }
+            out {
+                helloWorldMessage : string
+            }
+        }
+        
+        "Obtém a quantidade de itens no estoque de acordo com um pedido"
+        query retornaEstoque {
+        	in {
+        		"ID do pedido"
+        		idPedido : string 
+        	}
+        	out{
+        		"Quantidade encontrada"
+        		qtd: integer
+        		"Mensagem de negócio"
+        		message: string?
+        	}
+        }
+        
+        "Verifica se o cliente já efetuou um pedido e habilita o crédito"
+        action alteraStatusCreditoHabilitado{
+        	in{
+        		"Id do cliente"
+        		idCliente: string
+        	}
+        	out{
+        		"retorno do status do cliente"
+        		statusCreditoHabilitado:boolean
+        	}
+        }
+        
+        
+        "Obtém a URL para upload da foto"
+        action obterUrlUploadFoto{
+            in{
+                "Id da foto, opcional, caso não tenha gera um e retorna"
+                id: string?
+            }
+            out{
+                "identificador da foto"
+                id: string 
+                "versão do arquivo para commit"
+                version: string 
+                "url para upload da foto"
+                url: string
+            }
+        }
+        "Grava a foto que foi upada"
+        action gravarFoto{
+            in{
+                "identificador da foto"
+                id: string
+                "versão que será gravada, obtida no obterUrlFoto"
+                version: string
+            }
+            out{
+                "resultado da operação"
+                result: fotoOperationResult
+            }
+        }
+        "Obtém a URL para download da foto"
+        action obterUrlDownloadFoto{
+            in{
+                "Id da foto"
+                id: string
+            }
+            out{
+                "url para download da foto"
+                url: string
+            }
+        }
+    }
+    types {
+    	"Enumeração que define o resultado da gravação da foto"
+        enumeration fotoOperationResult{
+            "Sucesso"
+            SUCCESS 
+            "Erro"
+            ERROR
+        }
+        
+       "Unidade de medida"
+        enumeration unit {
+            "Unidade"
+            UN 
+            "Dezena"
+            DZ
+			"Mililitro"
+			ML
+			"Litro"
+			L
+			"Quilo"
+			KG
+			"Grama"
+			G
+			"Caixa"
+			CAIXA
+			"Embalagem"
+			EMBALAGEM
+			"Galão"
+			GALAO
+			"Garrafa"
+			GARRAFA
+			"Lata"
+			LATA
+			"Pacote"
+			PACOTE
+        }
+    }
+    entities {
+	    "Entidade que representa o cliente"
+		fixed entity cliente{
+		    "Chave primaria"
+		    id: uuid?
+		    "Nome do cliente"
+		    nome: string
+		    "Data de nascimento"
+		    dataNascimento: date
+		    "Tem credito habilitado"
+		    creditoHabilitado: boolean? default: false
+		    "CPF do cliente"
+		    cpf: string
+		    "id da foto"
+		    idFoto: string?
+		}
+		
+		"Item do pedido"
+		fixed entity item{
+		    "Chave primária"
+		    id: uuid?
+		    "descrição"
+		    descricao: string
+		    "quantidade"
+		    quantidade: double
+		    "valor unitário"
+		    valorUnitario: double
+		}
+		
+		"Pedido"
+		fixed entity pedido{
+		    "Chave primaria"
+		    id: uuid?
+		    "Data do pedido"
+		    data: date
+		    "Observações do pedido"
+		    obsservacoes: string?
+		    "Cliente do pedido"
+		    cliente: cliente    
+		    "Itens do pedido"
+		    itens: item*
+		} 
+		
+		"Categoria"
+		fixed entity category {
+		    "Código"
+		    id: uuid?
+		    "Descrição da categoria"
+		    description: string
+		    
+		}
+		
+		"Item da lista"
+		fixed entity itemList {
+		    "Código"
+		    id: uuid?
+		    "Descrição do item"
+		    description: string
+		    "Quantidade"
+		    quantity: double
+		    "Unidade de medida"
+		    unit: unit
+			"Preço"
+		    price: double
+			"Quantidade"
+		    category: category
+			"Observação"
+		    note: string?
+		}
+		
+		"Lista de compras"
+		fixed entity shoppingList {
+		    "Código"
+		    id: uuid?
+		    "Descrição da lista"
+		    description: string
+			"Itens da lista"
+		    items: itemList*
+		}
+		
+    }
+}

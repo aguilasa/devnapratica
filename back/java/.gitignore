@@ -1,0 +1,7 @@
+/server/*
+!/server/pom.xml
+!/server/src
+/client
+.iml
+.idea
+*.iml
