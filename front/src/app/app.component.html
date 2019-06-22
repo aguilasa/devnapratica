@@ -1,0 +1,9 @@
+<s-loading-state [loading]="pageLoading" [blockWindow]="true">
+    <div class="sds-container" *ngIf="!customTemplate else customTemplate">
+        <p-growl></p-growl>
+        <s-breadcrumb></s-breadcrumb>
+        <router-outlet></router-outlet>
+    </div>
+</s-loading-state>
+<!--{CA:FILE_CONTENTS:START}-->
+<!--{CA:FILE_CONTENTS:END}-->

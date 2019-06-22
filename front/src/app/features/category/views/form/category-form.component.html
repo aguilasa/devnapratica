@@ -1,0 +1,36 @@
+<div *ngIf="!customTemplate else customTemplate">
+    <p-confirmDialog acceptLabel="{{'yes' | translate}}" acceptIcon="" rejectLabel="{{'no' | translate}}"
+        rejectIcon="">
+    </p-confirmDialog>
+    <form [formGroup]="formGroup" novalidate>
+        <p-panel styleClass="form-group" [toggleable]="false" [collapsed]="mainPanelCollapsed">
+            <p-header>
+                {{"furb.basico.category_form_general_title" | translate}}
+            </p-header>
+            <div class="ui-fluid" *ngIf="!customFormFields else customFormFields">
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-md-6">
+                        <label for="id">{{"furb.basico.category_id" | translate}}</label>
+                        <input type="text" id="id" name="id" pInputText formControlName="id" autocomplete="off" />
+                    </div>
+                    <div class="ui-g-12 ui-md-6 required">
+                        <label for="description">{{"furb.basico.category_description" | translate}}</label>
+                        <input type="text" id="description" name="description" pInputText formControlName="description" autocomplete="off"
+                        />
+                        <s-control-errors [control]="formGroup.controls['description']" [errorMessages]="{ required: 'error_required' | translate }"></s-control-errors>
+                    </div>
+                </div>
+            </div>
+            <p-footer>
+                <button id="save-button" title="{{'save' | translate}} (Alt + Shift + S)" type="submit" pButton label="{{'save' | translate}}"
+                    (click)="onSave()" *ngIf="isNew() || permissions.editar"></button>
+                <button id="delete-button" title="{{'delete' | translate}} (Alt + Shift + X)" type="button" class="ui-button-secondary"
+                    pButton label="{{'delete' | translate}}" (click)="onDelete()" *ngIf="!isNew() && permissions.excluir && !loading"></button>
+                <button id="cancel-button" title="{{'cancel' | translate}} (Alt + Shift + C)" type="button" class="ui-button-link"
+                    pButton label="{{'cancel' | translate}}" (click)="onCancel()"></button>
+            </p-footer>
+        </p-panel>
+    </form>
+</div>
+<!--{CA:FILE_CONTENTS:START}-->
+<!--{CA:FILE_CONTENTS:END}-->

@@ -1,0 +1,80 @@
+{
+	"domainDescription": "Trabalho Final",
+	"domain": "furb",
+	"service": "basico",
+	"description": "Trabalho Final",
+	"resources": [
+		{
+			"name": "category",
+			"label": "usuarios.userManager.furb_basico_entities_category_label",
+			"description": "usuarios.userManager.furb_basico_entities_category_description",
+			"URI": "res://senior.com.br/furb/basico/entities/category",
+			"actions": [
+				{
+					"name": "Incluir",
+					"label": "usuarios.userManager.furb_basico_entities_category_action_incluir_label"
+				},
+				{
+					"name": "Editar",
+					"label": "usuarios.userManager.furb_basico_entities_category_action_editar_label"
+				},
+				{
+					"name": "Excluir",
+					"label": "usuarios.userManager.furb_basico_entities_category_action_excluir_label"
+				},
+				{
+					"name": "Visualizar",
+					"label": "usuarios.userManager.furb_basico_entities_category_action_visualizar_label"
+				}
+			]
+		},
+		{
+			"name": "itemList",
+			"label": "usuarios.userManager.furb_basico_entities_itemlist_label",
+			"description": "usuarios.userManager.furb_basico_entities_itemlist_description",
+			"URI": "res://senior.com.br/furb/basico/entities/itemList",
+			"actions": [
+				{
+					"name": "Incluir",
+					"label": "usuarios.userManager.furb_basico_entities_itemlist_action_incluir_label"
+				},
+				{
+					"name": "Editar",
+					"label": "usuarios.userManager.furb_basico_entities_itemlist_action_editar_label"
+				},
+				{
+					"name": "Excluir",
+					"label": "usuarios.userManager.furb_basico_entities_itemlist_action_excluir_label"
+				},
+				{
+					"name": "Visualizar",
+					"label": "usuarios.userManager.furb_basico_entities_itemlist_action_visualizar_label"
+				}
+			]
+		},
+		{
+			"name": "shoppingList",
+			"label": "usuarios.userManager.furb_basico_entities_shoppinglist_label",
+			"description": "usuarios.userManager.furb_basico_entities_shoppinglist_description",
+			"URI": "res://senior.com.br/furb/basico/entities/shoppingList",
+			"actions": [
+				{
+					"name": "Incluir",
+					"label": "usuarios.userManager.furb_basico_entities_shoppinglist_action_incluir_label"
+				},
+				{
+					"name": "Editar",
+					"label": "usuarios.userManager.furb_basico_entities_shoppinglist_action_editar_label"
+				},
+				{
+					"name": "Excluir",
+					"label": "usuarios.userManager.furb_basico_entities_shoppinglist_action_excluir_label"
+				},
+				{
+					"name": "Visualizar",
+					"label": "usuarios.userManager.furb_basico_entities_shoppinglist_action_visualizar_label"
+				}
+			]
+		}
+	]
+}
