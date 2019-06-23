@@ -25,7 +25,7 @@ local.properties
 
 # Locally stored "Eclipse launch configurations"
 *.launch
-!FurbBasicoServer.launch
+!FurbBasicoServer*.launch
 
 RemoteSystemsTempFiles/.project
 .idea/
