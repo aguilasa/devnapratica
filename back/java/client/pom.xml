@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     
     <!--
     
@@ -10,7 +11,7 @@
     
     <modelVersion>4.0.0</modelVersion>
     
-    <artifactId>furb-basico-server</artifactId>
+    <artifactId>furb-basico-client</artifactId>
     <packaging>jar</packaging>
     <parent>
         <groupId>br.com.senior.furb</groupId>
@@ -22,6 +23,12 @@
             <groupId>br.com.senior.messaging</groupId>
             <artifactId>service-model</artifactId>
             <version>${service-model-version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>br.com.senior.messaging</groupId>
+                    <artifactId>messaging-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         
         <dependency>
@@ -32,68 +39,14 @@
         
         <dependency>
             <groupId>br.com.senior.messaging</groupId>
-            <artifactId>service-model-persist</artifactId>
-            <version>${service-model-version}</version>
+            <artifactId>messaging-api</artifactId>
+            <version>${messaging-api-version}</version>
         </dependency>
         
         <dependency>
-            <groupId>com.querydsl</groupId>
-            <artifactId>querydsl-jpa</artifactId>
-            <version>4.2.1</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>br.com.senior</groupId>
-            <artifactId>translation-hub-api</artifactId>
-            <version>${translation-hub-api-version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>br.com.senior.security</groupId>
-            <artifactId>security-api</artifactId>
-            <version>${security-api-version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>br.com.senior</groupId>
-            <artifactId>springbatchintegration</artifactId>
-            <version>${springbatchintegration-version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>br.com.senior</groupId>
-            <artifactId>customization-service-client</artifactId>
-            <version>${customization-service-client-version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>${httpclient-version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate-version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>furb-basico-client</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.5</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-            <version>0.9.11</version>
+            <groupId>br.com.senior.platform</groupId>
+            <artifactId>sdl-api</artifactId>
+            <version>1.1.0</version>
         </dependency>
     </dependencies>
     <build>
@@ -158,7 +111,7 @@
         			</execution>
         		</executions>
         	</plugin>
-        	
         </plugins>
     </build>
 </project>
+
