@@ -3,25 +3,18 @@ import { MessageService } from "primeng/components/common/messageservice";
 import { SortMeta } from "primeng/components/common/api";
 import { throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
-/*{CA:PACKAGE_IMPORTS:START}*/
-/*{CA:PACKAGE_IMPORTS:END}*/
-
-/*{CA:PROJECT_IMPORTS:START}*/
-/*{CA:PROJECT_IMPORTS:END}*/
 
 export class EntityService<T> {
-    /*{CA:CLASS_ATTRIBUTES:START}*/
-    /*{CA:CLASS_ATTRIBUTES:END}*/
-
-    constructor(protected http: HttpClient, protected messageService: MessageService, protected entityUrl: string) {
+    constructor(
+        protected http: HttpClient,
+        protected messageService: MessageService,
+        protected entityUrl: string
+    ) {
         this.http = http;
         this.messageService = messageService;
         this.entityUrl = entityUrl;
 
         this.defaultCatch = this.defaultCatch.bind(this);
-
-        /*{CA:CONSTRUCTOR_END:START}*/
-        /*{CA:CONSTRUCTOR_END:END}*/
     }
 
     public getListQueryParams(listParams: ListParams) {
@@ -58,12 +51,13 @@ export class EntityService<T> {
         return catchError((err: any) => {
             if (err) {
                 const summary = err.status ? String(err.status) : "Error";
-                const detail = (err.error && err.error.message) || err.statusText || err.message || "Error";
+                const detail =
+                    (err.error && err.error.message) || err.statusText || err.message || "Error";
 
                 this.messageService.add({
                     severity: "error",
                     summary,
-                    detail,
+                    detail
                 });
             }
 
@@ -72,7 +66,9 @@ export class EntityService<T> {
     }
 
     public list(listParams: ListParams) {
-        return this.http.get<T[]>(this.entityUrl, { params: this.getListQueryParams(listParams) }).pipe(this.defaultCatch());
+        return this.http
+            .get<T[]>(this.entityUrl, { params: this.getListQueryParams(listParams) })
+            .pipe(this.defaultCatch());
     }
 
     public get(id: any) {
@@ -90,9 +86,6 @@ export class EntityService<T> {
     public delete(id: any) {
         return this.http.delete<T>(`${this.entityUrl}/${id}`).pipe(this.defaultCatch());
     }
-
-    /*{CA:CLASS_METHODS:START}*/
-    /*{CA:CLASS_METHODS:END}*/
 }
 
 export interface ListParams {
@@ -102,6 +95,3 @@ export interface ListParams {
     filterQuery?: string;
     displayFields?: string[];
 }
-
-/*{CA:FILE_CONTENTS:START}*/
-/*{CA:FILE_CONTENTS:END}*/

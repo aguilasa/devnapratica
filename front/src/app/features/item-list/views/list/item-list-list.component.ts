@@ -11,31 +11,18 @@ import { Subject, forkJoin, of } from "rxjs";
 import { takeUntil, finalize, catchError, map } from "rxjs/operators";
 import { FormField, FieldType, IToken } from "@seniorsistemas/angular-components";
 import { FiltersStorageService } from "~shared/storage/filters-storage.service";
-/*{CA:EXTERNAL_IMPORTS:START}*/
-/*{CA:EXTERNAL_IMPORTS:END}*/
 
 import { ItemList } from "~core/entities/item-list/item-list";
 import { ItemListService } from "~core/entities/item-list/item-list.service";
 
 import { Unit } from "~core/enums/unit";
-/*{CA:PROJECT_IMPORTS:START}*/
-/*{CA:PROJECT_IMPORTS:END}*/
 
 @Component({
     templateUrl: "./item-list-list.component.html",
-    styleUrls: [
-        /*{CA:COMPONENT_STYLE_URLS:START}*/
-        /*{CA:COMPONENT_STYLE_URLS:END}*/
-    ],
-    providers: [
-        ConfirmationService,
-        /*{CA:COMPONENT_PROVIDERS:START}*/
-        /*{CA:COMPONENT_PROVIDERS:END}*/
-    ],
-    /*{CA:COMPONENT_CONFIG:START}*/
-    /*{CA:COMPONENT_CONFIG:END}*/
+    styleUrls: [],
+    providers: [ConfirmationService]
 })
-export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTERFACES:START}*/ /*{CA:CLASS_INTERFACES:END}*/ {
+export class ItemListListComponent implements OnInit, OnDestroy {
     public allPermissions: any = {};
     public permissions: any = {};
     public localeConfig: any = {};
@@ -72,14 +59,9 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
     @ViewChild("customGridBody")
     public customGridBody: TemplateRef<any>;
 
-    /*{CA:CLASS_ATTRIBUTES:START}*/
-    /*{CA:CLASS_ATTRIBUTES:END}*/
-
     private ngUnsubscribe = new Subject();
 
     constructor(
-        /*{CA:INJECTIONS:START}*/
-        /*{CA:INJECTIONS:END}*/
         private router: Router,
         private route: ActivatedRoute,
         private itemListService: ItemListService,
@@ -89,16 +71,12 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
         private hotkeysService: HotkeysService,
         private formBuilder: FormBuilder,
         private filtersStorageService: FiltersStorageService
-    ) {
-        /*{CA:CONSTRUCTOR_END:START}*/
-        /*{CA:CONSTRUCTOR_END:END}*/
-    }
+    ) {}
 
     public ngOnInit() {
-        /*{CA:ON_INIT_START:START}*/
-        /*{CA:ON_INIT_START:END}*/
-
-        this.route.data.pipe(takeUntil(this.ngUnsubscribe)).subscribe((data: any) => this.onRouteDataChange(data));
+        this.route.data
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe((data: any) => this.onRouteDataChange(data));
 
         this.filterFormGroup = this.formBuilder.group({
             id: [undefined, Validators.compose([])],
@@ -106,7 +84,7 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
             quantity: [undefined, Validators.compose([])],
             unit: [undefined, Validators.compose([])],
             price: [undefined, Validators.compose([])],
-            note: [undefined, Validators.compose([])],
+            note: [undefined, Validators.compose([])]
         });
 
         this.setStorageFiltersIntoForm(this.filterFormGroup);
@@ -114,26 +92,14 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
         this.filterFields = this.getFilterFields();
 
         this.setHotkeys();
-
-        /*{CA:ON_INIT_END:START}*/
-        /*{CA:ON_INIT_END:END}*/
     }
 
     public ngOnDestroy() {
-        /*{CA:ON_DESTROY_START:START}*/
-        /*{CA:ON_DESTROY_START:END}*/
-
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
-
-        /*{CA:ON_DESTROY_END:START}*/
-        /*{CA:ON_DESTROY_END:END}*/
     }
 
     public setHotkeys() {
-        /*{CA:SET_HOTKEYS_START:START}*/
-        /*{CA:SET_HOTKEYS_START:END}*/
-
         this.hotkeysService.add(
             new Hotkey(
                 "alt+shift+e",
@@ -170,21 +136,12 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
                 ["INPUT", "SELECT", "TEXTAREA"]
             )
         );
-
-        /*{CA:SET_HOTKEYS_END:START}*/
-        /*{CA:SET_HOTKEYS_END:END}*/
     }
 
     public onRouteDataChange(data: any) {
-        /*{CA:ON_ROUTE_DATA_CHANGE_START:START}*/
-        /*{CA:ON_ROUTE_DATA_CHANGE_START:END}*/
-
         this.allPermissions = data.allPermissions;
         this.permissions = data.allPermissions.itemList;
         this.localeConfig = data.localeConfig;
-
-        /*{CA:ON_ROUTE_DATA_CHANGE_END:START}*/
-        /*{CA:ON_ROUTE_DATA_CHANGE_END:END}*/
     }
 
     // Verifica se o objeto possui um valor que foi alterado para "" (String vazia) ao inves de null ou undefined
@@ -193,9 +150,6 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
     }
 
     public onSearch() {
-        /*{CA:ON_SEARCH_START:START}*/
-        /*{CA:ON_SEARCH_START:END}*/
-
         const filterData = this.filterFormGroup.getRawValue();
 
         if (this.hasEmpty(filterData)) {
@@ -206,74 +160,38 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
             this.resetGrid({ filterData });
             this.filtersStorageService.storeFilters(this.constructor.name, filterData);
         }
-
-        /*{CA:ON_SEARCH_END:START}*/
-        /*{CA:ON_SEARCH_END:END}*/
     }
 
     public onClear() {
-        /*{CA:ON_CLEAR_START:START}*/
-        /*{CA:ON_CLEAR_START:END}*/
-
         this.filterFormGroup.reset();
         const filterData = this.filterFormGroup.getRawValue();
         this.resetGrid({ filterData });
-
-        /*{CA:ON_CLEAR_END:START}*/
-        /*{CA:ON_CLEAR_END:END}*/
     }
 
     public onRemoveToken(token: IToken) {
-        /*{CA:ON_REMOVE_TOKEN_START:START}*/
-        /*{CA:ON_REMOVE_TOKEN_START:END}*/
-
         this.filterFormGroup.get(token.id).setValue(undefined);
         const filterData = this.filterFormGroup.getRawValue();
         this.resetGrid({ filterData });
         this.filtersStorageService.storeFilters(this.constructor.name, filterData);
-
-        /*{CA:ON_REMOVE_TOKEN_END:START}*/
-        /*{CA:ON_REMOVE_TOKEN_END:END}*/
     }
 
     public onGridChange(event: LazyLoadEvent) {
-        /*{CA:ON_GRID_CHANGE_START:START}*/
-        /*{CA:ON_GRID_CHANGE_START:END}*/
-
         const size = event.rows;
         const page = event.first / size;
         const sort = event.multiSortMeta;
 
         return this.updateGrid({ page, size, sort });
-
-        /*{CA:ON_GRID_CHANGE_END:START}*/
-        /*{CA:ON_GRID_CHANGE_END:END}*/
     }
 
     public onAdd() {
-        /*{CA:ON_ADD_START:START}*/
-        /*{CA:ON_ADD_START:END}*/
-
         this.router.navigate(["new"], { relativeTo: this.route });
-
-        /*{CA:ON_ADD_END:START}*/
-        /*{CA:ON_ADD_END:END}*/
     }
 
     public onEdit() {
-        /*{CA:ON_EDIT_START:START}*/
-        /*{CA:ON_EDIT_START:END}*/
-
         this.router.navigate([this.selection[0].id], { relativeTo: this.route });
-
-        /*{CA:ON_EDIT_END:START}*/
-        /*{CA:ON_EDIT_END:END}*/
     }
 
     public onDelete() {
-        /*{CA:ON_DELETE_START:START}*/
-        /*{CA:ON_DELETE_START:END}*/
-
         this.confirmationService.confirm({
             message: this.translate.instant("delete_confirmation_message"),
             header: this.translate.instant("delete_confirmation_title"),
@@ -284,30 +202,27 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
                         this.messageService.add({
                             severity: "success",
                             summary: this.translate.instant("deleted_message_title"),
-                            detail: this.translate.instant("deleted_message_content"),
+                            detail: this.translate.instant("deleted_message_content")
                         });
 
                         this.resetGrid();
                     });
-            },
+            }
         });
-
-        /*{CA:ON_DELETE_END:START}*/
-        /*{CA:ON_DELETE_END:END}*/
     }
 
     private getGridColumns() {
         const gridColumns = [
             { field: "id", header: this.translate.instant("furb.basico.item_list_id") },
-            { field: "description", header: this.translate.instant("furb.basico.item_list_description") },
+            {
+                field: "description",
+                header: this.translate.instant("furb.basico.item_list_description")
+            },
             { field: "quantity", header: this.translate.instant("furb.basico.item_list_quantity") },
             { field: "unit", header: this.translate.instant("furb.basico.item_list_unit") },
             { field: "price", header: this.translate.instant("furb.basico.item_list_price") },
-            { field: "note", header: this.translate.instant("furb.basico.item_list_note") },
+            { field: "note", header: this.translate.instant("furb.basico.item_list_note") }
         ];
-
-        /*{CA:GET_GRID_COLUMNS:START}*/
-        /*{CA:GET_GRID_COLUMNS:END}*/
 
         return gridColumns;
     }
@@ -317,17 +232,17 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
             new FormField({
                 name: "id",
                 label: this.translate.instant("furb.basico.item_list_id"),
-                type: FieldType.String,
+                type: FieldType.String
             }),
             new FormField({
                 name: "description",
                 label: this.translate.instant("furb.basico.item_list_description"),
-                type: FieldType.String,
+                type: FieldType.String
             }),
             new FormField({
                 name: "quantity",
                 label: this.translate.instant("furb.basico.item_list_quantity"),
-                type: FieldType.Double,
+                type: FieldType.Double
             }),
             new FormField({
                 name: "unit",
@@ -342,28 +257,31 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
                     { label: this.translate.instant("furb.basico.unit_kg"), value: Unit.KG },
                     { label: this.translate.instant("furb.basico.unit_g"), value: Unit.G },
                     { label: this.translate.instant("furb.basico.unit_caixa"), value: Unit.CAIXA },
-                    { label: this.translate.instant("furb.basico.unit_embalagem"), value: Unit.EMBALAGEM },
+                    {
+                        label: this.translate.instant("furb.basico.unit_embalagem"),
+                        value: Unit.EMBALAGEM
+                    },
                     { label: this.translate.instant("furb.basico.unit_galao"), value: Unit.GALAO },
-                    { label: this.translate.instant("furb.basico.unit_garrafa"), value: Unit.GARRAFA },
+                    {
+                        label: this.translate.instant("furb.basico.unit_garrafa"),
+                        value: Unit.GARRAFA
+                    },
                     { label: this.translate.instant("furb.basico.unit_lata"), value: Unit.LATA },
-                    { label: this.translate.instant("furb.basico.unit_pacote"), value: Unit.PACOTE },
+                    { label: this.translate.instant("furb.basico.unit_pacote"), value: Unit.PACOTE }
                 ],
-                multiple: false,
+                multiple: false
             }),
             new FormField({
                 name: "price",
                 label: this.translate.instant("furb.basico.item_list_price"),
-                type: FieldType.Double,
+                type: FieldType.Double
             }),
             new FormField({
                 name: "note",
                 label: this.translate.instant("furb.basico.item_list_note"),
-                type: FieldType.String,
-            }),
+                type: FieldType.String
+            })
         ];
-
-        /*{CA:GET_SEARCH_FIELDS:START}*/
-        /*{CA:GET_SEARCH_FIELDS:END}*/
 
         return filterFields;
     }
@@ -377,13 +295,12 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
         this.filtersLoaded = true;
         const filterData = this.filterFormGroup.getRawValue();
         this.resetGrid({ filterData });
-
-        /*{CA:GET_FILTER_FORM_GROUP:START}*/
-        /*{CA:GET_FILTER_FORM_GROUP:END}*/
     }
 
     private getEnumQuery(name: string, value: any, multiple: boolean) {
-        return multiple ? `(${value.map((selected: any) => `${name} eq ${selected}`).join(" or ")})` : `${name} eq ${value}`;
+        return multiple
+            ? `(${value.map((selected: any) => `${name} eq ${selected}`).join(" or ")})`
+            : `${name} eq ${value}`;
     }
 
     private updateGrid(listParams: ListParams = {}) {
@@ -413,10 +330,14 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
                 const value = filterData[name];
 
                 if (typeof value == "number") return `${name} eq ${value}`;
-                else if (type == FieldType.Date) return `${name} eq '${moment(value).format("YYYY-MM-DD")}'`;
-                else if (type == FieldType.Time) return `${name} eq '${moment(value).format("HH:mm:ss")}'`;
-                else if (type == FieldType.DateTime) return `${name} eq '${moment(value).format()}'`;
-                else if (type == FieldType.String) return `containing(lower(${name}), lower('${value}'))`;
+                else if (type == FieldType.Date)
+                    return `${name} eq '${moment(value).format("YYYY-MM-DD")}'`;
+                else if (type == FieldType.Time)
+                    return `${name} eq '${moment(value).format("HH:mm:ss")}'`;
+                else if (type == FieldType.DateTime)
+                    return `${name} eq '${moment(value).format()}'`;
+                else if (type == FieldType.String)
+                    return `containing(lower(${name}), lower('${value}'))`;
                 else if (type == FieldType.Enum) return this.getEnumQuery(name, value, multiple);
                 else return `${name} eq '${value}'`;
             })
@@ -457,9 +378,6 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
             else if (control instanceof FormGroup) this.validateAllFormFields(control);
         });
     }
-
-    /*{CA:CLASS_METHODS:START}*/
-    /*{CA:CLASS_METHODS:END}*/
 }
 
 interface ListParams {
@@ -468,6 +386,3 @@ interface ListParams {
     sort?: SortMeta[];
     filterData?: any;
 }
-
-/*{CA:FILE_CONTENTS:START}*/
-/*{CA:FILE_CONTENTS:END}*/

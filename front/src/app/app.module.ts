@@ -12,20 +12,16 @@ import {
     LocaleModule,
     RestUrl,
     BreadcrumbModule,
-    LoadingStateModule,
+    LoadingStateModule
 } from "@seniorsistemas/angular-components";
 import { of } from "rxjs";
 import { TranslationsModule, PermissionsModule } from "@seniorsistemas/platform-components";
 import { TranslateModule } from "@ngx-translate/core";
-/*{CA:PACKAGE_IMPORTS:START}*/
-/*{CA:PACKAGE_IMPORTS:END}*/
 
 import { environment } from "~environments/environment";
 import { CoreModule } from "~core/core.module";
 import { FeaturesModule } from "~features/features.module";
 import { AppComponent } from "~app/app.component";
-/*{CA:PROJECT_IMPORTS:START}*/
-/*{CA:PROJECT_IMPORTS:END}*/
 
 export class CustomRestUrl {
     get() {
@@ -37,12 +33,16 @@ export class CustomRestUrl {
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        RouterModule.forRoot([], { paramsInheritanceStrategy: "always", preloadingStrategy: PreloadAllModules, useHash: true }),
+        RouterModule.forRoot([], {
+            paramsInheritanceStrategy: "always",
+            preloadingStrategy: PreloadAllModules,
+            useHash: true
+        }),
         HttpClientModule,
-        HttpInterceptorModule,
+        // HttpInterceptorModule,
         CyclicJsonInterceptorModule,
         LocaleModule.forRoot(),
-        PermissionsModule.forRoot([], { ignorePermissions: environment.ignorePermissions }),
+        // PermissionsModule.forRoot([], { ignorePermissions: environment.ignorePermissions }),
         BreadcrumbModule,
         GrowlModule,
         LoadingStateModule,
@@ -50,26 +50,17 @@ export class CustomRestUrl {
         TranslateModule.forRoot(),
         TranslationsModule.forRoot([]),
         FeaturesModule,
-        CoreModule,
-        /*{CA:MODULE_IMPORTS:START}*/
-        /*{CA:MODULE_IMPORTS:END}*/
+        CoreModule
     ],
-    declarations: [
-        AppComponent,
-        /*{CA:MODULE_DECLARATIONS:START}*/
-        /*{CA:MODULE_DECLARATIONS:END}*/
-    ],
+    declarations: [AppComponent],
     providers: [
         MessageService,
-        { provide: RestUrl, useFactory: () => (!environment.production && environment.restUrl ? new CustomRestUrl() : new RestUrl()) },
-        /*{CA:MODULE_PROVIDERS:START}*/
-        /*{CA:MODULE_PROVIDERS:END}*/
+        {
+            provide: RestUrl,
+            useFactory: () =>
+                !environment.production && environment.restUrl ? new CustomRestUrl() : new RestUrl()
+        }
     ],
-    bootstrap: [AppComponent],
-    /*{CA:MODULE_CONFIG:START}*/
-    /*{CA:MODULE_CONFIG:END}*/
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
-
-/*{CA:FILE_CONTENTS:START}*/
-/*{CA:FILE_CONTENTS:END}*/

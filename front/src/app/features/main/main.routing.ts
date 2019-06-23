@@ -2,14 +2,10 @@ import { NgModule, Injectable } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { of } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
-/*{CA:PACKAGE_IMPORTS:START}*/
-/*{CA:PACKAGE_IMPORTS:END}*/
 
 import { environment } from "~environments/environment";
 import { MainComponent } from "~features/main/main.component";
 import { ErrorPageComponent } from "./views/error-page/error-page.component";
-/*{CA:PROJECT_IMPORTS:START}*/
-/*{CA:PROJECT_IMPORTS:END}*/
 
 export class TitleResolver {
     public resolve() {
@@ -24,7 +20,7 @@ export class NotFoundTranslationsResolver {
     public resolve() {
         return of({
             title: this.translate.instant("error_not_found_title"),
-            description: this.translate.instant("error_not_found_description"),
+            description: this.translate.instant("error_not_found_description")
         });
     }
 }
@@ -36,7 +32,7 @@ export class ForbiddenTranslationsResolver {
     public resolve() {
         return of({
             title: this.translate.instant("error_forbidden_title"),
-            description: this.translate.instant("error_forbidden_description"),
+            description: this.translate.instant("error_forbidden_description")
         });
     }
 }
@@ -46,41 +42,36 @@ export const routes: Routes = [
         path: "main",
         component: MainComponent,
         resolve: {
-            routeTitle: TitleResolver,
-            /*{CA:MAIN_ROUTE_RESOLVE:START}*/
-            /*{CA:MAIN_ROUTE_RESOLVE:END}*/
-        },
+            routeTitle: TitleResolver
+        }
     },
     {
         path: "not-found",
         component: ErrorPageComponent,
         data: {
             errorCode: 404,
-            routeTitle: "404",
+            routeTitle: "404"
         },
         resolve: {
-            translations: NotFoundTranslationsResolver,
-        },
+            translations: NotFoundTranslationsResolver
+        }
     },
     {
         path: "forbidden",
         component: ErrorPageComponent,
         data: {
             errorCode: 403,
-            routeTitle: "403",
+            routeTitle: "403"
         },
         resolve: {
-            translations: ForbiddenTranslationsResolver,
-        },
-    },
+            translations: ForbiddenTranslationsResolver
+        }
+    }
 ];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
-    providers: [TitleResolver, NotFoundTranslationsResolver, ForbiddenTranslationsResolver],
+    providers: [TitleResolver, NotFoundTranslationsResolver, ForbiddenTranslationsResolver]
 })
 export class MainRouting {}
-
-/*{CA:FILE_CONTENTS:START}*/
-/*{CA:FILE_CONTENTS:END}*/
