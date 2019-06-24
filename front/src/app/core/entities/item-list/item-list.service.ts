@@ -12,7 +12,7 @@ export class ItemListService extends EntityService<ItemListDto> {
         super(
             http,
             messageService,
-            `${environment.project.domain}/${environment.project.service}/entities/itemList`
+            `${environment.restUrl}/entities/itemList`
         );
     }
 }

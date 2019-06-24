@@ -12,7 +12,7 @@ export class ShoppingListService extends EntityService<ShoppingListDto> {
         super(
             http,
             messageService,
-            `${environment.project.domain}/${environment.project.service}/entities/shoppingList`
+            `${environment.restUrl}/entities/shoppingList`
         );
     }
 }

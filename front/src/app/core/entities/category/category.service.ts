@@ -12,7 +12,7 @@ export class CategoryService extends EntityService<CategoryDto> {
         super(
             http,
             messageService,
-            `${environment.project.domain}/${environment.project.service}/entities/category`
+            `${environment.restUrl}/entities/category`
         );
     }
 }
