@@ -10,7 +10,7 @@ import br.com.senior.messaging.model.EntityId;
  * Item da lista
  */
 @EntityDescription
-public class ItemList {
+public class Product {
     
     public static class Id {
     	
@@ -19,11 +19,11 @@ public class ItemList {
         public Id() {
         }
         
-        public Id(String itemListId) {
-            this.id = itemListId;
+        public Id(String productId) {
+            this.id = productId;
         }
         
-        public String getItemListId() {
+        public String getProductId() {
             return id;
         }
         
@@ -41,16 +41,16 @@ public class ItemList {
     	public Long totalPages;
     	public Long totalElements;
     	
-        public List<ItemList> contents;
+        public List<Product> contents;
         
         public PagedResults() {
         }
         
-        public PagedResults(List<ItemList> contents) {
+        public PagedResults(List<Product> contents) {
             this.contents = contents;
         }
         
-        public PagedResults(List<ItemList> contents, Long totalPages, Long totalElements) {
+        public PagedResults(List<Product> contents, Long totalPages, Long totalElements) {
             this.contents = contents;
             this.totalPages = totalPages;
             this.totalElements = totalElements;
@@ -101,48 +101,37 @@ public class ItemList {
      */
     public String id;
     /**
-     * Produto
+     * Descrição do produto
      */
-    public Product product;
+    public String description;
     /**
-     * Quantidade
+     * Unidade de medida
      */
-    public Double quantity;
+    public Unit unit;
     /**
-     * Preço
+     * Categoria
      */
-    public Double price;
-    /**
-     * Checado
-     */
-    public Boolean checked;
-    /**
-     * Observação
-     */
-    public String note;
+    public Category category;
     
-    public ItemList() {
+    public Product() {
     }
     
     /** 
      * This constructor allows initialization of all fields, required and optional.
      */
-    public ItemList(String id, Product product, Double quantity, Double price, Boolean checked, String note) {
+    public Product(String id, String description, Unit unit, Category category) {
         this.id = id;
-        this.product = product;
-        this.quantity = quantity;
-        this.price = price;
-        this.checked = checked;
-        this.note = note;
+        this.description = description;
+        this.unit = unit;
+        this.category = category;
     }
     /** 
      * This convenience constructor allows initialization of all required fields.
      */
-    public ItemList(Product product, Double quantity, Double price, Boolean checked) {
-        this.product = product;
-        this.quantity = quantity;
-        this.price = price;
-        this.checked = checked;
+    public Product(String description, Unit unit, Category category) {
+        this.description = description;
+        this.unit = unit;
+        this.category = category;
     }
     
     public void normalize(Map<String, Object> headers) {
@@ -178,10 +167,10 @@ public class ItemList {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof ItemList)) {
+        if (!(obj instanceof Product)) {
             return false;
         }
-        ItemList other = (ItemList) obj;
+        Product other = (Product) obj;
         if ((id == null) != (other.id == null)) {
             return false;
         }
@@ -206,17 +195,15 @@ public class ItemList {
     	}
     	appended.add(this);
     	sb.append("id=").append(id == null ? "null" : id).append(", ");
-    	sb.append("product=<");
-    	if (product == null) {
+    	sb.append("description=").append(description == null ? "null" : description).append(", ");
+    	sb.append("unit=").append(unit == null ? "null" : unit).append(", ");
+    	sb.append("category=<");
+    	if (category == null) {
     		sb.append("null");
     	} else {
-    		product.toString(sb, appended);
+    		category.toString(sb, appended);
     	}
-    	sb.append('>').append(", ");
-    	sb.append("quantity=").append(quantity == null ? "null" : quantity).append(", ");
-    	sb.append("price=").append(price == null ? "null" : price).append(", ");
-    	sb.append("checked=").append(checked == null ? "null" : checked).append(", ");
-    	sb.append("note=").append(note == null ? "null" : note);
+    	sb.append('>');
     	sb.append(']');
     }
     

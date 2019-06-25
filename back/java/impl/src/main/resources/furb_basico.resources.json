@@ -29,6 +29,30 @@
 			]
 		},
 		{
+			"name": "product",
+			"label": "usuarios.userManager.furb_basico_entities_product_label",
+			"description": "usuarios.userManager.furb_basico_entities_product_description",
+			"URI": "res://senior.com.br/furb/basico/entities/product",
+			"actions": [
+				{
+					"name": "Incluir",
+					"label": "usuarios.userManager.furb_basico_entities_product_action_incluir_label"
+				},
+				{
+					"name": "Editar",
+					"label": "usuarios.userManager.furb_basico_entities_product_action_editar_label"
+				},
+				{
+					"name": "Excluir",
+					"label": "usuarios.userManager.furb_basico_entities_product_action_excluir_label"
+				},
+				{
+					"name": "Visualizar",
+					"label": "usuarios.userManager.furb_basico_entities_product_action_visualizar_label"
+				}
+			]
+		},
+		{
 			"name": "itemList",
 			"label": "usuarios.userManager.furb_basico_entities_itemlist_label",
 			"description": "usuarios.userManager.furb_basico_entities_itemlist_description",

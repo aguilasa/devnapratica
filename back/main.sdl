@@ -44,19 +44,29 @@ service basico {
         }
 
         "Item da lista"
+        fixed entity product {
+            "Código"
+            id : uuid?
+            "Descrição do produto"
+            description : string
+            "Unidade de medida"
+            unit : unit
+            "Categoria"
+            category : category
+        }
+
+        "Item da lista"
         fixed entity itemList {
             "Código"
             id : uuid?
-            "Descrição do item"
-            description : string
+            "Produto"
+            product : product
             "Quantidade"
             quantity : double
-            "Unidade de medida"
-            unit : unit
             "Preço"
             price : double
-            "Quantidade"
-            category : category
+            "Checado"
+            checked : boolean
             "Observação"
             note : string?
         }

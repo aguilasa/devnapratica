@@ -35,6 +35,28 @@ public class BasicoNormalizer {
     	}
     }
     /**
+     * Normalizes the Product payload.
+     */
+    public static void normalize(Product toNormalize, Map<String, Object> headers) {
+    	if (headers != null) {
+    		String entityId = headers.containsKey(Message.ENTITY_ID_HEADER) ? headers.get(Message.ENTITY_ID_HEADER).toString() : null;
+    		if (entityId != null && toNormalize != null && toNormalize.id == null) {
+    			toNormalize.id = entityId;
+    		}
+    	}
+    }
+    /**
+     * Normalizes the Product.Id payload.
+     */
+    public static void normalize(Product.Id toNormalize, Map<String, Object> headers) {
+    	if (headers != null) {
+    		String entityId = headers.containsKey(Message.ENTITY_ID_HEADER) ? headers.get(Message.ENTITY_ID_HEADER).toString() : null;
+    		if (entityId != null && toNormalize != null && toNormalize.id == null) {
+    			toNormalize.id = entityId;
+    		}
+    	}
+    }
+    /**
      * Normalizes the ItemList payload.
      */
     public static void normalize(ItemList toNormalize, Map<String, Object> headers) {

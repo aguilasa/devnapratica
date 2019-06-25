@@ -8,9 +8,17 @@ entities {
 
 service basico {
 	entities {
-		entity itemList {
+		entity product {
 			relationships{
         		ManyToOne(category) {
+        			type: aggregation
+    				fetchType: eager
+        		}
+        	}
+        }
+		entity itemList {
+			relationships{
+        		ManyToOne(product) {
         			type: aggregation
     				fetchType: eager
         		}

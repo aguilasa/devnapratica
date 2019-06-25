@@ -6,6 +6,7 @@
 	<persistence-unit name="service"
 		transaction-type="RESOURCE_LOCAL">
 		<class>br.com.senior.furb.basico.CategoryEntity</class>
+		<class>br.com.senior.furb.basico.ProductEntity</class>
 		<class>br.com.senior.furb.basico.ItemListEntity</class>
 		<class>br.com.senior.furb.basico.ShoppingListEntity</class>
 		<class>br.com.senior.furb.basico.ShoppingList_ItemsEntity</class>

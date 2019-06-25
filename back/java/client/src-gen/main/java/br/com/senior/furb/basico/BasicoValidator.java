@@ -58,6 +58,61 @@ public class BasicoValidator {
     /**
      * Validates the payload for required fields and valid values.
      */
+    public static void validate(br.com.senior.furb.basico.Product toValidate) {
+    	validate(toValidate, true);
+    }
+    
+    /**
+     * Validates the payload for valid values and checks for required fields if required argument is true.
+     */
+    public static void validate(br.com.senior.furb.basico.Product toValidate, boolean required) {
+    	validate(toValidate, null, true);
+    }
+    
+    /**
+     * Validates the payload for valid values using message headers and checks for required fields if required argument is true.
+     */
+    public static void validate(br.com.senior.furb.basico.Product toValidate, Map<String, Object> headers, boolean required) {
+    	validate(toValidate, headers, required, new ArrayList<>());
+    }
+    
+    /**
+     * Validates the payload for valid values using message headers and checks for required fields if required argument is true ignoring if already validated.
+     */
+    public static void validate(br.com.senior.furb.basico.Product toValidate, Map<String, Object> headers, boolean required, List<Object> validated) {
+    	if (validated.contains(toValidate)) {
+    		return;
+    	}
+    	validated.add(toValidate);
+    	
+    	if (headers != null) {
+    		String entityId = headers.containsKey(Message.ENTITY_ID_HEADER) ? headers.get(Message.ENTITY_ID_HEADER).toString() : null;
+    		if (entityId != null && toValidate != null && toValidate.id != null && !toValidate.id.toString().equals(entityId)) {
+    			throw new IllegalArgumentException("Payload id '" + toValidate.id + "' differs from header id '" + entityId + "'.");
+    		}
+    	}
+    	if (required) {
+    		if (toValidate.description == null) {
+    			throw new IllegalArgumentException("description is required");
+    		}
+    	}
+    	if (required) {
+    		if (toValidate.unit == null) {
+    			throw new IllegalArgumentException("unit is required");
+    		}
+    	}
+    	if (required) {
+    		if (toValidate.category == null) {
+    			throw new IllegalArgumentException("category is required");
+    		}
+    		if (toValidate.category.id == null) {
+    			throw new IllegalArgumentException("category.id is required");
+    		}
+    	}
+    }
+    /**
+     * Validates the payload for required fields and valid values.
+     */
     public static void validate(br.com.senior.furb.basico.ItemList toValidate) {
     	validate(toValidate, true);
     }
@@ -92,8 +147,11 @@ public class BasicoValidator {
     		}
     	}
     	if (required) {
-    		if (toValidate.description == null) {
-    			throw new IllegalArgumentException("description is required");
+    		if (toValidate.product == null) {
+    			throw new IllegalArgumentException("product is required");
+    		}
+    		if (toValidate.product.id == null) {
+    			throw new IllegalArgumentException("product.id is required");
     		}
     	}
     	if (required) {
@@ -102,21 +160,13 @@ public class BasicoValidator {
     		}
     	}
     	if (required) {
-    		if (toValidate.unit == null) {
-    			throw new IllegalArgumentException("unit is required");
-    		}
-    	}
-    	if (required) {
     		if (toValidate.price == null) {
     			throw new IllegalArgumentException("price is required");
     		}
     	}
     	if (required) {
-    		if (toValidate.category == null) {
-    			throw new IllegalArgumentException("category is required");
-    		}
-    		if (toValidate.category.id == null) {
-    			throw new IllegalArgumentException("category.id is required");
+    		if (toValidate.checked == null) {
+    			throw new IllegalArgumentException("checked is required");
     		}
     	}
     }
@@ -1293,6 +1343,226 @@ public class BasicoValidator {
     /**
      * Validates the payload for required fields and valid values.
      */
+    public static void validate(br.com.senior.furb.basico.ImportProductInput toValidate) {
+    	validate(toValidate, true);
+    }
+    
+    /**
+     * Validates the payload for valid values and checks for required fields if required argument is true.
+     */
+    public static void validate(br.com.senior.furb.basico.ImportProductInput toValidate, boolean required) {
+    	validate(toValidate, null, true);
+    }
+    
+    /**
+     * Validates the payload for valid values using message headers and checks for required fields if required argument is true.
+     */
+    public static void validate(br.com.senior.furb.basico.ImportProductInput toValidate, Map<String, Object> headers, boolean required) {
+    	validate(toValidate, headers, required, new ArrayList<>());
+    }
+    
+    /**
+     * Validates the payload for valid values using message headers and checks for required fields if required argument is true ignoring if already validated.
+     */
+    public static void validate(br.com.senior.furb.basico.ImportProductInput toValidate, Map<String, Object> headers, boolean required, List<Object> validated) {
+    	if (validated.contains(toValidate)) {
+    		return;
+    	}
+    	validated.add(toValidate);
+    	
+    	if (required) {
+    		if (toValidate.config == null) {
+    			throw new IllegalArgumentException("config is required");
+    		}
+    		toValidate.config.validate(null, required, validated);
+    	}
+    }
+    /**
+     * Validates the payload for required fields and valid values.
+     */
+    public static void validate(br.com.senior.furb.basico.ImportProductOutput toValidate) {
+    	validate(toValidate, true);
+    }
+    
+    /**
+     * Validates the payload for valid values and checks for required fields if required argument is true.
+     */
+    public static void validate(br.com.senior.furb.basico.ImportProductOutput toValidate, boolean required) {
+    	validate(toValidate, null, true);
+    }
+    
+    /**
+     * Validates the payload for valid values using message headers and checks for required fields if required argument is true.
+     */
+    public static void validate(br.com.senior.furb.basico.ImportProductOutput toValidate, Map<String, Object> headers, boolean required) {
+    	validate(toValidate, headers, required, new ArrayList<>());
+    }
+    
+    /**
+     * Validates the payload for valid values using message headers and checks for required fields if required argument is true ignoring if already validated.
+     */
+    public static void validate(br.com.senior.furb.basico.ImportProductOutput toValidate, Map<String, Object> headers, boolean required, List<Object> validated) {
+    	if (validated.contains(toValidate)) {
+    		return;
+    	}
+    	validated.add(toValidate);
+    	
+    	if (required) {
+    		if (toValidate.importJobId == null) {
+    			throw new IllegalArgumentException("importJobId is required");
+    		}
+    	}
+    }
+    /**
+     * Validates the payload for required fields and valid values.
+     */
+    public static void validate(br.com.senior.furb.basico.ExportProductInput toValidate) {
+    	validate(toValidate, true);
+    }
+    
+    /**
+     * Validates the payload for valid values and checks for required fields if required argument is true.
+     */
+    public static void validate(br.com.senior.furb.basico.ExportProductInput toValidate, boolean required) {
+    	validate(toValidate, null, true);
+    }
+    
+    /**
+     * Validates the payload for valid values using message headers and checks for required fields if required argument is true.
+     */
+    public static void validate(br.com.senior.furb.basico.ExportProductInput toValidate, Map<String, Object> headers, boolean required) {
+    	validate(toValidate, headers, required, new ArrayList<>());
+    }
+    
+    /**
+     * Validates the payload for valid values using message headers and checks for required fields if required argument is true ignoring if already validated.
+     */
+    public static void validate(br.com.senior.furb.basico.ExportProductInput toValidate, Map<String, Object> headers, boolean required, List<Object> validated) {
+    	if (validated.contains(toValidate)) {
+    		return;
+    	}
+    	validated.add(toValidate);
+    	
+    	if (required) {
+    		if (toValidate.config == null) {
+    			throw new IllegalArgumentException("config is required");
+    		}
+    		toValidate.config.validate(null, required, validated);
+    	}
+    }
+    /**
+     * Validates the payload for required fields and valid values.
+     */
+    public static void validate(br.com.senior.furb.basico.ExportProductOutput toValidate) {
+    	validate(toValidate, true);
+    }
+    
+    /**
+     * Validates the payload for valid values and checks for required fields if required argument is true.
+     */
+    public static void validate(br.com.senior.furb.basico.ExportProductOutput toValidate, boolean required) {
+    	validate(toValidate, null, true);
+    }
+    
+    /**
+     * Validates the payload for valid values using message headers and checks for required fields if required argument is true.
+     */
+    public static void validate(br.com.senior.furb.basico.ExportProductOutput toValidate, Map<String, Object> headers, boolean required) {
+    	validate(toValidate, headers, required, new ArrayList<>());
+    }
+    
+    /**
+     * Validates the payload for valid values using message headers and checks for required fields if required argument is true ignoring if already validated.
+     */
+    public static void validate(br.com.senior.furb.basico.ExportProductOutput toValidate, Map<String, Object> headers, boolean required, List<Object> validated) {
+    	if (validated.contains(toValidate)) {
+    		return;
+    	}
+    	validated.add(toValidate);
+    	
+    	if (required) {
+    		if (toValidate.exportJobId == null) {
+    			throw new IllegalArgumentException("exportJobId is required");
+    		}
+    	}
+    }
+    /**
+     * Validates the payload for required fields and valid values.
+     */
+    public static void validate(br.com.senior.furb.basico.ImportProductEventPayload toValidate) {
+    	validate(toValidate, true);
+    }
+    
+    /**
+     * Validates the payload for valid values and checks for required fields if required argument is true.
+     */
+    public static void validate(br.com.senior.furb.basico.ImportProductEventPayload toValidate, boolean required) {
+    	validate(toValidate, null, true);
+    }
+    
+    /**
+     * Validates the payload for valid values using message headers and checks for required fields if required argument is true.
+     */
+    public static void validate(br.com.senior.furb.basico.ImportProductEventPayload toValidate, Map<String, Object> headers, boolean required) {
+    	validate(toValidate, headers, required, new ArrayList<>());
+    }
+    
+    /**
+     * Validates the payload for valid values using message headers and checks for required fields if required argument is true ignoring if already validated.
+     */
+    public static void validate(br.com.senior.furb.basico.ImportProductEventPayload toValidate, Map<String, Object> headers, boolean required, List<Object> validated) {
+    	if (validated.contains(toValidate)) {
+    		return;
+    	}
+    	validated.add(toValidate);
+    	
+    	if (required) {
+    		if (toValidate.eventpl == null) {
+    			throw new IllegalArgumentException("eventpl is required");
+    		}
+    		toValidate.eventpl.validate(null, required, validated);
+    	}
+    }
+    /**
+     * Validates the payload for required fields and valid values.
+     */
+    public static void validate(br.com.senior.furb.basico.ExportProductEventPayload toValidate) {
+    	validate(toValidate, true);
+    }
+    
+    /**
+     * Validates the payload for valid values and checks for required fields if required argument is true.
+     */
+    public static void validate(br.com.senior.furb.basico.ExportProductEventPayload toValidate, boolean required) {
+    	validate(toValidate, null, true);
+    }
+    
+    /**
+     * Validates the payload for valid values using message headers and checks for required fields if required argument is true.
+     */
+    public static void validate(br.com.senior.furb.basico.ExportProductEventPayload toValidate, Map<String, Object> headers, boolean required) {
+    	validate(toValidate, headers, required, new ArrayList<>());
+    }
+    
+    /**
+     * Validates the payload for valid values using message headers and checks for required fields if required argument is true ignoring if already validated.
+     */
+    public static void validate(br.com.senior.furb.basico.ExportProductEventPayload toValidate, Map<String, Object> headers, boolean required, List<Object> validated) {
+    	if (validated.contains(toValidate)) {
+    		return;
+    	}
+    	validated.add(toValidate);
+    	
+    	if (required) {
+    		if (toValidate.eventpl == null) {
+    			throw new IllegalArgumentException("eventpl is required");
+    		}
+    		toValidate.eventpl.validate(null, required, validated);
+    	}
+    }
+    /**
+     * Validates the payload for required fields and valid values.
+     */
     public static void validate(br.com.senior.furb.basico.ImportItemListInput toValidate) {
     	validate(toValidate, true);
     }
@@ -1876,6 +2146,73 @@ public class BasicoValidator {
      * Validates the payload for valid values using message headers and checks for required fields if required argument is true ignoring if already validated.
      */
     public static void validate(br.com.senior.furb.basico.CreateBulkCategoryOutput toValidate, Map<String, Object> headers, boolean required, List<Object> validated) {
+    	if (validated.contains(toValidate)) {
+    		return;
+    	}
+    	validated.add(toValidate);
+    	
+    }
+    /**
+     * Validates the payload for required fields and valid values.
+     */
+    public static void validate(br.com.senior.furb.basico.CreateBulkProductInput toValidate) {
+    	validate(toValidate, true);
+    }
+    
+    /**
+     * Validates the payload for valid values and checks for required fields if required argument is true.
+     */
+    public static void validate(br.com.senior.furb.basico.CreateBulkProductInput toValidate, boolean required) {
+    	validate(toValidate, null, true);
+    }
+    
+    /**
+     * Validates the payload for valid values using message headers and checks for required fields if required argument is true.
+     */
+    public static void validate(br.com.senior.furb.basico.CreateBulkProductInput toValidate, Map<String, Object> headers, boolean required) {
+    	validate(toValidate, headers, required, new ArrayList<>());
+    }
+    
+    /**
+     * Validates the payload for valid values using message headers and checks for required fields if required argument is true ignoring if already validated.
+     */
+    public static void validate(br.com.senior.furb.basico.CreateBulkProductInput toValidate, Map<String, Object> headers, boolean required, List<Object> validated) {
+    	if (validated.contains(toValidate)) {
+    		return;
+    	}
+    	validated.add(toValidate);
+    	
+    	if (required) {
+    		if (toValidate.entities == null || toValidate.entities.isEmpty()) {
+    			throw new IllegalArgumentException("entities is required, at least one value must be present");
+    		}
+    	}
+    }
+    /**
+     * Validates the payload for required fields and valid values.
+     */
+    public static void validate(br.com.senior.furb.basico.CreateBulkProductOutput toValidate) {
+    	validate(toValidate, true);
+    }
+    
+    /**
+     * Validates the payload for valid values and checks for required fields if required argument is true.
+     */
+    public static void validate(br.com.senior.furb.basico.CreateBulkProductOutput toValidate, boolean required) {
+    	validate(toValidate, null, true);
+    }
+    
+    /**
+     * Validates the payload for valid values using message headers and checks for required fields if required argument is true.
+     */
+    public static void validate(br.com.senior.furb.basico.CreateBulkProductOutput toValidate, Map<String, Object> headers, boolean required) {
+    	validate(toValidate, headers, required, new ArrayList<>());
+    }
+    
+    /**
+     * Validates the payload for valid values using message headers and checks for required fields if required argument is true ignoring if already validated.
+     */
+    public static void validate(br.com.senior.furb.basico.CreateBulkProductOutput toValidate, Map<String, Object> headers, boolean required, List<Object> validated) {
     	if (validated.contains(toValidate)) {
     		return;
     	}

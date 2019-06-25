@@ -64,6 +64,40 @@ public interface BasicoConstants {
     	 */
     	String EXPORT_CATEGORY_ERROR = "exportCategoryError";
     	/**
+    	 * @see ImportProductInput the request payload
+    	 */
+    	String IMPORT_PRODUCT = "importProduct";
+    	/**
+    	 * The success response primitive for importProduct.
+    	 *
+    	 * @see #IMPORT_PRODUCT the request primitive
+    	 * @see ImportProductOutput the response payload
+    	 */
+    	String IMPORT_PRODUCT_RESPONSE = "importProductResponse";
+    	/**
+    	 * An error response primitive for importProduct.
+    	 *
+    	 * @see #IMPORT_PRODUCT the request primitive
+    	 */
+    	String IMPORT_PRODUCT_ERROR = "importProductError";
+    	/**
+    	 * @see ExportProductInput the request payload
+    	 */
+    	String EXPORT_PRODUCT = "exportProduct";
+    	/**
+    	 * The success response primitive for exportProduct.
+    	 *
+    	 * @see #EXPORT_PRODUCT the request primitive
+    	 * @see ExportProductOutput the response payload
+    	 */
+    	String EXPORT_PRODUCT_RESPONSE = "exportProductResponse";
+    	/**
+    	 * An error response primitive for exportProduct.
+    	 *
+    	 * @see #EXPORT_PRODUCT the request primitive
+    	 */
+    	String EXPORT_PRODUCT_ERROR = "exportProductError";
+    	/**
     	 * @see ImportItemListInput the request payload
     	 */
     	String IMPORT_ITEM_LIST = "importItemList";
@@ -149,6 +183,24 @@ public interface BasicoConstants {
     	 * @see #LIST_CATEGORY the request primitive
     	 */
     	String LIST_CATEGORY_ERROR = "listCategoryError";
+    	/**
+    	 * The 'list' request primitive for the Product entity.
+    	 * @see product.pageRequest the request payload
+    	 */
+    	String LIST_PRODUCT = "listProduct";
+    	/**
+    	 * The success response primitive for listProduct.
+    	 *
+    	 * @see #LIST_PRODUCT the request primitive
+    	 * @see Product.PagedResults the response payload
+    	 */
+    	String LIST_PRODUCT_RESPONSE = "listProductResponse";
+    	/**
+    	 * An error response primitive for listProduct.
+    	 *
+    	 * @see #LIST_PRODUCT the request primitive
+    	 */
+    	String LIST_PRODUCT_ERROR = "listProductError";
     	/**
     	 * The 'list' request primitive for the ItemList entity.
     	 * @see itemList.pageRequest the request payload
@@ -322,6 +374,126 @@ public interface BasicoConstants {
     	 * @see #DELETE_CATEGORY the request primitive
     	 */
     	String DELETE_CATEGORY_ERROR = "deleteCategoryError";
+    	/**
+    	 * The 'create' request primitive for the Product entity.
+    	 * @see Product the request payload
+    	 */
+    	String CREATE_PRODUCT = "createProduct";
+    	/**
+    	 * The success response primitive for createProduct.
+    	 *
+    	 * @see #CREATE_PRODUCT the request primitive
+    	 */
+    	String CREATE_PRODUCT_RESPONSE = "createProductResponse";
+    	/**
+    	 * An error response primitive for createProduct.
+    	 *
+    	 * @see #CREATE_PRODUCT the request primitive
+    	 */
+    	String CREATE_PRODUCT_ERROR = "createProductError";
+    	/**
+    	 * The 'createBulk' request primitive for the Product entity.
+    	 * @see CreateBulkProductInput the request payload
+    	 */
+    	String CREATE_BULK_PRODUCT = "createBulkProduct";
+    	/**
+    	 * The success response primitive for createBulkProduct.
+    	 *
+    	 * @see #CREATE_BULK_PRODUCT the request primitive
+    	 * @see CreateBulkProductOutput the response payload
+    	 */
+    	String CREATE_BULK_PRODUCT_RESPONSE = "createBulkProductResponse";
+    	/**
+    	 * An error response primitive for createBulkProduct.
+    	 *
+    	 * @see #CREATE_BULK_PRODUCT the request primitive
+    	 */
+    	String CREATE_BULK_PRODUCT_ERROR = "createBulkProductError";
+    	/**
+    	 * The 'createMerge' request primitive for the Product entity.
+    	 * @see Product the request payload
+    	 */
+    	String CREATE_MERGE_PRODUCT = "createMergeProduct";
+    	/**
+    	 * The success response primitive for createMergeProduct.
+    	 *
+    	 * @see #CREATE_MERGE_PRODUCT the request primitive
+    	 */
+    	String CREATE_MERGE_PRODUCT_RESPONSE = "createMergeProductResponse";
+    	/**
+    	 * An error response primitive for createMergeProduct.
+    	 *
+    	 * @see #CREATE_MERGE_PRODUCT the request primitive
+    	 */
+    	String CREATE_MERGE_PRODUCT_ERROR = "createMergeProductError";
+    	/**
+    	 * The 'retrieve' request primitive for the Product entity.
+    	 * @see Product.Id the request payload
+    	 */
+    	String RETRIEVE_PRODUCT = "retrieveProduct";
+    	/**
+    	 * The success response primitive for retrieveProduct.
+    	 *
+    	 * @see #RETRIEVE_PRODUCT the request primitive
+    	 */
+    	String RETRIEVE_PRODUCT_RESPONSE = "retrieveProductResponse";
+    	/**
+    	 * An error response primitive for retrieveProduct.
+    	 *
+    	 * @see #RETRIEVE_PRODUCT the request primitive
+    	 */
+    	String RETRIEVE_PRODUCT_ERROR = "retrieveProductError";
+    	/**
+    	 * The 'update' request primitive for the Product entity.
+    	 * @see Product the request payload
+    	 */
+    	String UPDATE_PRODUCT = "updateProduct";
+    	/**
+    	 * The success response primitive for updateProduct.
+    	 *
+    	 * @see #UPDATE_PRODUCT the request primitive
+    	 */
+    	String UPDATE_PRODUCT_RESPONSE = "updateProductResponse";
+    	/**
+    	 * An error response primitive for updateProduct.
+    	 *
+    	 * @see #UPDATE_PRODUCT the request primitive
+    	 */
+    	String UPDATE_PRODUCT_ERROR = "updateProductError";
+    	/**
+    	 * The 'updateMerge' request primitive for the Product entity.
+    	 * @see Product the request payload
+    	 */
+    	String UPDATE_MERGE_PRODUCT = "updateMergeProduct";
+    	/**
+    	 * The success response primitive for updateMergeProduct.
+    	 *
+    	 * @see #UPDATE_MERGE_PRODUCT the request primitive
+    	 */
+    	String UPDATE_MERGE_PRODUCT_RESPONSE = "updateMergeProductResponse";
+    	/**
+    	 * An error response primitive for updateMergeProduct.
+    	 *
+    	 * @see #UPDATE_MERGE_PRODUCT the request primitive
+    	 */
+    	String UPDATE_MERGE_PRODUCT_ERROR = "updateMergeProductError";
+    	/**
+    	 * The 'delete' request primitive for the Product entity.
+    	 * @see Product.Id the request payload
+    	 */
+    	String DELETE_PRODUCT = "deleteProduct";
+    	/**
+    	 * The success response primitive for deleteProduct.
+    	 *
+    	 * @see #DELETE_PRODUCT the request primitive
+    	 */
+    	String DELETE_PRODUCT_RESPONSE = "deleteProductResponse";
+    	/**
+    	 * An error response primitive for deleteProduct.
+    	 *
+    	 * @see #DELETE_PRODUCT the request primitive
+    	 */
+    	String DELETE_PRODUCT_ERROR = "deleteProductError";
     	/**
     	 * The 'create' request primitive for the ItemList entity.
     	 * @see ItemList the request payload
@@ -575,6 +747,8 @@ public interface BasicoConstants {
     	String NOTIFY_USER_EVENT = "notifyUserEvent";
     	String IMPORT_CATEGORY_EVENT = "importCategoryEvent";
     	String EXPORT_CATEGORY_EVENT = "exportCategoryEvent";
+    	String IMPORT_PRODUCT_EVENT = "importProductEvent";
+    	String EXPORT_PRODUCT_EVENT = "exportProductEvent";
     	String IMPORT_ITEM_LIST_EVENT = "importItemListEvent";
     	String EXPORT_ITEM_LIST_EVENT = "exportItemListEvent";
     	String IMPORT_SHOPPING_LIST_EVENT = "importShoppingListEvent";

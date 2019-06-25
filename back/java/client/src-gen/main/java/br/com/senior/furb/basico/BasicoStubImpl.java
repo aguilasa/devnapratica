@@ -17,6 +17,10 @@ import br.com.senior.furb.basico.ImportCategoryInput;
 import br.com.senior.furb.basico.ImportCategoryOutput;
 import br.com.senior.furb.basico.ExportCategoryInput;
 import br.com.senior.furb.basico.ExportCategoryOutput;
+import br.com.senior.furb.basico.ImportProductInput;
+import br.com.senior.furb.basico.ImportProductOutput;
+import br.com.senior.furb.basico.ExportProductInput;
+import br.com.senior.furb.basico.ExportProductOutput;
 import br.com.senior.furb.basico.ImportItemListInput;
 import br.com.senior.furb.basico.ImportItemListOutput;
 import br.com.senior.furb.basico.ExportItemListInput;
@@ -29,6 +33,9 @@ import br.com.senior.furb.basico.GetDependenciesOutput;
 import br.com.senior.furb.basico.Category;
 import br.com.senior.furb.basico.CreateBulkCategoryInput;
 import br.com.senior.furb.basico.CreateBulkCategoryOutput;
+import br.com.senior.furb.basico.Product;
+import br.com.senior.furb.basico.CreateBulkProductInput;
+import br.com.senior.furb.basico.CreateBulkProductOutput;
 import br.com.senior.furb.basico.ItemList;
 import br.com.senior.furb.basico.CreateBulkItemListInput;
 import br.com.senior.furb.basico.CreateBulkItemListOutput;
@@ -39,6 +46,8 @@ import br.com.senior.furb.basico.ServiceStartedPayload;
 import br.com.senior.furb.basico.NotifyUserEventPayload;
 import br.com.senior.furb.basico.ImportCategoryEventPayload;
 import br.com.senior.furb.basico.ExportCategoryEventPayload;
+import br.com.senior.furb.basico.ImportProductEventPayload;
+import br.com.senior.furb.basico.ExportProductEventPayload;
 import br.com.senior.furb.basico.ImportItemListEventPayload;
 import br.com.senior.furb.basico.ExportItemListEventPayload;
 import br.com.senior.furb.basico.ImportShoppingListEventPayload;
@@ -174,6 +183,72 @@ public class BasicoStubImpl  implements BasicoStub {
 	public CompletableFuture<ExportCategoryOutput> exportCategoryRequest(ExportCategoryInput input) {
 		br.com.senior.furb.basico.impl.ExportCategoryImpl impl = new br.com.senior.furb.basico.impl.ExportCategoryImpl(messengerSupplier, userId, messageSupplier);
 		return impl.exportCategoryRequest(input);
+	}
+	/**
+	 * Chamada síncrona para o método importProduct
+	 * This is a public operation
+	 * 
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public ImportProductOutput importProduct(ImportProductInput input, long timeout) {
+		br.com.senior.furb.basico.impl.ImportProductImpl impl = new br.com.senior.furb.basico.impl.ImportProductImpl(messengerSupplier, userId, messageSupplier);
+		return impl.importProduct(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método importProduct
+	 * This is a public operation
+	 * 
+	 */
+	@Override
+	public void importProduct(ImportProductInput input) {
+		br.com.senior.furb.basico.impl.ImportProductImpl impl = new br.com.senior.furb.basico.impl.ImportProductImpl(messengerSupplier, userId, messageSupplier);
+		impl.importProduct(input);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método importProduct
+	 * This is a public operation
+	 * 
+	 */
+	@Override
+	public CompletableFuture<ImportProductOutput> importProductRequest(ImportProductInput input) {
+		br.com.senior.furb.basico.impl.ImportProductImpl impl = new br.com.senior.furb.basico.impl.ImportProductImpl(messengerSupplier, userId, messageSupplier);
+		return impl.importProductRequest(input);
+	}
+	/**
+	 * Chamada síncrona para o método exportProduct
+	 * This is a public operation
+	 * 
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public ExportProductOutput exportProduct(ExportProductInput input, long timeout) {
+		br.com.senior.furb.basico.impl.ExportProductImpl impl = new br.com.senior.furb.basico.impl.ExportProductImpl(messengerSupplier, userId, messageSupplier);
+		return impl.exportProduct(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método exportProduct
+	 * This is a public operation
+	 * 
+	 */
+	@Override
+	public void exportProduct(ExportProductInput input) {
+		br.com.senior.furb.basico.impl.ExportProductImpl impl = new br.com.senior.furb.basico.impl.ExportProductImpl(messengerSupplier, userId, messageSupplier);
+		impl.exportProduct(input);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método exportProduct
+	 * This is a public operation
+	 * 
+	 */
+	@Override
+	public CompletableFuture<ExportProductOutput> exportProductRequest(ExportProductInput input) {
+		br.com.senior.furb.basico.impl.ExportProductImpl impl = new br.com.senior.furb.basico.impl.ExportProductImpl(messengerSupplier, userId, messageSupplier);
+		return impl.exportProductRequest(input);
 	}
 	/**
 	 * Chamada síncrona para o método importItemList
@@ -339,6 +414,39 @@ public class BasicoStubImpl  implements BasicoStub {
 	public CompletableFuture<Category.PagedResults> listCategoryRequest(Category.PageRequest input) {
 		br.com.senior.furb.basico.impl.ListCategoryImpl impl = new br.com.senior.furb.basico.impl.ListCategoryImpl(messengerSupplier, userId, messageSupplier);
 		return impl.listCategoryRequest(input);
+	}
+	/**
+	 * Chamada síncrona para o método listProduct
+	 * This is a public operation
+	 * The 'list' request primitive for the Product entity.
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public Product.PagedResults listProduct(Product.PageRequest input, long timeout) {
+		br.com.senior.furb.basico.impl.ListProductImpl impl = new br.com.senior.furb.basico.impl.ListProductImpl(messengerSupplier, userId, messageSupplier);
+		return impl.listProduct(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método listProduct
+	 * This is a public operation
+	 * The 'list' request primitive for the Product entity.
+	 */
+	@Override
+	public void listProduct(Product.PageRequest input) {
+		br.com.senior.furb.basico.impl.ListProductImpl impl = new br.com.senior.furb.basico.impl.ListProductImpl(messengerSupplier, userId, messageSupplier);
+		impl.listProduct(input);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método listProduct
+	 * This is a public operation
+	 * The 'list' request primitive for the Product entity.
+	 */
+	@Override
+	public CompletableFuture<Product.PagedResults> listProductRequest(Product.PageRequest input) {
+		br.com.senior.furb.basico.impl.ListProductImpl impl = new br.com.senior.furb.basico.impl.ListProductImpl(messengerSupplier, userId, messageSupplier);
+		return impl.listProductRequest(input);
 	}
 	/**
 	 * Chamada síncrona para o método listItemList
@@ -658,6 +766,227 @@ public class BasicoStubImpl  implements BasicoStub {
 	public void deleteCategory(Category.Id input) {
 		br.com.senior.furb.basico.impl.DeleteCategoryImpl impl = new br.com.senior.furb.basico.impl.DeleteCategoryImpl(messengerSupplier, userId, messageSupplier);
 		impl.deleteCategory(input);
+	}
+	
+	/**
+	 * Chamada síncrona para o método createProduct
+	 * This is a public operation
+	 * The 'create' request primitive for the Product entity.
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public Product createProduct(Product input, long timeout) {
+		br.com.senior.furb.basico.impl.CreateProductImpl impl = new br.com.senior.furb.basico.impl.CreateProductImpl(messengerSupplier, userId, messageSupplier);
+		return impl.createProduct(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método createProduct
+	 * This is a public operation
+	 * The 'create' request primitive for the Product entity.
+	 */
+	@Override
+	public void createProduct(Product input) {
+		br.com.senior.furb.basico.impl.CreateProductImpl impl = new br.com.senior.furb.basico.impl.CreateProductImpl(messengerSupplier, userId, messageSupplier);
+		impl.createProduct(input);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método createProduct
+	 * This is a public operation
+	 * The 'create' request primitive for the Product entity.
+	 */
+	@Override
+	public CompletableFuture<Product> createProductRequest(Product input) {
+		br.com.senior.furb.basico.impl.CreateProductImpl impl = new br.com.senior.furb.basico.impl.CreateProductImpl(messengerSupplier, userId, messageSupplier);
+		return impl.createProductRequest(input);
+	}
+	/**
+	 * Chamada síncrona para o método createBulkProduct
+	 * This is a public operation
+	 * The 'createBulk' request primitive for the Product entity.
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public CreateBulkProductOutput createBulkProduct(CreateBulkProductInput input, long timeout) {
+		br.com.senior.furb.basico.impl.CreateBulkProductImpl impl = new br.com.senior.furb.basico.impl.CreateBulkProductImpl(messengerSupplier, userId, messageSupplier);
+		return impl.createBulkProduct(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método createBulkProduct
+	 * This is a public operation
+	 * The 'createBulk' request primitive for the Product entity.
+	 */
+	@Override
+	public void createBulkProduct(CreateBulkProductInput input) {
+		br.com.senior.furb.basico.impl.CreateBulkProductImpl impl = new br.com.senior.furb.basico.impl.CreateBulkProductImpl(messengerSupplier, userId, messageSupplier);
+		impl.createBulkProduct(input);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método createBulkProduct
+	 * This is a public operation
+	 * The 'createBulk' request primitive for the Product entity.
+	 */
+	@Override
+	public CompletableFuture<CreateBulkProductOutput> createBulkProductRequest(CreateBulkProductInput input) {
+		br.com.senior.furb.basico.impl.CreateBulkProductImpl impl = new br.com.senior.furb.basico.impl.CreateBulkProductImpl(messengerSupplier, userId, messageSupplier);
+		return impl.createBulkProductRequest(input);
+	}
+	/**
+	 * Chamada síncrona para o método createMergeProduct
+	 * This is a public operation
+	 * The 'createMerge' request primitive for the Product entity.
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public Product createMergeProduct(Product input, long timeout) {
+		br.com.senior.furb.basico.impl.CreateMergeProductImpl impl = new br.com.senior.furb.basico.impl.CreateMergeProductImpl(messengerSupplier, userId, messageSupplier);
+		return impl.createMergeProduct(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método createMergeProduct
+	 * This is a public operation
+	 * The 'createMerge' request primitive for the Product entity.
+	 */
+	@Override
+	public void createMergeProduct(Product input) {
+		br.com.senior.furb.basico.impl.CreateMergeProductImpl impl = new br.com.senior.furb.basico.impl.CreateMergeProductImpl(messengerSupplier, userId, messageSupplier);
+		impl.createMergeProduct(input);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método createMergeProduct
+	 * This is a public operation
+	 * The 'createMerge' request primitive for the Product entity.
+	 */
+	@Override
+	public CompletableFuture<Product> createMergeProductRequest(Product input) {
+		br.com.senior.furb.basico.impl.CreateMergeProductImpl impl = new br.com.senior.furb.basico.impl.CreateMergeProductImpl(messengerSupplier, userId, messageSupplier);
+		return impl.createMergeProductRequest(input);
+	}
+	/**
+	 * Chamada síncrona para o método retrieveProduct
+	 * This is a public operation
+	 * The 'retrieve' request primitive for the Product entity.
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public Product retrieveProduct(Product.Id input, long timeout) {
+		br.com.senior.furb.basico.impl.RetrieveProductImpl impl = new br.com.senior.furb.basico.impl.RetrieveProductImpl(messengerSupplier, userId, messageSupplier);
+		return impl.retrieveProduct(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método retrieveProduct
+	 * This is a public operation
+	 * The 'retrieve' request primitive for the Product entity.
+	 */
+	@Override
+	public void retrieveProduct(Product.Id input) {
+		br.com.senior.furb.basico.impl.RetrieveProductImpl impl = new br.com.senior.furb.basico.impl.RetrieveProductImpl(messengerSupplier, userId, messageSupplier);
+		impl.retrieveProduct(input);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método retrieveProduct
+	 * This is a public operation
+	 * The 'retrieve' request primitive for the Product entity.
+	 */
+	@Override
+	public CompletableFuture<Product> retrieveProductRequest(Product.Id input) {
+		br.com.senior.furb.basico.impl.RetrieveProductImpl impl = new br.com.senior.furb.basico.impl.RetrieveProductImpl(messengerSupplier, userId, messageSupplier);
+		return impl.retrieveProductRequest(input);
+	}
+	/**
+	 * Chamada síncrona para o método updateProduct
+	 * This is a public operation
+	 * The 'update' request primitive for the Product entity.
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public Product updateProduct(Product input, long timeout) {
+		br.com.senior.furb.basico.impl.UpdateProductImpl impl = new br.com.senior.furb.basico.impl.UpdateProductImpl(messengerSupplier, userId, messageSupplier);
+		return impl.updateProduct(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método updateProduct
+	 * This is a public operation
+	 * The 'update' request primitive for the Product entity.
+	 */
+	@Override
+	public void updateProduct(Product input) {
+		br.com.senior.furb.basico.impl.UpdateProductImpl impl = new br.com.senior.furb.basico.impl.UpdateProductImpl(messengerSupplier, userId, messageSupplier);
+		impl.updateProduct(input);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método updateProduct
+	 * This is a public operation
+	 * The 'update' request primitive for the Product entity.
+	 */
+	@Override
+	public CompletableFuture<Product> updateProductRequest(Product input) {
+		br.com.senior.furb.basico.impl.UpdateProductImpl impl = new br.com.senior.furb.basico.impl.UpdateProductImpl(messengerSupplier, userId, messageSupplier);
+		return impl.updateProductRequest(input);
+	}
+	/**
+	 * Chamada síncrona para o método updateMergeProduct
+	 * This is a public operation
+	 * The 'updateMerge' request primitive for the Product entity.
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public Product updateMergeProduct(Product input, long timeout) {
+		br.com.senior.furb.basico.impl.UpdateMergeProductImpl impl = new br.com.senior.furb.basico.impl.UpdateMergeProductImpl(messengerSupplier, userId, messageSupplier);
+		return impl.updateMergeProduct(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método updateMergeProduct
+	 * This is a public operation
+	 * The 'updateMerge' request primitive for the Product entity.
+	 */
+	@Override
+	public void updateMergeProduct(Product input) {
+		br.com.senior.furb.basico.impl.UpdateMergeProductImpl impl = new br.com.senior.furb.basico.impl.UpdateMergeProductImpl(messengerSupplier, userId, messageSupplier);
+		impl.updateMergeProduct(input);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método updateMergeProduct
+	 * This is a public operation
+	 * The 'updateMerge' request primitive for the Product entity.
+	 */
+	@Override
+	public CompletableFuture<Product> updateMergeProductRequest(Product input) {
+		br.com.senior.furb.basico.impl.UpdateMergeProductImpl impl = new br.com.senior.furb.basico.impl.UpdateMergeProductImpl(messengerSupplier, userId, messageSupplier);
+		return impl.updateMergeProductRequest(input);
+	}
+	/**
+	 * Chamada síncrona para o método deleteProduct
+	 * This is a public operation
+	 * The 'delete' request primitive for the Product entity.
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public void deleteProduct(Product.Id input, long timeout) {
+		br.com.senior.furb.basico.impl.DeleteProductImpl impl = new br.com.senior.furb.basico.impl.DeleteProductImpl(messengerSupplier, userId, messageSupplier);
+		impl.deleteProduct(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método deleteProduct
+	 * This is a public operation
+	 * The 'delete' request primitive for the Product entity.
+	 */
+	@Override
+	public void deleteProduct(Product.Id input) {
+		br.com.senior.furb.basico.impl.DeleteProductImpl impl = new br.com.senior.furb.basico.impl.DeleteProductImpl(messengerSupplier, userId, messageSupplier);
+		impl.deleteProduct(input);
 	}
 	
 	/**
@@ -1156,6 +1485,36 @@ public class BasicoStubImpl  implements BasicoStub {
 	public void publishExportCategoryEvent( ExportCategoryEventPayload input ) {
 	
 		Message message = new Message(userId.getTenant(), BasicoConstants.DOMAIN, BasicoConstants.SERVICE, BasicoConstants.Events.EXPORT_CATEGORY_EVENT, DtoJsonConverter.toJSON(input));
+		try {
+			addMessageHeaders(message);
+			messengerSupplier.get().publish(message);
+		} catch (Exception e) {
+			throw new BasicoException("Erro ao enviar a mensagem", e);
+		}
+	}
+	
+	/**
+	* Chamada assíncrona para o método publishImportProductEvent
+	* This is a public operation
+	*/
+	public void publishImportProductEvent( ImportProductEventPayload input ) {
+	
+		Message message = new Message(userId.getTenant(), BasicoConstants.DOMAIN, BasicoConstants.SERVICE, BasicoConstants.Events.IMPORT_PRODUCT_EVENT, DtoJsonConverter.toJSON(input));
+		try {
+			addMessageHeaders(message);
+			messengerSupplier.get().publish(message);
+		} catch (Exception e) {
+			throw new BasicoException("Erro ao enviar a mensagem", e);
+		}
+	}
+	
+	/**
+	* Chamada assíncrona para o método publishExportProductEvent
+	* This is a public operation
+	*/
+	public void publishExportProductEvent( ExportProductEventPayload input ) {
+	
+		Message message = new Message(userId.getTenant(), BasicoConstants.DOMAIN, BasicoConstants.SERVICE, BasicoConstants.Events.EXPORT_PRODUCT_EVENT, DtoJsonConverter.toJSON(input));
 		try {
 			addMessageHeaders(message);
 			messengerSupplier.get().publish(message);

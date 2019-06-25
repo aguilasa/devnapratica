@@ -11,6 +11,10 @@ import br.com.senior.furb.basico.ImportCategoryInput;
 import br.com.senior.furb.basico.ImportCategoryOutput;
 import br.com.senior.furb.basico.ExportCategoryInput;
 import br.com.senior.furb.basico.ExportCategoryOutput;
+import br.com.senior.furb.basico.ImportProductInput;
+import br.com.senior.furb.basico.ImportProductOutput;
+import br.com.senior.furb.basico.ExportProductInput;
+import br.com.senior.furb.basico.ExportProductOutput;
 import br.com.senior.furb.basico.ImportItemListInput;
 import br.com.senior.furb.basico.ImportItemListOutput;
 import br.com.senior.furb.basico.ExportItemListInput;
@@ -23,6 +27,9 @@ import br.com.senior.furb.basico.GetDependenciesOutput;
 import br.com.senior.furb.basico.Category;
 import br.com.senior.furb.basico.CreateBulkCategoryInput;
 import br.com.senior.furb.basico.CreateBulkCategoryOutput;
+import br.com.senior.furb.basico.Product;
+import br.com.senior.furb.basico.CreateBulkProductInput;
+import br.com.senior.furb.basico.CreateBulkProductOutput;
 import br.com.senior.furb.basico.ItemList;
 import br.com.senior.furb.basico.CreateBulkItemListInput;
 import br.com.senior.furb.basico.CreateBulkItemListOutput;
@@ -33,6 +40,8 @@ import br.com.senior.furb.basico.ServiceStartedPayload;
 import br.com.senior.furb.basico.NotifyUserEventPayload;
 import br.com.senior.furb.basico.ImportCategoryEventPayload;
 import br.com.senior.furb.basico.ExportCategoryEventPayload;
+import br.com.senior.furb.basico.ImportProductEventPayload;
+import br.com.senior.furb.basico.ExportProductEventPayload;
 import br.com.senior.furb.basico.ImportItemListEventPayload;
 import br.com.senior.furb.basico.ExportItemListEventPayload;
 import br.com.senior.furb.basico.ImportShoppingListEventPayload;
@@ -105,6 +114,48 @@ public interface BasicoStub {
 	 * Chamada assíncrona utilizando request
 	 */
 	CompletableFuture<ExportCategoryOutput> exportCategoryRequest(ExportCategoryInput input);
+	
+	/**
+	 * This is a public operation
+	 * 
+	 * Chamada síncrona, o valor de timeout deve ser informado em ms 
+	 */
+	ImportProductOutput importProduct(ImportProductInput input, long timeout);
+	
+	/**
+	 * This is a public operation
+	 * 
+	 * Chamada assíncrona
+	 */
+	void importProduct(ImportProductInput input);
+	
+	/**
+	 * This is a public operation
+	 * 
+	 * Chamada assíncrona utilizando request
+	 */
+	CompletableFuture<ImportProductOutput> importProductRequest(ImportProductInput input);
+	
+	/**
+	 * This is a public operation
+	 * 
+	 * Chamada síncrona, o valor de timeout deve ser informado em ms 
+	 */
+	ExportProductOutput exportProduct(ExportProductInput input, long timeout);
+	
+	/**
+	 * This is a public operation
+	 * 
+	 * Chamada assíncrona
+	 */
+	void exportProduct(ExportProductInput input);
+	
+	/**
+	 * This is a public operation
+	 * 
+	 * Chamada assíncrona utilizando request
+	 */
+	CompletableFuture<ExportProductOutput> exportProductRequest(ExportProductInput input);
 	
 	/**
 	 * This is a public operation
@@ -210,6 +261,27 @@ public interface BasicoStub {
 	 * Chamada assíncrona utilizando request
 	 */
 	CompletableFuture<Category.PagedResults> listCategoryRequest(Category.PageRequest input);
+	
+	/**
+	 * This is a public operation
+	 * The 'list' request primitive for the Product entity.
+	 * Chamada síncrona, o valor de timeout deve ser informado em ms 
+	 */
+	Product.PagedResults listProduct(Product.PageRequest input, long timeout);
+	
+	/**
+	 * This is a public operation
+	 * The 'list' request primitive for the Product entity.
+	 * Chamada assíncrona
+	 */
+	void listProduct(Product.PageRequest input);
+	
+	/**
+	 * This is a public operation
+	 * The 'list' request primitive for the Product entity.
+	 * Chamada assíncrona utilizando request
+	 */
+	CompletableFuture<Product.PagedResults> listProductRequest(Product.PageRequest input);
 	
 	/**
 	 * This is a public operation
@@ -413,6 +485,146 @@ public interface BasicoStub {
 	 * Chamada assíncrona
 	 */
 	void deleteCategory(Category.Id input);
+	
+	/**
+	 * This is a public operation
+	 * The 'create' request primitive for the Product entity.
+	 * Chamada síncrona, o valor de timeout deve ser informado em ms 
+	 */
+	Product createProduct(Product input, long timeout);
+	
+	/**
+	 * This is a public operation
+	 * The 'create' request primitive for the Product entity.
+	 * Chamada assíncrona
+	 */
+	void createProduct(Product input);
+	
+	/**
+	 * This is a public operation
+	 * The 'create' request primitive for the Product entity.
+	 * Chamada assíncrona utilizando request
+	 */
+	CompletableFuture<Product> createProductRequest(Product input);
+	
+	/**
+	 * This is a public operation
+	 * The 'createBulk' request primitive for the Product entity.
+	 * Chamada síncrona, o valor de timeout deve ser informado em ms 
+	 */
+	CreateBulkProductOutput createBulkProduct(CreateBulkProductInput input, long timeout);
+	
+	/**
+	 * This is a public operation
+	 * The 'createBulk' request primitive for the Product entity.
+	 * Chamada assíncrona
+	 */
+	void createBulkProduct(CreateBulkProductInput input);
+	
+	/**
+	 * This is a public operation
+	 * The 'createBulk' request primitive for the Product entity.
+	 * Chamada assíncrona utilizando request
+	 */
+	CompletableFuture<CreateBulkProductOutput> createBulkProductRequest(CreateBulkProductInput input);
+	
+	/**
+	 * This is a public operation
+	 * The 'createMerge' request primitive for the Product entity.
+	 * Chamada síncrona, o valor de timeout deve ser informado em ms 
+	 */
+	Product createMergeProduct(Product input, long timeout);
+	
+	/**
+	 * This is a public operation
+	 * The 'createMerge' request primitive for the Product entity.
+	 * Chamada assíncrona
+	 */
+	void createMergeProduct(Product input);
+	
+	/**
+	 * This is a public operation
+	 * The 'createMerge' request primitive for the Product entity.
+	 * Chamada assíncrona utilizando request
+	 */
+	CompletableFuture<Product> createMergeProductRequest(Product input);
+	
+	/**
+	 * This is a public operation
+	 * The 'retrieve' request primitive for the Product entity.
+	 * Chamada síncrona, o valor de timeout deve ser informado em ms 
+	 */
+	Product retrieveProduct(Product.Id input, long timeout);
+	
+	/**
+	 * This is a public operation
+	 * The 'retrieve' request primitive for the Product entity.
+	 * Chamada assíncrona
+	 */
+	void retrieveProduct(Product.Id input);
+	
+	/**
+	 * This is a public operation
+	 * The 'retrieve' request primitive for the Product entity.
+	 * Chamada assíncrona utilizando request
+	 */
+	CompletableFuture<Product> retrieveProductRequest(Product.Id input);
+	
+	/**
+	 * This is a public operation
+	 * The 'update' request primitive for the Product entity.
+	 * Chamada síncrona, o valor de timeout deve ser informado em ms 
+	 */
+	Product updateProduct(Product input, long timeout);
+	
+	/**
+	 * This is a public operation
+	 * The 'update' request primitive for the Product entity.
+	 * Chamada assíncrona
+	 */
+	void updateProduct(Product input);
+	
+	/**
+	 * This is a public operation
+	 * The 'update' request primitive for the Product entity.
+	 * Chamada assíncrona utilizando request
+	 */
+	CompletableFuture<Product> updateProductRequest(Product input);
+	
+	/**
+	 * This is a public operation
+	 * The 'updateMerge' request primitive for the Product entity.
+	 * Chamada síncrona, o valor de timeout deve ser informado em ms 
+	 */
+	Product updateMergeProduct(Product input, long timeout);
+	
+	/**
+	 * This is a public operation
+	 * The 'updateMerge' request primitive for the Product entity.
+	 * Chamada assíncrona
+	 */
+	void updateMergeProduct(Product input);
+	
+	/**
+	 * This is a public operation
+	 * The 'updateMerge' request primitive for the Product entity.
+	 * Chamada assíncrona utilizando request
+	 */
+	CompletableFuture<Product> updateMergeProductRequest(Product input);
+	
+	/**
+	 * This is a public operation
+	 * The 'delete' request primitive for the Product entity.
+	 * Chamada síncrona, o valor de timeout deve ser informado em ms 
+	 */
+	void deleteProduct(Product.Id input, long timeout);
+	
+	/**
+	 * This is a public operation
+	 * The 'delete' request primitive for the Product entity.
+	 * Chamada assíncrona
+	 */
+	void deleteProduct(Product.Id input);
 	
 	/**
 	 * This is a public operation
@@ -722,6 +934,20 @@ public interface BasicoStub {
 	* This is a public operation
 	*/
 	void publishExportCategoryEvent( ExportCategoryEventPayload input );
+			
+	
+	/**
+	* Chamada assíncrona para o método publishImportProductEvent 
+	* This is a public operation
+	*/
+	void publishImportProductEvent( ImportProductEventPayload input );
+			
+	
+	/**
+	* Chamada assíncrona para o método publishExportProductEvent 
+	* This is a public operation
+	*/
+	void publishExportProductEvent( ExportProductEventPayload input );
 			
 	
 	/**
