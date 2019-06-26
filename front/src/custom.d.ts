@@ -3,5 +3,5 @@ declare module "*.json" {
     export default content;
 }
 
-
-
+/*{CA:FILE_CONTENTS:START}*/
+/*{CA:FILE_CONTENTS:END}*/

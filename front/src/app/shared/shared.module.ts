@@ -10,7 +10,7 @@ import {
     EmptyStateModule,
     DynamicFormModule,
     TokenListModule,
-    LoadingStateModule
+    LoadingStateModule,
 } from "@seniorsistemas/angular-components";
 import { PanelModule } from "primeng/panel";
 import { InputTextModule } from "primeng/inputtext";
@@ -23,9 +23,17 @@ import { DropdownModule } from "primeng/dropdown";
 import { TabViewModule } from "primeng/tabview";
 import { SharedModule as PrimeSharedModule } from "primeng/shared";
 import { FiltersStorageService } from "./storage/filters-storage.service";
+/*{CA:PACKAGE_IMPORTS:START}*/
+/*{CA:PACKAGE_IMPORTS:END}*/
+
+/*{CA:PROJECT_IMPORTS:START}*/
+/*{CA:PROJECT_IMPORTS:END}*/
 
 @NgModule({
-    imports: [],
+    imports: [
+        /*{CA:MODULE_IMPORTS:START}*/
+        /*{CA:MODULE_IMPORTS:END}*/
+    ],
     exports: [
         FormsModule,
         ReactiveFormsModule,
@@ -48,9 +56,23 @@ import { FiltersStorageService } from "./storage/filters-storage.service";
         TabViewModule,
         PrimeSharedModule,
         HotkeyModule,
-        LoadingStateModule
+        LoadingStateModule,
+        /*{CA:MODULE_EXPORTS:START}*/
+        /*{CA:MODULE_EXPORTS:END}*/
     ],
-    providers: [FiltersStorageService],
-    declarations: []
+    providers: [
+        FiltersStorageService,
+        /*{CA:MODULE_PROVIDERS:START}*/
+        /*{CA:MODULE_PROVIDERS:END}*/
+    ],
+    declarations: [
+        /*{CA:MODULE_DECLARATIONS:START}*/
+        /*{CA:MODULE_DECLARATIONS:END}*/
+    ],
+    /*{CA:MODULE_CONFIG:START}*/
+    /*{CA:MODULE_CONFIG:END}*/
 })
 export class SharedModule {}
+
+/*{CA:FILE_CONTENTS:START}*/
+/*{CA:FILE_CONTENTS:END}*/

@@ -1,24 +1,26 @@
 import { NgModule } from "@angular/core";
+import { PermissionsModule } from "@seniorsistemas/platform-components";
 /*{CA:PACKAGE_IMPORTS:START}*/
 /*{CA:PACKAGE_IMPORTS:END}*/
 
-import { CategoryModule } from "~core/entities/category/category.module";
-import { ProductModule } from "~core/entities/product/product.module";
-import { ItemListModule } from "~core/entities/item-list/item-list.module";
-import { ShoppingListModule } from "~core/entities/shopping-list/shopping-list.module";
+import { ProductService } from "~core/entities/product/product.service";
 /*{CA:PROJECT_IMPORTS:START}*/
 /*{CA:PROJECT_IMPORTS:END}*/
 
 @NgModule({
     imports: [
-        CategoryModule,
-        ProductModule,
-        ItemListModule,
-        ShoppingListModule,
+        PermissionsModule.forChild([
+            {
+                name: "product",
+                actions: ["Visualizar", "Incluir", "Editar", "Excluir"],
+                uri: `res://senior.com.br/furb/basico/entities/product`,
+            },
+        ]),
         /*{CA:MODULE_IMPORTS:START}*/
         /*{CA:MODULE_IMPORTS:END}*/
     ],
     providers: [
+        ProductService,
         /*{CA:MODULE_PROVIDERS:START}*/
         /*{CA:MODULE_PROVIDERS:END}*/
     ],
@@ -33,7 +35,7 @@ import { ShoppingListModule } from "~core/entities/shopping-list/shopping-list.m
     /*{CA:MODULE_CONFIG:START}*/
     /*{CA:MODULE_CONFIG:END}*/
 })
-export class CoreModule {}
+export class ProductModule {}
 
 /*{CA:FILE_CONTENTS:START}*/
 /*{CA:FILE_CONTENTS:END}*/

@@ -8,19 +8,19 @@ import { LocaleService } from "@seniorsistemas/angular-components";
 /*{CA:PACKAGE_IMPORTS:START}*/
 /*{CA:PACKAGE_IMPORTS:END}*/
 
-import { CategoryListComponent } from "~features/category/views/list/category-list.component";
-import { CategoryFormComponent } from "~features/category/views/form/category-form.component";
-import { CategoryService } from "~core/entities/category/category.service";
+import { ProductListComponent } from "~features/product/views/list/product-list.component";
+import { ProductFormComponent } from "~features/product/views/form/product-form.component";
+import { ProductService } from "~core/entities/product/product.service";
 
 /*{CA:PROJECT_IMPORTS:START}*/
 /*{CA:PROJECT_IMPORTS:END}*/
 
 @Injectable()
-export class CategoryFeatureRoutingGuard implements CanActivate {
+export class ProductFeatureRoutingGuard implements CanActivate {
     constructor(private permissionsService: PermissionsService, private router: Router) {}
 
     public canActivate() {
-        return this.permissionsService.get("category").pipe(
+        return this.permissionsService.get("product").pipe(
             map((permissions: any) => {
                 if (!permissions.visualizar) this.router.navigate(["forbidden"]);
                 return permissions.visualizar;
@@ -30,25 +30,25 @@ export class CategoryFeatureRoutingGuard implements CanActivate {
 }
 
 @Injectable()
-export class CategoryFeatureRoutingFormTitleResolver {
+export class ProductFeatureRoutingFormTitleResolver {
     constructor(private translate: TranslateService) {}
 
     public resolve() {
-        return this.translate.get("furb.basico.category_form_title");
+        return this.translate.get("furb.basico.product_form_title");
     }
 }
 
 @Injectable()
-export class CategoryFeatureRoutingListTitleResolver {
+export class ProductFeatureRoutingListTitleResolver {
     constructor(private translate: TranslateService) {}
 
     public resolve() {
-        return this.translate.get("furb.basico.category_list_title");
+        return this.translate.get("furb.basico.product_list_title");
     }
 }
 
 @Injectable()
-export class CategoryFeatureRoutingPermissionResolver {
+export class ProductFeatureRoutingPermissionResolver {
     constructor(private permissionsService: PermissionsService) {}
 
     public resolve() {
@@ -57,7 +57,7 @@ export class CategoryFeatureRoutingPermissionResolver {
 }
 
 @Injectable()
-export class CategoryFeatureRoutingLocaleResolver {
+export class ProductFeatureRoutingLocaleResolver {
     constructor(private localeService: LocaleService) {}
 
     public resolve() {
@@ -66,13 +66,13 @@ export class CategoryFeatureRoutingLocaleResolver {
 }
 
 @Injectable()
-export class CategoryFeatureRoutingEntityResolver {
-    constructor(private categoryService: CategoryService) {}
+export class ProductFeatureRoutingEntityResolver {
+    constructor(private productService: ProductService) {}
 
     public resolve(route: ActivatedRouteSnapshot) {
-        if (route.params.category === "new") return;
+        if (route.params.product === "new") return;
 
-        return this.categoryService.get(route.params.category);
+        return this.productService.get(route.params.product);
     }
 }
 
@@ -83,47 +83,47 @@ export class EmptyComponent {}
 
 export const routes: Routes = [
     {
-        path: "category",
+        path: "product",
         component: EmptyComponent,
         canActivate: [
-            CategoryFeatureRoutingGuard,
-            /*{CA:CATEGORY_ROUTE_GUARDS:START}*/
-            /*{CA:CATEGORY_ROUTE_GUARDS:END}*/
+            ProductFeatureRoutingGuard,
+            /*{CA:PRODUCT_ROUTE_GUARDS:START}*/
+            /*{CA:PRODUCT_ROUTE_GUARDS:END}*/
         ],
         resolve: {
-            allPermissions: CategoryFeatureRoutingPermissionResolver,
-            localeConfig: CategoryFeatureRoutingLocaleResolver,
-            routeTitle: CategoryFeatureRoutingListTitleResolver,
-            /*{CA:CATEGORY_ROUTE_RESOLVE:START}*/
-            /*{CA:CATEGORY_ROUTE_RESOLVE:END}*/
+            allPermissions: ProductFeatureRoutingPermissionResolver,
+            localeConfig: ProductFeatureRoutingLocaleResolver,
+            routeTitle: ProductFeatureRoutingListTitleResolver,
+            /*{CA:PRODUCT_ROUTE_RESOLVE:START}*/
+            /*{CA:PRODUCT_ROUTE_RESOLVE:END}*/
         },
         children: [
             {
                 path: "",
-                component: CategoryListComponent,
+                component: ProductListComponent,
             },
             {
-                path: ":category",
+                path: ":product",
                 component: EmptyComponent,
-                canActivate: [CategoryFeatureRoutingGuard],
+                canActivate: [ProductFeatureRoutingGuard],
                 resolve: {
-                    routeTitle: CategoryFeatureRoutingFormTitleResolver,
-                    entity: CategoryFeatureRoutingEntityResolver,
-                    /*{CA:CATEGORY_ROUTE_RESOLVE:START}*/
-                    /*{CA:CATEGORY_ROUTE_RESOLVE:END}*/
+                    routeTitle: ProductFeatureRoutingFormTitleResolver,
+                    entity: ProductFeatureRoutingEntityResolver,
+                    /*{CA:PRODUCT_ROUTE_RESOLVE:START}*/
+                    /*{CA:PRODUCT_ROUTE_RESOLVE:END}*/
                 },
                 children: [
                     {
                         path: "",
-                        component: CategoryFormComponent,
+                        component: ProductFormComponent,
                     },
 
-                    /*{CA:CATEGORY_ROUTE_CHILDREN:START}*/
-                    /*{CA:CATEGORY_ROUTE_CHILDREN:END}*/
+                    /*{CA:PRODUCT_ROUTE_CHILDREN:START}*/
+                    /*{CA:PRODUCT_ROUTE_CHILDREN:END}*/
                 ],
             },
-            /*{CA:CATEGORY_ROUTE_CHILDREN:START}*/
-            /*{CA:CATEGORY_ROUTE_CHILDREN:END}*/
+            /*{CA:PRODUCT_ROUTE_CHILDREN:START}*/
+            /*{CA:PRODUCT_ROUTE_CHILDREN:END}*/
         ],
     },
 ];
@@ -140,12 +140,12 @@ export const routes: Routes = [
         /*{CA:MODULE_EXPORTS:END}*/
     ],
     providers: [
-        CategoryFeatureRoutingGuard,
-        CategoryFeatureRoutingPermissionResolver,
-        CategoryFeatureRoutingLocaleResolver,
-        CategoryFeatureRoutingFormTitleResolver,
-        CategoryFeatureRoutingListTitleResolver,
-        CategoryFeatureRoutingEntityResolver,
+        ProductFeatureRoutingGuard,
+        ProductFeatureRoutingPermissionResolver,
+        ProductFeatureRoutingLocaleResolver,
+        ProductFeatureRoutingFormTitleResolver,
+        ProductFeatureRoutingListTitleResolver,
+        ProductFeatureRoutingEntityResolver,
         /*{CA:MODULE_PROVIDERS:START}*/
         /*{CA:MODULE_PROVIDERS:END}*/
     ],
@@ -157,7 +157,7 @@ export const routes: Routes = [
     /*{CA:MODULE_CONFIG:START}*/
     /*{CA:MODULE_CONFIG:END}*/
 })
-export class CategoryFeatureRouting {}
+export class ProductFeatureRouting {}
 
 /*{CA:FILE_CONTENTS:START}*/
 /*{CA:FILE_CONTENTS:END}*/

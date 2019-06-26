@@ -4,10 +4,11 @@
 /*{CA:PROJECT_IMPORTS:START}*/
 /*{CA:PROJECT_IMPORTS:END}*/
 
-export interface ShoppingListDto {
+export interface ProductDto {
     id?: string;
     description: string;
-    items: any[];
+    unit: any;
+    category: any;
 
     /*{CA:INTERFACE_ATTRIBUTES:START}*/
     /*{CA:INTERFACE_ATTRIBUTES:END}*/

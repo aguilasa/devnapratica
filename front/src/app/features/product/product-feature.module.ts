@@ -4,9 +4,9 @@ import { LocaleModule } from "@seniorsistemas/angular-components";
 /*{CA:PACKAGE_IMPORTS:END}*/
 
 import { SharedModule } from "~shared/shared.module";
-import { ItemListFeatureRouting } from "~features/item-list/item-list-feature.routing";
-import { ItemListFormComponent } from "~features/item-list/views/form/item-list-form.component";
-import { ItemListListComponent } from "~features/item-list/views/list/item-list-list.component";
+import { ProductFeatureRouting } from "~features/product/product-feature.routing";
+import { ProductFormComponent } from "~features/product/views/form/product-form.component";
+import { ProductListComponent } from "~features/product/views/list/product-list.component";
 /*{CA:PROJECT_IMPORTS:START}*/
 /*{CA:PROJECT_IMPORTS:END}*/
 
@@ -14,13 +14,13 @@ import { ItemListListComponent } from "~features/item-list/views/list/item-list-
     imports: [
         LocaleModule.forChild(),
         SharedModule,
-        ItemListFeatureRouting,
+        ProductFeatureRouting,
         /*{CA:MODULE_IMPORTS:START}*/
         /*{CA:MODULE_IMPORTS:END}*/
     ],
     declarations: [
-        ItemListListComponent,
-        ItemListFormComponent,
+        ProductListComponent,
+        ProductFormComponent,
 
         /*{CA:MODULE_DECLARATIONS:START}*/
         /*{CA:MODULE_DECLARATIONS:END}*/
@@ -36,7 +36,7 @@ import { ItemListListComponent } from "~features/item-list/views/list/item-list-
     /*{CA:MODULE_CONFIG:START}*/
     /*{CA:MODULE_CONFIG:END}*/
 })
-export class ItemListFeatureModule {}
+export class ProductFeatureModule {}
 
 /*{CA:FILE_CONTENTS:START}*/
 /*{CA:FILE_CONTENTS:END}*/

@@ -13,11 +13,16 @@
                         <label for="id">{{"furb.basico.item_list_id" | translate}}</label>
                         <input type="text" id="id" name="id" pInputText formControlName="id" autocomplete="off" />
                     </div>
-                    <div class="ui-g-12 ui-md-6 required">
-                        <label for="description">{{"furb.basico.item_list_description" | translate}}</label>
-                        <input type="text" id="description" name="description" pInputText formControlName="description" autocomplete="off"
-                        />
-                        <s-control-errors [control]="formGroup.controls['description']" [errorMessages]="{ required: 'error_required' | translate }"></s-control-errors>
+                    <div [attr.data-hidden]="!allPermissions?.product.visualizar" class="ui-g-12 ui-md-6 required">
+                        <label for="product">{{"furb.basico.item_list_product" | translate}}</label>
+                        <s-lookup dataKey="id" id="product" name="product" formControlName="product" [searchFields]="productSearchFields"
+                            [searchGridFields]="productSearchGridFields" [searchGridData]="productSearchGridData"
+                            [multiple]="false" [lookupSuggestions]="productLookupSuggestions" (onLookupRequest)="onProductLookupRequest($event)"
+                            (onSearchRequest)="onProductSearchRequest($event)" lookupDisplayField="id" [searchTotalRecords]=productSearchTotalRecords
+                            [searchTitle]="'furb.basico.item_list_product_search_title' | translate" [searchEmptyTitle]="'nothing_found' | translate"
+                            [filterLabel]="'filter' | translate" [clearLabel]="'clear' | translate" [cancelLabel]="'cancel' | translate"
+                            [selectLabel]="'select' | translate" [searchTotalRecordsLabel]="'total_records' | translate: {value: productSearchTotalRecords}"></s-lookup>
+                        <s-control-errors [control]="formGroup.controls['product']" [errorMessages]="{ required: 'error_required' | translate }"></s-control-errors>
                     </div>
                     <div class="ui-g-12 ui-md-6 required">
                         <label for="quantity">{{"furb.basico.item_list_quantity" | translate}}</label>
@@ -26,25 +31,16 @@
                         <s-control-errors [control]="formGroup.controls['quantity']" [errorMessages]="{ required: 'error_required' | translate }"></s-control-errors>
                     </div>
                     <div class="ui-g-12 ui-md-6 required">
-                        <label for="unit">{{"furb.basico.item_list_unit" | translate}}</label>
-                        <p-dropdown inputId="unit" name="unit" [options]="unit" formControlName="unit" [autoWidth]="false" placeholder="{{'furb.basico.item_list_unit_placeholder' | translate}}"></p-dropdown>
-                        <s-control-errors [control]="formGroup.controls['unit']" [errorMessages]="{ required: 'error_required' | translate }"></s-control-errors>
-                    </div>
-                    <div class="ui-g-12 ui-md-6 required">
                         <label for="price">{{"furb.basico.item_list_price" | translate}}</label>
                         <input type="number" id="price" name="price" pInputText formControlName="price" autocomplete="off" />
                         <s-control-errors [control]="formGroup.controls['price']" [errorMessages]="{ required: 'error_required' | translate }"></s-control-errors>
                     </div>
-                    <div [attr.data-hidden]="!allPermissions?.category.visualizar" class="ui-g-12 ui-md-6 required">
-                        <label for="category">{{"furb.basico.item_list_category" | translate}}</label>
-                        <s-lookup dataKey="id" id="category" name="category" formControlName="category" [searchFields]="categorySearchFields"
-                            [searchGridFields]="categorySearchGridFields" [searchGridData]="categorySearchGridData"
-                            [multiple]="false" [lookupSuggestions]="categoryLookupSuggestions" (onLookupRequest)="onCategoryLookupRequest($event)"
-                            (onSearchRequest)="onCategorySearchRequest($event)" lookupDisplayField="id" [searchTotalRecords]=categorySearchTotalRecords
-                            [searchTitle]="'furb.basico.item_list_category_search_title' | translate" [searchEmptyTitle]="'nothing_found' | translate"
-                            [filterLabel]="'filter' | translate" [clearLabel]="'clear' | translate" [cancelLabel]="'cancel' | translate"
-                            [selectLabel]="'select' | translate" [searchTotalRecordsLabel]="'total_records' | translate: {value: categorySearchTotalRecords}"></s-lookup>
-                        <s-control-errors [control]="formGroup.controls['category']" [errorMessages]="{ required: 'error_required' | translate }"></s-control-errors>
+                    <div class="ui-g-12 ui-md-6 required">
+                        <label for="checked">{{"furb.basico.item_list_checked" | translate}}</label>
+                        <div class="ui-inputgroup">
+                            <p-checkbox inputId="checked" name="checked" binary="true" formControlName="checked"></p-checkbox>
+                        </div>
+                        <s-control-errors [control]="formGroup.controls['checked']" [errorMessages]="{ required: 'error_required' | translate }"></s-control-errors>
                     </div>
                     <div class="ui-g-12 ui-md-6">
                         <label for="note">{{"furb.basico.item_list_note" | translate}}</label>

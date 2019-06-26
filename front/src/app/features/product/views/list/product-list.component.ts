@@ -14,14 +14,15 @@ import { FiltersStorageService } from "~shared/storage/filters-storage.service";
 /*{CA:EXTERNAL_IMPORTS:START}*/
 /*{CA:EXTERNAL_IMPORTS:END}*/
 
-import { ItemList } from "~core/entities/item-list/item-list";
-import { ItemListService } from "~core/entities/item-list/item-list.service";
+import { Product } from "~core/entities/product/product";
+import { ProductService } from "~core/entities/product/product.service";
 
+import { Unit } from "~core/enums/unit";
 /*{CA:PROJECT_IMPORTS:START}*/
 /*{CA:PROJECT_IMPORTS:END}*/
 
 @Component({
-    templateUrl: "./item-list-list.component.html",
+    templateUrl: "./product-list.component.html",
     styleUrls: [
         /*{CA:COMPONENT_STYLE_URLS:START}*/
         /*{CA:COMPONENT_STYLE_URLS:END}*/
@@ -34,17 +35,17 @@ import { ItemListService } from "~core/entities/item-list/item-list.service";
     /*{CA:COMPONENT_CONFIG:START}*/
     /*{CA:COMPONENT_CONFIG:END}*/
 })
-export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTERFACES:START}*/ /*{CA:CLASS_INTERFACES:END}*/ {
+export class ProductListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTERFACES:START}*/ /*{CA:CLASS_INTERFACES:END}*/ {
     public allPermissions: any = {};
     public permissions: any = {};
     public localeConfig: any = {};
 
     public currentListParams: ListParams = { page: 0, size: 10, sort: [], filterData: {} };
-    public gridData: ItemList[];
+    public gridData: Product[];
     public gridColumns: any[];
     public showLoader: boolean;
     public totalRecords: number;
-    public selection: ItemList[];
+    public selection: Product[];
 
     public filterFields: FormField[];
     public filterFormGroup: FormGroup;
@@ -53,7 +54,7 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
     public serverError: boolean = false;
     public filtersLoaded = false;
 
-    @ViewChild("itemListTable")
+    @ViewChild("productTable")
     public table: Table;
 
     @ViewChild("customTemplate")
@@ -81,7 +82,7 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
         /*{CA:INJECTIONS:END}*/
         private router: Router,
         private route: ActivatedRoute,
-        private itemListService: ItemListService,
+        private productService: ProductService,
         private confirmationService: ConfirmationService,
         private translate: TranslateService,
         private messageService: MessageService,
@@ -101,10 +102,8 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
 
         this.filterFormGroup = this.formBuilder.group({
             id: [undefined, Validators.compose([])],
-            quantity: [undefined, Validators.compose([])],
-            price: [undefined, Validators.compose([])],
-            checked: [undefined, Validators.compose([])],
-            note: [undefined, Validators.compose([])],
+            description: [undefined, Validators.compose([])],
+            unit: [undefined, Validators.compose([])],
         });
 
         this.setStorageFiltersIntoForm(this.filterFormGroup);
@@ -178,7 +177,7 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
         /*{CA:ON_ROUTE_DATA_CHANGE_START:END}*/
 
         this.allPermissions = data.allPermissions;
-        this.permissions = data.allPermissions.itemList;
+        this.permissions = data.allPermissions.product;
         this.localeConfig = data.localeConfig;
 
         /*{CA:ON_ROUTE_DATA_CHANGE_END:START}*/
@@ -276,7 +275,7 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
             message: this.translate.instant("delete_confirmation_message"),
             header: this.translate.instant("delete_confirmation_title"),
             accept: () => {
-                forkJoin(this.selection.map(itemList => this.itemListService.delete(itemList.id)))
+                forkJoin(this.selection.map(product => this.productService.delete(product.id)))
                     .pipe(takeUntil(this.ngUnsubscribe))
                     .subscribe(() => {
                         this.messageService.add({
@@ -296,11 +295,9 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
 
     private getGridColumns() {
         const gridColumns = [
-            { field: "id", header: this.translate.instant("furb.basico.item_list_id") },
-            { field: "quantity", header: this.translate.instant("furb.basico.item_list_quantity") },
-            { field: "price", header: this.translate.instant("furb.basico.item_list_price") },
-            { field: "checked", header: this.translate.instant("furb.basico.item_list_checked") },
-            { field: "note", header: this.translate.instant("furb.basico.item_list_note") },
+            { field: "id", header: this.translate.instant("furb.basico.product_id") },
+            { field: "description", header: this.translate.instant("furb.basico.product_description") },
+            { field: "unit", header: this.translate.instant("furb.basico.product_unit") },
         ];
 
         /*{CA:GET_GRID_COLUMNS:START}*/
@@ -313,28 +310,34 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
         const filterFields = [
             new FormField({
                 name: "id",
-                label: this.translate.instant("furb.basico.item_list_id"),
+                label: this.translate.instant("furb.basico.product_id"),
                 type: FieldType.String,
             }),
             new FormField({
-                name: "quantity",
-                label: this.translate.instant("furb.basico.item_list_quantity"),
-                type: FieldType.Double,
-            }),
-            new FormField({
-                name: "price",
-                label: this.translate.instant("furb.basico.item_list_price"),
-                type: FieldType.Double,
-            }),
-            new FormField({
-                name: "checked",
-                label: this.translate.instant("furb.basico.item_list_checked"),
-                type: FieldType.Boolean,
-            }),
-            new FormField({
-                name: "note",
-                label: this.translate.instant("furb.basico.item_list_note"),
+                name: "description",
+                label: this.translate.instant("furb.basico.product_description"),
                 type: FieldType.String,
+            }),
+            new FormField({
+                name: "unit",
+                label: this.translate.instant("furb.basico.product_unit"),
+                type: FieldType.Enum,
+                placeholder: this.translate.instant("furb.basico.product_unit_placeholder"),
+                options: [
+                    { label: this.translate.instant("furb.basico.unit_un"), value: Unit.UN },
+                    { label: this.translate.instant("furb.basico.unit_dz"), value: Unit.DZ },
+                    { label: this.translate.instant("furb.basico.unit_ml"), value: Unit.ML },
+                    { label: this.translate.instant("furb.basico.unit_l"), value: Unit.L },
+                    { label: this.translate.instant("furb.basico.unit_kg"), value: Unit.KG },
+                    { label: this.translate.instant("furb.basico.unit_g"), value: Unit.G },
+                    { label: this.translate.instant("furb.basico.unit_caixa"), value: Unit.CAIXA },
+                    { label: this.translate.instant("furb.basico.unit_embalagem"), value: Unit.EMBALAGEM },
+                    { label: this.translate.instant("furb.basico.unit_galao"), value: Unit.GALAO },
+                    { label: this.translate.instant("furb.basico.unit_garrafa"), value: Unit.GARRAFA },
+                    { label: this.translate.instant("furb.basico.unit_lata"), value: Unit.LATA },
+                    { label: this.translate.instant("furb.basico.unit_pacote"), value: Unit.PACOTE },
+                ],
+                multiple: false,
             }),
         ];
 
@@ -400,7 +403,7 @@ export class ItemListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
 
         const displayFields = this.gridColumns.map(column => column.field);
 
-        this.itemListService
+        this.productService
             .list({ page, size, sort, filterQuery, displayFields })
             .pipe(
                 takeUntil(this.ngUnsubscribe),

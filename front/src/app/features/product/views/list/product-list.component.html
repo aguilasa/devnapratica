@@ -22,13 +22,13 @@
     </form>
     <p-panel *sLoadingState="showLoader">
         <p-header>
-            {{"furb.basico.item_list_list_grid_title" | translate}}
+            {{"furb.basico.product_list_grid_title" | translate}}
         </p-header>
         <s-empty-state *ngIf="serverError" iconClass="fa fa-exclamation-triangle" title="{{'error_server_title' | translate}}"
             primaryActionLabel="{{'error_server_try_again' | translate}}" (primaryAction)="resetGrid()" description="{{'error_server_description' | translate}}"></s-empty-state>
-        <s-empty-state *ngIf="gridData && !gridData.length" [title]="'furb.basico.item_list_empty_state_title' | translate"
+        <s-empty-state *ngIf="gridData && !gridData.length" [title]="'furb.basico.product_empty_state_title' | translate"
             [showPrimaryAction]="permissions.incluir" [primaryActionLabel]="'add' | translate" (primaryAction)="onAdd()"
-            [description]="'furb.basico.item_list_empty_state_description' | translate"></s-empty-state>
+            [description]="'furb.basico.product_empty_state_description' | translate"></s-empty-state>
         <div [attr.data-hidden]="!gridData?.length">
             <div class="ui-g">
                 <div class="ui-g-12">
@@ -44,7 +44,7 @@
             </div>
             <div class="ui-g">
                 <div class="ui-g-12">
-                    <p-table #itemListTable [value]="gridData" [columns]="gridColumns" dataKey="id" [lazy]="true" [scrollable]="true"
+                    <p-table #productTable [value]="gridData" [columns]="gridColumns" dataKey="id" [lazy]="true" [scrollable]="true"
                         [resizableColumns]="true" sortMode="multiple" [paginator]="true" [totalRecords]="totalRecords"
                         rows="10" [rowsPerPageOptions]="[10, 20, 50, 100]" [(selection)]="selection" (onLazyLoad)="onGridChange($event)">
                         <ng-template pTemplate="colgroup" let-columns *ngIf="!customGridColgroup else customGridColgroup">
@@ -78,16 +78,23 @@
                                     <span>{{rowData["id"]}}</span>
                                 </td>
                                 <td (click)="selection = [rowData]" style="width: 200px">
-                                    <span>{{rowData["quantity"]}}</span>
+                                    <span>{{rowData["description"]}}</span>
                                 </td>
                                 <td (click)="selection = [rowData]" style="width: 200px">
-                                    <span>{{rowData["price"]}}</span>
-                                </td>
-                                <td (click)="selection = [rowData]" style="width: 200px">
-                                    <p-checkbox [(ngModel)]="rowData['checked']" [disabled]="true" [binary]="true"></p-checkbox>
-                                </td>
-                                <td (click)="selection = [rowData]" style="width: 200px">
-                                    <span>{{rowData["note"]}}</span>
+                                    <div [ngSwitch]="rowData['unit']">
+                                        <span *ngSwitchCase="'UN'">{{ "furb.basico.unit_un" | translate }}</span>
+                                        <span *ngSwitchCase="'DZ'">{{ "furb.basico.unit_dz" | translate }}</span>
+                                        <span *ngSwitchCase="'ML'">{{ "furb.basico.unit_ml" | translate }}</span>
+                                        <span *ngSwitchCase="'L'">{{ "furb.basico.unit_l" | translate }}</span>
+                                        <span *ngSwitchCase="'KG'">{{ "furb.basico.unit_kg" | translate }}</span>
+                                        <span *ngSwitchCase="'G'">{{ "furb.basico.unit_g" | translate }}</span>
+                                        <span *ngSwitchCase="'CAIXA'">{{ "furb.basico.unit_caixa" | translate }}</span>
+                                        <span *ngSwitchCase="'EMBALAGEM'">{{ "furb.basico.unit_embalagem" | translate }}</span>
+                                        <span *ngSwitchCase="'GALAO'">{{ "furb.basico.unit_galao" | translate }}</span>
+                                        <span *ngSwitchCase="'GARRAFA'">{{ "furb.basico.unit_garrafa" | translate }}</span>
+                                        <span *ngSwitchCase="'LATA'">{{ "furb.basico.unit_lata" | translate }}</span>
+                                        <span *ngSwitchCase="'PACOTE'">{{ "furb.basico.unit_pacote" | translate }}</span>
+                                    </div>
                                 </td>
                                 <!--{CA:GRID_BODY_COLUMNS:START}-->
                                 <!--{CA:GRID_BODY_COLUMNS:END}-->

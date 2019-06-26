@@ -12,18 +12,19 @@ import { FormField, FieldType } from "@seniorsistemas/angular-components";
 /*{CA:PACKAGE_IMPORTS:START}*/
 /*{CA:PACKAGE_IMPORTS:END}*/
 
-import { ShoppingList } from "~core/entities/shopping-list/shopping-list";
+import { Product } from "~core/entities/product/product";
 
-import { ShoppingListService } from "~core/entities/shopping-list/shopping-list.service";
+import { ProductService } from "~core/entities/product/product.service";
 
-import { ItemList } from "~core/entities/item-list/item-list";
-import { ItemListService } from "~core/entities/item-list/item-list.service";
+import { Category } from "~core/entities/category/category";
+import { CategoryService } from "~core/entities/category/category.service";
 
+import { Unit } from "~core/enums/unit";
 /*{CA:PROJECT_IMPORTS:START}*/
 /*{CA:PROJECT_IMPORTS:END}*/
 
 @Component({
-    templateUrl: "./shopping-list-form.component.html",
+    templateUrl: "./product-form.component.html",
     styleUrls: [
         /*{CA:COMPONENT_STYLE_URLS:START}*/
         /*{CA:COMPONENT_STYLE_URLS:END}*/
@@ -36,7 +37,7 @@ import { ItemListService } from "~core/entities/item-list/item-list.service";
     /*{CA:COMPONENT_CONFIG:START}*/
     /*{CA:COMPONENT_CONFIG:END}*/
 })
-export class ShoppingListFormComponent implements OnInit, OnDestroy /*{CA:CLASS_INTERFACES:START}*/ /*{CA:CLASS_INTERFACES:END}*/ {
+export class ProductFormComponent implements OnInit, OnDestroy /*{CA:CLASS_INTERFACES:START}*/ /*{CA:CLASS_INTERFACES:END}*/ {
     public localeConfig: any = {};
     public permissions: any = {};
     public allPermissions: any = {};
@@ -46,11 +47,26 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy /*{CA:CLASS_
 
     public mainPanelCollapsed = false;
 
-    public itemsLookupSuggestions: ItemList[];
-    public itemsSearchFields: FormField[];
-    public itemsSearchGridFields: FormField[];
-    public itemsSearchGridData: ItemList[];
-    public itemsSearchTotalRecords: number;
+    public unit: { label: string; value: Unit }[] = [
+        { label: this.translate.instant("furb.basico.unit_un"), value: Unit.UN },
+        { label: this.translate.instant("furb.basico.unit_dz"), value: Unit.DZ },
+        { label: this.translate.instant("furb.basico.unit_ml"), value: Unit.ML },
+        { label: this.translate.instant("furb.basico.unit_l"), value: Unit.L },
+        { label: this.translate.instant("furb.basico.unit_kg"), value: Unit.KG },
+        { label: this.translate.instant("furb.basico.unit_g"), value: Unit.G },
+        { label: this.translate.instant("furb.basico.unit_caixa"), value: Unit.CAIXA },
+        { label: this.translate.instant("furb.basico.unit_embalagem"), value: Unit.EMBALAGEM },
+        { label: this.translate.instant("furb.basico.unit_galao"), value: Unit.GALAO },
+        { label: this.translate.instant("furb.basico.unit_garrafa"), value: Unit.GARRAFA },
+        { label: this.translate.instant("furb.basico.unit_lata"), value: Unit.LATA },
+        { label: this.translate.instant("furb.basico.unit_pacote"), value: Unit.PACOTE },
+    ];
+
+    public categoryLookupSuggestions: Category[];
+    public categorySearchFields: FormField[];
+    public categorySearchGridFields: FormField[];
+    public categorySearchGridData: Category[];
+    public categorySearchTotalRecords: number;
 
     @ViewChild("customTemplate")
     public customTemplate: TemplateRef<any>;
@@ -67,7 +83,7 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy /*{CA:CLASS_
     constructor(
         /*{CA:INJECTIONS:START}*/
         /*{CA:INJECTIONS:END}*/
-        private shoppingListService: ShoppingListService,
+        private productService: ProductService,
         private router: Router,
         private route: ActivatedRoute,
         private messageService: MessageService,
@@ -75,7 +91,7 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy /*{CA:CLASS_
         private formBuilder: FormBuilder,
         private translate: TranslateService,
         private hotkeysService: HotkeysService,
-        private itemListService: ItemListService
+        private categoryService: CategoryService
     ) {
         /*{CA:CONSTRUCTOR_END:START}*/
         /*{CA:CONSTRUCTOR_END:END}*/
@@ -90,8 +106,8 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy /*{CA:CLASS_
         this.route.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe((params: any) => this.onRouteParamsChange(params));
         this.route.data.pipe(takeUntil(this.ngUnsubscribe)).subscribe((data: any) => this.onRouteDataChange(data));
 
-        this.itemsSearchFields = this.getItemsSearchFields();
-        this.itemsSearchGridFields = this.getItemsSearchGridFields();
+        this.categorySearchFields = this.getCategorySearchFields();
+        this.categorySearchGridFields = this.getCategorySearchGridFields();
 
         this.setHotkeys();
 
@@ -152,7 +168,7 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy /*{CA:CLASS_
     }
 
     public isNew() {
-        return this.routeParams.shoppingList == "new";
+        return this.routeParams.product == "new";
     }
 
     public onRouteParamsChange(params: any) {
@@ -168,14 +184,14 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy /*{CA:CLASS_
         /*{CA:ON_ROUTE_DATA_CHANGE_START:END}*/
 
         this.localeConfig = data.localeConfig;
-        this.permissions = data.allPermissions.shoppingList;
+        this.permissions = data.allPermissions.product;
         this.allPermissions = data.allPermissions;
         if (data.entity) {
             const canEdit = this.permissions.editar;
             if (!canEdit) this.formGroup.disable();
-            this.formGroup.patchValue(ShoppingList.fromDto(data.entity));
+            this.formGroup.patchValue(Product.fromDto(data.entity));
         } else {
-            this.formGroup.patchValue(new ShoppingList());
+            this.formGroup.patchValue(new Product());
         }
 
         /*{CA:ON_ROUTE_DATA_CHANGE_END:START}*/
@@ -229,33 +245,33 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy /*{CA:CLASS_
         /*{CA:ON_DELETE_END:END}*/
     }
 
-    public onItemsLookupRequest(value: string) {
-        /*{CA:ON_ITEMS_LOOKUP_REQUEST_START:START}*/
-        /*{CA:ON_ITEMS_LOOKUP_REQUEST_START:END}*/
+    public onCategoryLookupRequest(value: string) {
+        /*{CA:ON_CATEGORY_LOOKUP_REQUEST_START:START}*/
+        /*{CA:ON_CATEGORY_LOOKUP_REQUEST_START:END}*/
 
         const filterQuery = `id eq '${value}'`;
 
-        this.itemListService
+        this.categoryService
             .list({ filterQuery, displayFields: ["id"] })
             .pipe(takeUntil(this.ngUnsubscribe))
             .subscribe((list: any) => {
-                this.itemsLookupSuggestions = list.contents;
+                this.categoryLookupSuggestions = list.contents;
             });
 
-        /*{CA:ON_ITEMS_LOOKUP_REQUEST_END:START}*/
-        /*{CA:ON_ITEMS_LOOKUP_REQUEST_END:END}*/
+        /*{CA:ON_CATEGORY_LOOKUP_REQUEST_END:START}*/
+        /*{CA:ON_CATEGORY_LOOKUP_REQUEST_END:END}*/
     }
 
-    public onItemsSearchRequest(event: any) {
-        /*{CA:ON_ITEMS_SEARCH_REQUEST_START:START}*/
-        /*{CA:ON_ITEMS_SEARCH_REQUEST_START:END}*/
+    public onCategorySearchRequest(event: any) {
+        /*{CA:ON_CATEGORY_SEARCH_REQUEST_START:START}*/
+        /*{CA:ON_CATEGORY_SEARCH_REQUEST_START:END}*/
 
         const { first, rows, multiSortMeta, filterData } = event;
         const page = first / rows;
         const sort = multiSortMeta;
-        const displayFields = this.itemsSearchGridFields.map(({ name }) => name);
+        const displayFields = this.categorySearchGridFields.map(({ name }) => name);
 
-        const filterQuery = this.itemsSearchFields
+        const filterQuery = this.categorySearchFields
             .filter(({ name }) => filterData[name] != undefined)
             .map(({ name, type }) => {
                 const value = filterData[name];
@@ -270,23 +286,24 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy /*{CA:CLASS_
             })
             .join(" and ");
 
-        this.itemListService
+        this.categoryService
             .list({ page, sort, filterQuery, displayFields })
             .pipe(takeUntil(this.ngUnsubscribe))
             .subscribe((list: any) => {
-                this.itemsSearchGridData = list.contents;
-                this.itemsSearchTotalRecords = list.totalElements;
+                this.categorySearchGridData = list.contents;
+                this.categorySearchTotalRecords = list.totalElements;
             });
 
-        /*{CA:ON_ITEMS_SEARCH_REQUEST_END:START}*/
-        /*{CA:ON_ITEMS_SEARCH_REQUEST_END:END}*/
+        /*{CA:ON_CATEGORY_SEARCH_REQUEST_END:START}*/
+        /*{CA:ON_CATEGORY_SEARCH_REQUEST_END:END}*/
     }
 
     private getFormGroup() {
         const formGroup = this.formBuilder.group({
             id: [{ value: undefined, disabled: true }, Validators.compose([])],
             description: [{ value: undefined, disabled: false }, Validators.compose([Validators.required])],
-            items: [{ value: undefined, disabled: false }, Validators.compose([Validators.required])],
+            unit: [{ value: undefined, disabled: false }, Validators.compose([Validators.required])],
+            category: [{ value: undefined, disabled: false }, Validators.compose([Validators.required])],
         });
 
         /*{CA:GET_FORM_CONTROLS:START}*/
@@ -295,72 +312,42 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy /*{CA:CLASS_
         return formGroup;
     }
 
-    private getItemsSearchFields() {
+    private getCategorySearchFields() {
         const searchFields = [
             new FormField({
                 name: "id",
-                label: this.translate.instant("furb.basico.item_list_id"),
+                label: this.translate.instant("furb.basico.category_id"),
                 type: FieldType.String,
             }),
             new FormField({
-                name: "quantity",
-                label: this.translate.instant("furb.basico.item_list_quantity"),
-                type: FieldType.Double,
-            }),
-            new FormField({
-                name: "price",
-                label: this.translate.instant("furb.basico.item_list_price"),
-                type: FieldType.Double,
-            }),
-            new FormField({
-                name: "checked",
-                label: this.translate.instant("furb.basico.item_list_checked"),
-                type: FieldType.Boolean,
-            }),
-            new FormField({
-                name: "note",
-                label: this.translate.instant("furb.basico.item_list_note"),
+                name: "description",
+                label: this.translate.instant("furb.basico.category_description"),
                 type: FieldType.String,
             }),
         ];
 
-        /*{CA:GET_ITEMS_SEARCH_FIELDS:START}*/
-        /*{CA:GET_ITEMS_SEARCH_FIELDS:END}*/
+        /*{CA:GET_CATEGORY_SEARCH_FIELDS:START}*/
+        /*{CA:GET_CATEGORY_SEARCH_FIELDS:END}*/
 
         return searchFields;
     }
 
-    private getItemsSearchGridFields() {
+    private getCategorySearchGridFields() {
         const searchGridFields = [
             new FormField({
                 name: "id",
-                label: this.translate.instant("furb.basico.item_list_id"),
+                label: this.translate.instant("furb.basico.category_id"),
                 type: FieldType.String,
             }),
             new FormField({
-                name: "quantity",
-                label: this.translate.instant("furb.basico.item_list_quantity"),
-                type: FieldType.Double,
-            }),
-            new FormField({
-                name: "price",
-                label: this.translate.instant("furb.basico.item_list_price"),
-                type: FieldType.Double,
-            }),
-            new FormField({
-                name: "checked",
-                label: this.translate.instant("furb.basico.item_list_checked"),
-                type: FieldType.Boolean,
-            }),
-            new FormField({
-                name: "note",
-                label: this.translate.instant("furb.basico.item_list_note"),
+                name: "description",
+                label: this.translate.instant("furb.basico.category_description"),
                 type: FieldType.String,
             }),
         ];
 
-        /*{CA:GET_ITEMS_SEARCH_GRID_FIELDS:START}*/
-        /*{CA:GET_ITEMS_SEARCH_GRID_FIELDS:END}*/
+        /*{CA:GET_CATEGORY_SEARCH_GRID_FIELDS:START}*/
+        /*{CA:GET_CATEGORY_SEARCH_GRID_FIELDS:END}*/
 
         return searchGridFields;
     }
@@ -380,22 +367,22 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy /*{CA:CLASS_
 
     private getSaveObservable() {
         const { value } = this.formGroup;
-        const shoppingListDto = ShoppingList.toDto(value);
+        const productDto = Product.toDto(value);
 
         let observable;
 
         if (this.isNew()) {
-            observable = this.shoppingListService.insert(shoppingListDto);
+            observable = this.productService.insert(productDto);
         } else {
-            const id = this.routeParams.shoppingList;
-            observable = this.shoppingListService.update(id, shoppingListDto);
+            const id = this.routeParams.product;
+            observable = this.productService.update(id, productDto);
         }
 
         return observable;
     }
 
     private getDeleteObservable() {
-        return this.shoppingListService.delete(this.routeParams.shoppingList).pipe(
+        return this.productService.delete(this.routeParams.product).pipe(
             tap(() => {
                 this.messageService.add({
                     severity: "success",
