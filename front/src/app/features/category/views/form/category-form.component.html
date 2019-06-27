@@ -9,7 +9,7 @@
             </p-header>
             <div class="ui-fluid" *ngIf="!customFormFields else customFormFields">
                 <div class="ui-g">
-                    <div class="ui-g-12 ui-md-6">
+                    <div [attr.data-hidden]="true" class="ui-g-12 ui-md-6">
                         <label for="id">{{"furb.basico.category_id" | translate}}</label>
                         <input type="text" id="id" name="id" pInputText formControlName="id" autocomplete="off" />
                     </div>

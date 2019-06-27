@@ -8,7 +8,19 @@ entities {
 
 service basico {
 	entities {
+		entity category {
+			fields {
+				id: {
+					hidden: true
+				}
+			}
+        }
 		entity product {
+			fields {
+				id: {
+					hidden: true
+				}
+			}
 			relationships{
         		ManyToOne(category) {
         			type: aggregation
@@ -17,6 +29,11 @@ service basico {
         	}
         }
 		entity itemList {
+			fields {
+				id: {
+					hidden: true
+				}
+			}
 			relationships{
         		ManyToOne(product) {
         			type: aggregation
@@ -25,6 +42,11 @@ service basico {
         	}
         }
 		entity shoppingList {
+			fields {
+				id: {
+					hidden: true
+				}
+			}
 			relationships{
                 OneToMany(items){
                     type: aggregation
