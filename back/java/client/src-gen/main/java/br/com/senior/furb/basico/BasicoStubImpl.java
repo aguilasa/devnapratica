@@ -29,6 +29,10 @@ import br.com.senior.furb.basico.ImportShoppingListInput;
 import br.com.senior.furb.basico.ImportShoppingListOutput;
 import br.com.senior.furb.basico.ExportShoppingListInput;
 import br.com.senior.furb.basico.ExportShoppingListOutput;
+import br.com.senior.furb.basico.ImportClienteInput;
+import br.com.senior.furb.basico.ImportClienteOutput;
+import br.com.senior.furb.basico.ExportClienteInput;
+import br.com.senior.furb.basico.ExportClienteOutput;
 import br.com.senior.furb.basico.GetDependenciesOutput;
 import br.com.senior.furb.basico.Category;
 import br.com.senior.furb.basico.CreateBulkCategoryInput;
@@ -42,6 +46,9 @@ import br.com.senior.furb.basico.CreateBulkItemListOutput;
 import br.com.senior.furb.basico.ShoppingList;
 import br.com.senior.furb.basico.CreateBulkShoppingListInput;
 import br.com.senior.furb.basico.CreateBulkShoppingListOutput;
+import br.com.senior.furb.basico.Cliente;
+import br.com.senior.furb.basico.CreateBulkClienteInput;
+import br.com.senior.furb.basico.CreateBulkClienteOutput;
 import br.com.senior.furb.basico.ServiceStartedPayload;
 import br.com.senior.furb.basico.NotifyUserEventPayload;
 import br.com.senior.furb.basico.ImportCategoryEventPayload;
@@ -52,6 +59,8 @@ import br.com.senior.furb.basico.ImportItemListEventPayload;
 import br.com.senior.furb.basico.ExportItemListEventPayload;
 import br.com.senior.furb.basico.ImportShoppingListEventPayload;
 import br.com.senior.furb.basico.ExportShoppingListEventPayload;
+import br.com.senior.furb.basico.ImportClienteEventPayload;
+import br.com.senior.furb.basico.ExportClienteEventPayload;
 
 import br.com.senior.furb.basico.BasicoValidator;
 import br.com.senior.furb.basico.BasicoException;
@@ -383,6 +392,72 @@ public class BasicoStubImpl  implements BasicoStub {
 		return impl.exportShoppingListRequest(input);
 	}
 	/**
+	 * Chamada síncrona para o método importCliente
+	 * This is a public operation
+	 * 
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public ImportClienteOutput importCliente(ImportClienteInput input, long timeout) {
+		br.com.senior.furb.basico.impl.ImportClienteImpl impl = new br.com.senior.furb.basico.impl.ImportClienteImpl(messengerSupplier, userId, messageSupplier);
+		return impl.importCliente(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método importCliente
+	 * This is a public operation
+	 * 
+	 */
+	@Override
+	public void importCliente(ImportClienteInput input) {
+		br.com.senior.furb.basico.impl.ImportClienteImpl impl = new br.com.senior.furb.basico.impl.ImportClienteImpl(messengerSupplier, userId, messageSupplier);
+		impl.importCliente(input);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método importCliente
+	 * This is a public operation
+	 * 
+	 */
+	@Override
+	public CompletableFuture<ImportClienteOutput> importClienteRequest(ImportClienteInput input) {
+		br.com.senior.furb.basico.impl.ImportClienteImpl impl = new br.com.senior.furb.basico.impl.ImportClienteImpl(messengerSupplier, userId, messageSupplier);
+		return impl.importClienteRequest(input);
+	}
+	/**
+	 * Chamada síncrona para o método exportCliente
+	 * This is a public operation
+	 * 
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public ExportClienteOutput exportCliente(ExportClienteInput input, long timeout) {
+		br.com.senior.furb.basico.impl.ExportClienteImpl impl = new br.com.senior.furb.basico.impl.ExportClienteImpl(messengerSupplier, userId, messageSupplier);
+		return impl.exportCliente(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método exportCliente
+	 * This is a public operation
+	 * 
+	 */
+	@Override
+	public void exportCliente(ExportClienteInput input) {
+		br.com.senior.furb.basico.impl.ExportClienteImpl impl = new br.com.senior.furb.basico.impl.ExportClienteImpl(messengerSupplier, userId, messageSupplier);
+		impl.exportCliente(input);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método exportCliente
+	 * This is a public operation
+	 * 
+	 */
+	@Override
+	public CompletableFuture<ExportClienteOutput> exportClienteRequest(ExportClienteInput input) {
+		br.com.senior.furb.basico.impl.ExportClienteImpl impl = new br.com.senior.furb.basico.impl.ExportClienteImpl(messengerSupplier, userId, messageSupplier);
+		return impl.exportClienteRequest(input);
+	}
+	/**
 	 * Chamada síncrona para o método listCategory
 	 * This is a public operation
 	 * The 'list' request primitive for the Category entity.
@@ -513,6 +588,39 @@ public class BasicoStubImpl  implements BasicoStub {
 	public CompletableFuture<ShoppingList.PagedResults> listShoppingListRequest(ShoppingList.PageRequest input) {
 		br.com.senior.furb.basico.impl.ListShoppingListImpl impl = new br.com.senior.furb.basico.impl.ListShoppingListImpl(messengerSupplier, userId, messageSupplier);
 		return impl.listShoppingListRequest(input);
+	}
+	/**
+	 * Chamada síncrona para o método listCliente
+	 * This is a public operation
+	 * The 'list' request primitive for the Cliente entity.
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public Cliente.PagedResults listCliente(Cliente.PageRequest input, long timeout) {
+		br.com.senior.furb.basico.impl.ListClienteImpl impl = new br.com.senior.furb.basico.impl.ListClienteImpl(messengerSupplier, userId, messageSupplier);
+		return impl.listCliente(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método listCliente
+	 * This is a public operation
+	 * The 'list' request primitive for the Cliente entity.
+	 */
+	@Override
+	public void listCliente(Cliente.PageRequest input) {
+		br.com.senior.furb.basico.impl.ListClienteImpl impl = new br.com.senior.furb.basico.impl.ListClienteImpl(messengerSupplier, userId, messageSupplier);
+		impl.listCliente(input);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método listCliente
+	 * This is a public operation
+	 * The 'list' request primitive for the Cliente entity.
+	 */
+	@Override
+	public CompletableFuture<Cliente.PagedResults> listClienteRequest(Cliente.PageRequest input) {
+		br.com.senior.furb.basico.impl.ListClienteImpl impl = new br.com.senior.furb.basico.impl.ListClienteImpl(messengerSupplier, userId, messageSupplier);
+		return impl.listClienteRequest(input);
 	}
 	/**
 	 * Chamada síncrona para o método getDependencies
@@ -1431,6 +1539,227 @@ public class BasicoStubImpl  implements BasicoStub {
 		impl.deleteShoppingList(input);
 	}
 	
+	/**
+	 * Chamada síncrona para o método createCliente
+	 * This is a public operation
+	 * The 'create' request primitive for the Cliente entity.
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public Cliente createCliente(Cliente input, long timeout) {
+		br.com.senior.furb.basico.impl.CreateClienteImpl impl = new br.com.senior.furb.basico.impl.CreateClienteImpl(messengerSupplier, userId, messageSupplier);
+		return impl.createCliente(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método createCliente
+	 * This is a public operation
+	 * The 'create' request primitive for the Cliente entity.
+	 */
+	@Override
+	public void createCliente(Cliente input) {
+		br.com.senior.furb.basico.impl.CreateClienteImpl impl = new br.com.senior.furb.basico.impl.CreateClienteImpl(messengerSupplier, userId, messageSupplier);
+		impl.createCliente(input);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método createCliente
+	 * This is a public operation
+	 * The 'create' request primitive for the Cliente entity.
+	 */
+	@Override
+	public CompletableFuture<Cliente> createClienteRequest(Cliente input) {
+		br.com.senior.furb.basico.impl.CreateClienteImpl impl = new br.com.senior.furb.basico.impl.CreateClienteImpl(messengerSupplier, userId, messageSupplier);
+		return impl.createClienteRequest(input);
+	}
+	/**
+	 * Chamada síncrona para o método createBulkCliente
+	 * This is a public operation
+	 * The 'createBulk' request primitive for the Cliente entity.
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public CreateBulkClienteOutput createBulkCliente(CreateBulkClienteInput input, long timeout) {
+		br.com.senior.furb.basico.impl.CreateBulkClienteImpl impl = new br.com.senior.furb.basico.impl.CreateBulkClienteImpl(messengerSupplier, userId, messageSupplier);
+		return impl.createBulkCliente(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método createBulkCliente
+	 * This is a public operation
+	 * The 'createBulk' request primitive for the Cliente entity.
+	 */
+	@Override
+	public void createBulkCliente(CreateBulkClienteInput input) {
+		br.com.senior.furb.basico.impl.CreateBulkClienteImpl impl = new br.com.senior.furb.basico.impl.CreateBulkClienteImpl(messengerSupplier, userId, messageSupplier);
+		impl.createBulkCliente(input);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método createBulkCliente
+	 * This is a public operation
+	 * The 'createBulk' request primitive for the Cliente entity.
+	 */
+	@Override
+	public CompletableFuture<CreateBulkClienteOutput> createBulkClienteRequest(CreateBulkClienteInput input) {
+		br.com.senior.furb.basico.impl.CreateBulkClienteImpl impl = new br.com.senior.furb.basico.impl.CreateBulkClienteImpl(messengerSupplier, userId, messageSupplier);
+		return impl.createBulkClienteRequest(input);
+	}
+	/**
+	 * Chamada síncrona para o método createMergeCliente
+	 * This is a public operation
+	 * The 'createMerge' request primitive for the Cliente entity.
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public Cliente createMergeCliente(Cliente input, long timeout) {
+		br.com.senior.furb.basico.impl.CreateMergeClienteImpl impl = new br.com.senior.furb.basico.impl.CreateMergeClienteImpl(messengerSupplier, userId, messageSupplier);
+		return impl.createMergeCliente(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método createMergeCliente
+	 * This is a public operation
+	 * The 'createMerge' request primitive for the Cliente entity.
+	 */
+	@Override
+	public void createMergeCliente(Cliente input) {
+		br.com.senior.furb.basico.impl.CreateMergeClienteImpl impl = new br.com.senior.furb.basico.impl.CreateMergeClienteImpl(messengerSupplier, userId, messageSupplier);
+		impl.createMergeCliente(input);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método createMergeCliente
+	 * This is a public operation
+	 * The 'createMerge' request primitive for the Cliente entity.
+	 */
+	@Override
+	public CompletableFuture<Cliente> createMergeClienteRequest(Cliente input) {
+		br.com.senior.furb.basico.impl.CreateMergeClienteImpl impl = new br.com.senior.furb.basico.impl.CreateMergeClienteImpl(messengerSupplier, userId, messageSupplier);
+		return impl.createMergeClienteRequest(input);
+	}
+	/**
+	 * Chamada síncrona para o método retrieveCliente
+	 * This is a public operation
+	 * The 'retrieve' request primitive for the Cliente entity.
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public Cliente retrieveCliente(Cliente.Id input, long timeout) {
+		br.com.senior.furb.basico.impl.RetrieveClienteImpl impl = new br.com.senior.furb.basico.impl.RetrieveClienteImpl(messengerSupplier, userId, messageSupplier);
+		return impl.retrieveCliente(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método retrieveCliente
+	 * This is a public operation
+	 * The 'retrieve' request primitive for the Cliente entity.
+	 */
+	@Override
+	public void retrieveCliente(Cliente.Id input) {
+		br.com.senior.furb.basico.impl.RetrieveClienteImpl impl = new br.com.senior.furb.basico.impl.RetrieveClienteImpl(messengerSupplier, userId, messageSupplier);
+		impl.retrieveCliente(input);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método retrieveCliente
+	 * This is a public operation
+	 * The 'retrieve' request primitive for the Cliente entity.
+	 */
+	@Override
+	public CompletableFuture<Cliente> retrieveClienteRequest(Cliente.Id input) {
+		br.com.senior.furb.basico.impl.RetrieveClienteImpl impl = new br.com.senior.furb.basico.impl.RetrieveClienteImpl(messengerSupplier, userId, messageSupplier);
+		return impl.retrieveClienteRequest(input);
+	}
+	/**
+	 * Chamada síncrona para o método updateCliente
+	 * This is a public operation
+	 * The 'update' request primitive for the Cliente entity.
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public Cliente updateCliente(Cliente input, long timeout) {
+		br.com.senior.furb.basico.impl.UpdateClienteImpl impl = new br.com.senior.furb.basico.impl.UpdateClienteImpl(messengerSupplier, userId, messageSupplier);
+		return impl.updateCliente(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método updateCliente
+	 * This is a public operation
+	 * The 'update' request primitive for the Cliente entity.
+	 */
+	@Override
+	public void updateCliente(Cliente input) {
+		br.com.senior.furb.basico.impl.UpdateClienteImpl impl = new br.com.senior.furb.basico.impl.UpdateClienteImpl(messengerSupplier, userId, messageSupplier);
+		impl.updateCliente(input);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método updateCliente
+	 * This is a public operation
+	 * The 'update' request primitive for the Cliente entity.
+	 */
+	@Override
+	public CompletableFuture<Cliente> updateClienteRequest(Cliente input) {
+		br.com.senior.furb.basico.impl.UpdateClienteImpl impl = new br.com.senior.furb.basico.impl.UpdateClienteImpl(messengerSupplier, userId, messageSupplier);
+		return impl.updateClienteRequest(input);
+	}
+	/**
+	 * Chamada síncrona para o método updateMergeCliente
+	 * This is a public operation
+	 * The 'updateMerge' request primitive for the Cliente entity.
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public Cliente updateMergeCliente(Cliente input, long timeout) {
+		br.com.senior.furb.basico.impl.UpdateMergeClienteImpl impl = new br.com.senior.furb.basico.impl.UpdateMergeClienteImpl(messengerSupplier, userId, messageSupplier);
+		return impl.updateMergeCliente(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método updateMergeCliente
+	 * This is a public operation
+	 * The 'updateMerge' request primitive for the Cliente entity.
+	 */
+	@Override
+	public void updateMergeCliente(Cliente input) {
+		br.com.senior.furb.basico.impl.UpdateMergeClienteImpl impl = new br.com.senior.furb.basico.impl.UpdateMergeClienteImpl(messengerSupplier, userId, messageSupplier);
+		impl.updateMergeCliente(input);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método updateMergeCliente
+	 * This is a public operation
+	 * The 'updateMerge' request primitive for the Cliente entity.
+	 */
+	@Override
+	public CompletableFuture<Cliente> updateMergeClienteRequest(Cliente input) {
+		br.com.senior.furb.basico.impl.UpdateMergeClienteImpl impl = new br.com.senior.furb.basico.impl.UpdateMergeClienteImpl(messengerSupplier, userId, messageSupplier);
+		return impl.updateMergeClienteRequest(input);
+	}
+	/**
+	 * Chamada síncrona para o método deleteCliente
+	 * This is a public operation
+	 * The 'delete' request primitive for the Cliente entity.
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public void deleteCliente(Cliente.Id input, long timeout) {
+		br.com.senior.furb.basico.impl.DeleteClienteImpl impl = new br.com.senior.furb.basico.impl.DeleteClienteImpl(messengerSupplier, userId, messageSupplier);
+		impl.deleteCliente(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método deleteCliente
+	 * This is a public operation
+	 * The 'delete' request primitive for the Cliente entity.
+	 */
+	@Override
+	public void deleteCliente(Cliente.Id input) {
+		br.com.senior.furb.basico.impl.DeleteClienteImpl impl = new br.com.senior.furb.basico.impl.DeleteClienteImpl(messengerSupplier, userId, messageSupplier);
+		impl.deleteCliente(input);
+	}
+	
 
 
 	/**
@@ -1575,6 +1904,36 @@ public class BasicoStubImpl  implements BasicoStub {
 	public void publishExportShoppingListEvent( ExportShoppingListEventPayload input ) {
 	
 		Message message = new Message(userId.getTenant(), BasicoConstants.DOMAIN, BasicoConstants.SERVICE, BasicoConstants.Events.EXPORT_SHOPPING_LIST_EVENT, DtoJsonConverter.toJSON(input));
+		try {
+			addMessageHeaders(message);
+			messengerSupplier.get().publish(message);
+		} catch (Exception e) {
+			throw new BasicoException("Erro ao enviar a mensagem", e);
+		}
+	}
+	
+	/**
+	* Chamada assíncrona para o método publishImportClienteEvent
+	* This is a public operation
+	*/
+	public void publishImportClienteEvent( ImportClienteEventPayload input ) {
+	
+		Message message = new Message(userId.getTenant(), BasicoConstants.DOMAIN, BasicoConstants.SERVICE, BasicoConstants.Events.IMPORT_CLIENTE_EVENT, DtoJsonConverter.toJSON(input));
+		try {
+			addMessageHeaders(message);
+			messengerSupplier.get().publish(message);
+		} catch (Exception e) {
+			throw new BasicoException("Erro ao enviar a mensagem", e);
+		}
+	}
+	
+	/**
+	* Chamada assíncrona para o método publishExportClienteEvent
+	* This is a public operation
+	*/
+	public void publishExportClienteEvent( ExportClienteEventPayload input ) {
+	
+		Message message = new Message(userId.getTenant(), BasicoConstants.DOMAIN, BasicoConstants.SERVICE, BasicoConstants.Events.EXPORT_CLIENTE_EVENT, DtoJsonConverter.toJSON(input));
 		try {
 			addMessageHeaders(message);
 			messengerSupplier.get().publish(message);

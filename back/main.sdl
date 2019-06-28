@@ -80,5 +80,21 @@ service basico {
             "Itens da lista"
             items : itemList*
         }
+        
+        "Entidade que representa o cliente"
+		fixed entity cliente{
+		    "Chave primaria"
+		    id: uuid?
+		    "Nome do cliente"
+		    nome: string
+		    "Data de nascimento"
+		    dataNascimento: date
+		    "Tem credito habilitado"
+		    creditoHabilitado: boolean? default: false
+		    "CPF do cliente"
+		    cpf: string
+		    "id da foto"
+		    idFoto: string?
+		}
     }
 }

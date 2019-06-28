@@ -10,5 +10,6 @@
 		<class>br.com.senior.furb.basico.ItemListEntity</class>
 		<class>br.com.senior.furb.basico.ShoppingListEntity</class>
 		<class>br.com.senior.furb.basico.ShoppingList_ItemsEntity</class>
+		<class>br.com.senior.furb.basico.ClienteEntity</class>
 	</persistence-unit>
 </persistence>
