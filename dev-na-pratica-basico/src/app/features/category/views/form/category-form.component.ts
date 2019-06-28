@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy, TemplateRef, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { HotkeysService, Hotkey } from "angular2-hotkeys";
 import { MessageService } from "primeng/components/common/messageservice";
 import { ConfirmationService } from "primeng/api";
 import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms";
-import { TranslateService } from "@ngx-translate/core";
 import { Subject } from "rxjs";
 import { tap, takeUntil } from "rxjs/operators";
 import { CategoryService } from 'src/app/core/entities/category/category.service';
@@ -19,10 +17,6 @@ import { Category } from 'src/app/core/entities/category/category';
     ],
 })
 export class CategoryFormComponent implements OnInit, OnDestroy {
-    public localeConfig: any = {};
-    public permissions: any = {};
-    public allPermissions: any = {};
-
     public formGroup: FormGroup;
     public loading: boolean;
 
@@ -44,8 +38,6 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
         private formBuilder: FormBuilder,
-        private translate: TranslateService,
-        private hotkeysService: HotkeysService
     ) {
     }
 
@@ -56,51 +48,12 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
         this.route.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe((params: any) => this.onRouteParamsChange(params));
         this.route.data.pipe(takeUntil(this.ngUnsubscribe)).subscribe((data: any) => this.onRouteDataChange(data));
 
-        this.setHotkeys();
-
     }
 
     public ngOnDestroy() {
 
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
-
-    }
-
-    public setHotkeys() {
-
-        this.hotkeysService.add(
-            new Hotkey(
-                "alt+shift+x",
-                () => {
-                    if (this.permissions.excluir) this.onDelete();
-                    return false;
-                },
-                ["INPUT", "SELECT", "TEXTAREA"]
-            )
-        );
-
-        this.hotkeysService.add(
-            new Hotkey(
-                "alt+shift+s",
-                () => {
-                    if (this.isNew() || this.permissions.editar) this.onSave();
-                    return false;
-                },
-                ["INPUT", "SELECT", "TEXTAREA"]
-            )
-        );
-
-        this.hotkeysService.add(
-            new Hotkey(
-                "alt+shift+c",
-                () => {
-                    this.onCancel();
-                    return false;
-                },
-                ["INPUT", "SELECT", "TEXTAREA"]
-            )
-        );
 
     }
 
@@ -114,7 +67,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 
     public onRouteDataChange(data: any) {
         if (data.entity) {
-            const canEdit = this.permissions.editar;
+            const canEdit = true;
             if (!canEdit) this.formGroup.disable();
             this.formGroup.patchValue(Category.fromDto(data.entity));
         } else {
@@ -133,8 +86,8 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
             .subscribe(() => {
                 this.messageService.add({
                     severity: "success",
-                    summary: this.translate.instant("saved_message_title"),
-                    detail: this.translate.instant("saved_message_content"),
+                    summary: "Registro salvo com sucesso",
+                    detail: "Sucesso",
                 });
                 this.goBack();
             });
@@ -142,8 +95,8 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
 
     public onDelete() {
         this.confirmationService.confirm({
-            message: this.translate.instant("delete_confirmation_message"),
-            header: this.translate.instant("delete_confirmation_title"),
+            message: "Se o registro for removido, ele não poderá ser restaurado",
+            header: "Deseja remover este registro?",
             accept: () =>
                 this.getDeleteObservable()
                     .pipe(takeUntil(this.ngUnsubscribe))
@@ -193,8 +146,8 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
             tap(() => {
                 this.messageService.add({
                     severity: "success",
-                    summary: this.translate.instant("deleted_message_title"),
-                    detail: this.translate.instant("deleted_message_content"),
+                    summary: "Sucesso",
+                    detail: "Registro(s) excluído(s) com sucesso",
                 });
                 this.goBack();
             })

@@ -37,4 +37,4 @@ import { ClienteResolver } from './views/cliente-form/cliente.resolver';
         ClienteResolver
     ]
 })
-export class ClienteModule { }
+export class ClienteFeatureModule { }

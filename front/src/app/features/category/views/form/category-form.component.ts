@@ -187,8 +187,8 @@ export class CategoryFormComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
             .subscribe(() => {
                 this.messageService.add({
                     severity: "success",
-                    summary: this.translate.instant("saved_message_title"),
-                    detail: this.translate.instant("saved_message_content"),
+                    summary: "Registro salvo com sucesso",
+                    detail: "Sucesso",
                 });
                 this.goBack();
             });
@@ -202,8 +202,8 @@ export class CategoryFormComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
         /*{CA:ON_DELETE_START:END}*/
 
         this.confirmationService.confirm({
-            message: this.translate.instant("delete_confirmation_message"),
-            header: this.translate.instant("delete_confirmation_title"),
+            message: "Se o registro for removido, ele não poderá ser restaurado",
+            header: "Deseja remover este registro?",
             accept: () =>
                 this.getDeleteObservable()
                     .pipe(takeUntil(this.ngUnsubscribe))
@@ -260,8 +260,8 @@ export class CategoryFormComponent implements OnInit, OnDestroy /*{CA:CLASS_INTE
             tap(() => {
                 this.messageService.add({
                     severity: "success",
-                    summary: this.translate.instant("deleted_message_title"),
-                    detail: this.translate.instant("deleted_message_content"),
+                    summary: "Sucesso",
+                    detail: "Registro(s) excluído(s) com sucesso",
                 });
                 this.goBack();
             })

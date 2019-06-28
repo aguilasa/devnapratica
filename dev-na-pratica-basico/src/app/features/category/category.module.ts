@@ -14,4 +14,4 @@ import { CategoryListComponent } from './views/list/category-list.component';
         CategoryResolver
     ]
 })
-export class CategoryModule { }
+export class CategoryFeatureModule { }

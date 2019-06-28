@@ -28,12 +28,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 
-
-import { SideNavComponent } from './common/side-nav/side-nav.component';
-import { TopBarComponent } from './common/top-bar/top-bar.component';
-
 @NgModule({
-    declarations: [SideNavComponent, TopBarComponent],
+    declarations: [],
     exports: [
         FormsModule,
         ReactiveFormsModule,

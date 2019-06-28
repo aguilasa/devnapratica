@@ -179,16 +179,16 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 
     public onDelete() {
         this.confirmationService.confirm({
-            message: this.translate.instant("delete_confirmation_message"),
-            header: this.translate.instant("delete_confirmation_title"),
+            message: "Se o registro for removido, ele não poderá ser restaurado",
+            header: "Deseja remover este registro?",
             accept: () => {
                 forkJoin(this.selection.map(category => this.categoryService.delete(category.id)))
                     .pipe(takeUntil(this.ngUnsubscribe))
                     .subscribe(() => {
                         this.messageService.add({
                             severity: "success",
-                            summary: this.translate.instant("deleted_message_title"),
-                            detail: this.translate.instant("deleted_message_content")
+                            summary: "Sucesso",
+                            detail: "Registro(s) excluído(s) com sucesso"
                         });
 
                         this.resetGrid();
@@ -199,10 +199,10 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 
     private getGridColumns() {
         const gridColumns = [
-            { field: "id", header: this.translate.instant("furb.basico.category_id") },
+            { field: "id", header: "Código" },
             {
                 field: "description",
-                header: this.translate.instant("furb.basico.category_description")
+                header: "Descrição da categoria"
             }
         ];
 
@@ -213,12 +213,12 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         const filterFields = [
             new FormField({
                 name: "id",
-                label: this.translate.instant("furb.basico.category_id"),
+                label: "Código",
                 type: FieldType.String
             }),
             new FormField({
                 name: "description",
-                label: this.translate.instant("furb.basico.category_description"),
+                label: "Descrição da categoria",
                 type: FieldType.String
             })
         ];

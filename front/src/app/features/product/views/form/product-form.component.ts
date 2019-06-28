@@ -218,8 +218,8 @@ export class ProductFormComponent implements OnInit, OnDestroy /*{CA:CLASS_INTER
             .subscribe(() => {
                 this.messageService.add({
                     severity: "success",
-                    summary: this.translate.instant("saved_message_title"),
-                    detail: this.translate.instant("saved_message_content"),
+                    summary: "Registro salvo com sucesso",
+                    detail: "Sucesso",
                 });
                 this.goBack();
             });
@@ -233,8 +233,8 @@ export class ProductFormComponent implements OnInit, OnDestroy /*{CA:CLASS_INTER
         /*{CA:ON_DELETE_START:END}*/
 
         this.confirmationService.confirm({
-            message: this.translate.instant("delete_confirmation_message"),
-            header: this.translate.instant("delete_confirmation_title"),
+            message: "Se o registro for removido, ele não poderá ser restaurado",
+            header: "Deseja remover este registro?",
             accept: () =>
                 this.getDeleteObservable()
                     .pipe(takeUntil(this.ngUnsubscribe))
@@ -316,12 +316,12 @@ export class ProductFormComponent implements OnInit, OnDestroy /*{CA:CLASS_INTER
         const searchFields = [
             new FormField({
                 name: "id",
-                label: this.translate.instant("furb.basico.category_id"),
+                label: "Código",
                 type: FieldType.String,
             }),
             new FormField({
                 name: "description",
-                label: this.translate.instant("furb.basico.category_description"),
+                label: "Descrição da categoria",
                 type: FieldType.String,
             }),
         ];
@@ -336,12 +336,12 @@ export class ProductFormComponent implements OnInit, OnDestroy /*{CA:CLASS_INTER
         const searchGridFields = [
             new FormField({
                 name: "id",
-                label: this.translate.instant("furb.basico.category_id"),
+                label: "Código",
                 type: FieldType.String,
             }),
             new FormField({
                 name: "description",
-                label: this.translate.instant("furb.basico.category_description"),
+                label: "Descrição da categoria",
                 type: FieldType.String,
             }),
         ];
@@ -386,8 +386,8 @@ export class ProductFormComponent implements OnInit, OnDestroy /*{CA:CLASS_INTER
             tap(() => {
                 this.messageService.add({
                     severity: "success",
-                    summary: this.translate.instant("deleted_message_title"),
-                    detail: this.translate.instant("deleted_message_content"),
+                    summary: "Sucesso",
+                    detail: "Registro(s) excluído(s) com sucesso",
                 });
                 this.goBack();
             })

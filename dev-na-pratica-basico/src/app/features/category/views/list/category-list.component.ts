@@ -10,10 +10,8 @@ import { TranslateService } from "@ngx-translate/core";
 import { Subject, forkJoin, of } from "rxjs";
 import { takeUntil, finalize, catchError, map } from "rxjs/operators";
 import { FormField, FieldType, IToken } from "@seniorsistemas/angular-components";
-import { FiltersStorageService } from "~shared/storage/filters-storage.service";
-
-import { Category } from "~core/entities/category/category";
-import { CategoryService } from "~core/entities/category/category.service";
+import { Category } from 'src/app/core/entities/category/category';
+import { CategoryService } from 'src/app/core/entities/category/category.service';
 
 @Component({
     templateUrl: "./category-list.component.html",
@@ -60,12 +58,9 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private categoryService: CategoryService,
         private confirmationService: ConfirmationService,
-        private translate: TranslateService,
         private messageService: MessageService,
-        private hotkeysService: HotkeysService,
-        private formBuilder: FormBuilder,
-        private filtersStorageService: FiltersStorageService
-    ) {}
+        private formBuilder: FormBuilder
+    ) { }
 
     public ngOnInit() {
         this.route.data
@@ -77,11 +72,8 @@ export class CategoryListComponent implements OnInit, OnDestroy {
             description: [undefined, Validators.compose([])]
         });
 
-        this.setStorageFiltersIntoForm(this.filterFormGroup);
         this.gridColumns = this.getGridColumns();
         this.filterFields = this.getFilterFields();
-
-        this.setHotkeys();
     }
 
     public ngOnDestroy() {
@@ -89,46 +81,8 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         this.ngUnsubscribe.complete();
     }
 
-    public setHotkeys() {
-        this.hotkeysService.add(
-            new Hotkey(
-                "alt+shift+e",
-                () => {
-                    if (this.selection && this.selection.length === 1) {
-                        this.onEdit();
-                    }
-                    return false;
-                },
-                ["INPUT", "SELECT", "TEXTAREA"]
-            )
-        );
 
-        this.hotkeysService.add(
-            new Hotkey(
-                "alt+shift+x",
-                () => {
-                    if (this.selection && this.selection.length) {
-                        this.onDelete();
-                    }
-                    return false;
-                },
-                ["INPUT", "SELECT", "TEXTAREA"]
-            )
-        );
-
-        this.hotkeysService.add(
-            new Hotkey(
-                "alt+shift+n",
-                () => {
-                    this.onAdd();
-                    return false;
-                },
-                ["INPUT", "SELECT", "TEXTAREA"]
-            )
-        );
-    }
-
-    public onRouteDataChange(data: any) {}
+    public onRouteDataChange(data: any) { }
 
     // Verifica se o objeto possui um valor que foi alterado para "" (String vazia) ao inves de null ou undefined
     private hasEmpty(target: any) {
@@ -144,7 +98,6 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         } else {
             this.filtersPanelCollapsed = true;
             this.resetGrid({ filterData });
-            this.filtersStorageService.storeFilters(this.constructor.name, filterData);
         }
     }
 
@@ -158,7 +111,6 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         this.filterFormGroup.get(token.id).setValue(undefined);
         const filterData = this.filterFormGroup.getRawValue();
         this.resetGrid({ filterData });
-        this.filtersStorageService.storeFilters(this.constructor.name, filterData);
     }
 
     public onGridChange(event: LazyLoadEvent) {
@@ -179,16 +131,16 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 
     public onDelete() {
         this.confirmationService.confirm({
-            message: this.translate.instant("delete_confirmation_message"),
-            header: this.translate.instant("delete_confirmation_title"),
+            message: "Se o registro for removido, ele não poderá ser restaurado",
+            header: "Deseja remover este registro?",
             accept: () => {
                 forkJoin(this.selection.map(category => this.categoryService.delete(category.id)))
                     .pipe(takeUntil(this.ngUnsubscribe))
                     .subscribe(() => {
                         this.messageService.add({
                             severity: "success",
-                            summary: this.translate.instant("deleted_message_title"),
-                            detail: this.translate.instant("deleted_message_content")
+                            summary: "Sucesso",
+                            detail: "Registro(s) excluído(s) com sucesso"
                         });
 
                         this.resetGrid();
@@ -199,10 +151,10 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 
     private getGridColumns() {
         const gridColumns = [
-            { field: "id", header: this.translate.instant("furb.basico.category_id") },
+            { field: "id", header: "Código" },
             {
                 field: "description",
-                header: this.translate.instant("furb.basico.category_description")
+                header: "Descrição da categoria"
             }
         ];
 
@@ -213,28 +165,17 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         const filterFields = [
             new FormField({
                 name: "id",
-                label: this.translate.instant("furb.basico.category_id"),
+                label: "Código",
                 type: FieldType.String
             }),
             new FormField({
                 name: "description",
-                label: this.translate.instant("furb.basico.category_description"),
+                label: "Descrição da categoria",
                 type: FieldType.String
             })
         ];
 
         return filterFields;
-    }
-
-    private async setStorageFiltersIntoForm(form: FormGroup) {
-        this.showLoader = true;
-        const filters = await this.filtersStorageService.getFilters(this.constructor.name);
-
-        Object.keys(form.controls).forEach(field => form.get(field).setValue(filters[field]));
-
-        this.filtersLoaded = true;
-        const filterData = this.filterFormGroup.getRawValue();
-        this.resetGrid({ filterData });
     }
 
     private getEnumQuery(name: string, value: any, multiple: boolean) {
@@ -286,7 +227,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         const displayFields = this.gridColumns.map(column => column.field);
 
         this.categoryService
-            .list({ page, size, sort, filterQuery, displayFields })
+            .listWithParams({ page, size, sort, filterQuery, displayFields })
             .pipe(
                 takeUntil(this.ngUnsubscribe),
                 catchError((err: any) => {
