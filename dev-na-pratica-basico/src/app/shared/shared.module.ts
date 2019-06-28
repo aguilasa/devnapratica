@@ -18,7 +18,6 @@ import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { DropdownModule } from "primeng/dropdown";
 import { TabViewModule } from "primeng/tabview";
 import { SharedModule as PrimeSharedModule } from "primeng/shared";
-import { FiltersStorageService } from "./storage/filters-storage.service";
 import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
@@ -29,8 +28,12 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 
+
+import { SideNavComponent } from './common/side-nav/side-nav.component';
+import { TopBarComponent } from './common/top-bar/top-bar.component';
+
 @NgModule({
-    imports: [],
+    declarations: [SideNavComponent, TopBarComponent],
     exports: [
         FormsModule,
         ReactiveFormsModule,
@@ -66,7 +69,8 @@ import { ToastModule } from 'primeng/toast';
         MessageModule,
         ToastModule
     ],
-    providers: [FiltersStorageService],
-    declarations: []
+    imports: [
+        CommonModule
+    ]
 })
 export class SharedModule { }

@@ -1,0 +1,89 @@
+<div *ngIf="!customTemplate else customTemplate">
+    <p-confirmDialog [acceptLabel]="'yes' " acceptIcon="" [rejectLabel]="'no' " rejectIcon=""></p-confirmDialog>
+    <form [formGroup]="filterFormGroup" autocomplete="off">
+        <p-panel styleClass="form-group" [toggleable]="true" [(collapsed)]="filtersPanelCollapsed">
+            <p-header>
+                Filtros
+                <s-token-list [tokens]="searchTokens" (tokenRemoved)="onRemoveToken($event)" [removableTokens]="true"></s-token-list>
+            </p-header>
+            <div *ngIf="!customFilterFields else customFilterFields">
+                <s-dynamic-form [fields]="filterFields" [form]="filterFormGroup" [errorMessages]="{pattern: 'error_invalid' }"></s-dynamic-form>
+            </div>
+            <p-footer>
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <button id="filter-button" class="ui-button" type="submit" pButton [label]="'filter' " (click)="onSearch()"></button>
+                        <button id="clear-button" class="ui-button ui-button-link" type="button" pButton [label]="'clear' "
+                            (click)="onClear()"></button>
+                    </div>
+                </div>
+            </p-footer>
+        </p-panel>
+    </form>
+    <p-panel *sLoadingState="showLoader">
+        <p-header>
+            {{"furb.basico.category_list_grid_title" }}
+        </p-header>
+        <s-empty-state *ngIf="serverError" iconClass="fa fa-exclamation-triangle" title="{{'error_server_title' }}"
+            primaryActionLabel="{{'error_server_try_again' }}" (primaryAction)="resetGrid()" description="{{'error_server_description' }}"></s-empty-state>
+        <s-empty-state *ngIf="gridData && !gridData.length" [title]="'furb.basico.category_empty_state_title' "
+            [showPrimaryAction]="true" [primaryActionLabel]="'add' " (primaryAction)="onAdd()"
+            [description]="'furb.basico.category_empty_state_description' "></s-empty-state>
+        <div [attr.data-hidden]="!gridData?.length">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <button id="add-button" type="button" pButton [label]="'add' " title="{{'add' }} (Alt + Shift + N)"
+                        *ngIf="true" (click)="onAdd()"></button>
+                    <button id="edit-button" type="button" class="ui-button-secondary" pButton [label]="'edit' "
+                        title="{{'edit' }} (Alt + Shift + E)" [disabled]="!selection || selection.length !== 1"
+                        (click)="onEdit()"></button>
+                    <button id="delete-button" type="button" class="ui-button-secondary" pButton [label]="'delete' "
+                        title="{{'delete' }} (Alt + Shift + X)" (click)="onDelete()" [disabled]="!selection || !selection.length"
+                        *ngIf="true"></button>
+                </div>
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <p-table #categoryTable [value]="gridData" [columns]="gridColumns" dataKey="id" [lazy]="true" [scrollable]="true"
+                        [resizableColumns]="true" sortMode="multiple" [paginator]="true" [totalRecords]="totalRecords"
+                        rows="10" [rowsPerPageOptions]="[10, 20, 50, 100]" [(selection)]="selection" (onLazyLoad)="onGridChange($event)">
+                        <ng-template pTemplate="colgroup" let-columns *ngIf="!customGridColgroup else customGridColgroup">
+                            <colgroup>
+                                <col *ngFor="let col of columns" [style.width]="col.width">
+                            </colgroup>
+                        </ng-template>
+                        <ng-template pTemplate="header" let-columns *ngIf="!customGridHeader else customGridHeader">
+                            <tr>
+                                <th style="width: 40px">
+                                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                </th>
+                                <th *ngFor="let col of columns" [pSortableColumn]="col.field" style="width: 200px" pResizableColumn>
+                                    <div class="senior-header">
+                                        <span class="senior-header-title">{{col.header}}</span>
+                                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                                    </div>
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns *ngIf="!customGridBody else customGridBody">
+                            <tr [pSelectableRow]="rowData">
+                                <td style="width: 40px">
+                                    <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                                </td>
+                                <td (click)="selection = [rowData]" style="width: 200px">
+                                    <span>{{rowData["id"]}}</span>
+                                </td>
+                                <td (click)="selection = [rowData]" style="width: 200px">
+                                    <span>{{rowData["description"]}}</span>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="paginatorright">
+                            <span [translate]="'total_records'" [translateParams]="{value: totalRecords}"></span>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </p-panel>
+</div>
