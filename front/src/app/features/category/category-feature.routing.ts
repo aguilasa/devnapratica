@@ -5,27 +5,17 @@ import { MessageService } from "primeng/components/common/messageservice";
 import { TranslateService } from "@ngx-translate/core";
 import { PermissionsService } from "@seniorsistemas/platform-components";
 import { LocaleService } from "@seniorsistemas/angular-components";
-/*{CA:PACKAGE_IMPORTS:START}*/
-/*{CA:PACKAGE_IMPORTS:END}*/
 
 import { CategoryListComponent } from "~features/category/views/list/category-list.component";
 import { CategoryFormComponent } from "~features/category/views/form/category-form.component";
 import { CategoryService } from "~core/entities/category/category.service";
 
-/*{CA:PROJECT_IMPORTS:START}*/
-/*{CA:PROJECT_IMPORTS:END}*/
-
 @Injectable()
 export class CategoryFeatureRoutingGuard implements CanActivate {
-    constructor(private permissionsService: PermissionsService, private router: Router) {}
+    constructor(private router: Router) {}
 
     public canActivate() {
-        return this.permissionsService.get("category").pipe(
-            map((permissions: any) => {
-                if (!permissions.visualizar) this.router.navigate(["forbidden"]);
-                return permissions.visualizar;
-            })
-        );
+        return true;
     }
 }
 
@@ -35,33 +25,6 @@ export class CategoryFeatureRoutingFormTitleResolver {
 
     public resolve() {
         return this.translate.get("furb.basico.category_form_title");
-    }
-}
-
-@Injectable()
-export class CategoryFeatureRoutingListTitleResolver {
-    constructor(private translate: TranslateService) {}
-
-    public resolve() {
-        return this.translate.get("furb.basico.category_list_title");
-    }
-}
-
-@Injectable()
-export class CategoryFeatureRoutingPermissionResolver {
-    constructor(private permissionsService: PermissionsService) {}
-
-    public resolve() {
-        return this.permissionsService.get();
-    }
-}
-
-@Injectable()
-export class CategoryFeatureRoutingLocaleResolver {
-    constructor(private localeService: LocaleService) {}
-
-    public resolve() {
-        return this.localeService.get();
     }
 }
 
@@ -77,7 +40,9 @@ export class CategoryFeatureRoutingEntityResolver {
 }
 
 @Component({
-    template: `<router-outlet></router-outlet>`,
+    template: `
+        <router-outlet></router-outlet>
+    `
 })
 export class EmptyComponent {}
 
@@ -85,79 +50,40 @@ export const routes: Routes = [
     {
         path: "category",
         component: EmptyComponent,
-        canActivate: [
-            CategoryFeatureRoutingGuard,
-            /*{CA:CATEGORY_ROUTE_GUARDS:START}*/
-            /*{CA:CATEGORY_ROUTE_GUARDS:END}*/
-        ],
-        resolve: {
-            allPermissions: CategoryFeatureRoutingPermissionResolver,
-            localeConfig: CategoryFeatureRoutingLocaleResolver,
-            routeTitle: CategoryFeatureRoutingListTitleResolver,
-            /*{CA:CATEGORY_ROUTE_RESOLVE:START}*/
-            /*{CA:CATEGORY_ROUTE_RESOLVE:END}*/
-        },
+        // canActivate: [CategoryFeatureRoutingGuard],
+        resolve: {},
         children: [
             {
                 path: "",
-                component: CategoryListComponent,
+                component: CategoryListComponent
             },
             {
                 path: ":category",
                 component: EmptyComponent,
-                canActivate: [CategoryFeatureRoutingGuard],
+                // canActivate: [CategoryFeatureRoutingGuard],
                 resolve: {
                     routeTitle: CategoryFeatureRoutingFormTitleResolver,
-                    entity: CategoryFeatureRoutingEntityResolver,
-                    /*{CA:CATEGORY_ROUTE_RESOLVE:START}*/
-                    /*{CA:CATEGORY_ROUTE_RESOLVE:END}*/
+                    entity: CategoryFeatureRoutingEntityResolver
                 },
                 children: [
                     {
                         path: "",
-                        component: CategoryFormComponent,
-                    },
-
-                    /*{CA:CATEGORY_ROUTE_CHILDREN:START}*/
-                    /*{CA:CATEGORY_ROUTE_CHILDREN:END}*/
-                ],
-            },
-            /*{CA:CATEGORY_ROUTE_CHILDREN:START}*/
-            /*{CA:CATEGORY_ROUTE_CHILDREN:END}*/
-        ],
-    },
+                        component: CategoryFormComponent
+                    }
+                ]
+            }
+        ]
+    }
 ];
 
 @NgModule({
-    imports: [
-        RouterModule.forChild(routes),
-        /*{CA:MODULE_IMPORTS:START}*/
-        /*{CA:MODULE_IMPORTS:END}*/
-    ],
-    exports: [
-        RouterModule,
-        /*{CA:MODULE_EXPORTS:START}*/
-        /*{CA:MODULE_EXPORTS:END}*/
-    ],
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
     providers: [
         CategoryFeatureRoutingGuard,
-        CategoryFeatureRoutingPermissionResolver,
-        CategoryFeatureRoutingLocaleResolver,
         CategoryFeatureRoutingFormTitleResolver,
-        CategoryFeatureRoutingListTitleResolver,
-        CategoryFeatureRoutingEntityResolver,
-        /*{CA:MODULE_PROVIDERS:START}*/
-        /*{CA:MODULE_PROVIDERS:END}*/
+        CategoryFeatureRoutingEntityResolver
     ],
-    declarations: [
-        EmptyComponent,
-        /*{CA:MODULE_DECLARATIONS:START}*/
-        /*{CA:MODULE_DECLARATIONS:END}*/
-    ],
-    /*{CA:MODULE_CONFIG:START}*/
-    /*{CA:MODULE_CONFIG:END}*/
+    declarations: [EmptyComponent]
 })
 export class CategoryFeatureRouting {}
-
-/*{CA:FILE_CONTENTS:START}*/
-/*{CA:FILE_CONTENTS:END}*/

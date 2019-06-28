@@ -12,6 +12,7 @@ export const environment: any = {
     production: false,
     ignorePermissions: false,
     /*{CA:ENV:START}*/
+    urlBase: "https://platform-homologx.senior.com.br/t/senior.com.br/bridge/1.0/rest/furb/basico",
     /*{CA:ENV:END}*/
 };
 

@@ -1,30 +1,15 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { MessageService } from "primeng/components/common/messageservice";
-/*{CA:PACKAGE_IMPORTS:START}*/
-/*{CA:PACKAGE_IMPORTS:END}*/
+import {Injectable} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
+import {MessageService} from "primeng/components/common/messageservice";
 
-import { environment } from "~environments/environment";
-import { ProductDto } from "~core/entities/product/product-dto";
-import { EntityService } from "~core/entities/entity-service";
-
-/*{CA:PROJECT_IMPORTS:START}*/
-/*{CA:PROJECT_IMPORTS:END}*/
+import {environment} from "~environments/environment";
+import {ProductDto} from "~core/entities/product/product-dto";
+import {EntityService} from "~core/entities/entity-service";
 
 @Injectable()
 export class ProductService extends EntityService<ProductDto> {
-    /*{CA:CLASS_ATTRIBUTES:START}*/
-    /*{CA:CLASS_ATTRIBUTES:END}*/
 
     constructor(protected http: HttpClient, protected messageService: MessageService) {
-        super(http, messageService, `${environment.project.domain}/${environment.project.service}/entities/product`);
-        /*{CA:CONSTRUCTOR_END:START}*/
-        /*{CA:CONSTRUCTOR_END:END}*/
+        super(http, messageService, `${environment.project.urlBase}/entities/product`);
     }
-
-    /*{CA:CLASS_METHODS:START}*/
-    /*{CA:CLASS_METHODS:END}*/
 }
-
-/*{CA:FILE_CONTENTS:START}*/
-/*{CA:FILE_CONTENTS:END}*/
