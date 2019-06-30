@@ -22,13 +22,13 @@
     </form>
     <p-panel *sLoadingState="showLoader">
         <p-header>
-            {{"furb.basico.product_list_grid_title" | translate}}
+            Items
         </p-header>
         <s-empty-state *ngIf="serverError" iconClass="fa fa-exclamation-triangle" title="Erro na busca das informações"
             primaryActionLabel="Atualizar" (primaryAction)="resetGrid()" description="Atualize a página e caso o erro continue, entre em contato com o Administrador do sistema"></s-empty-state>
-        <s-empty-state *ngIf="gridData && !gridData.length" [title]="'furb.basico.product_empty_state_title' | translate"
-             [primaryActionLabel]="Adicionar" (primaryAction)="onAdd()"
-            [description]="'furb.basico.product_empty_state_description' | translate"></s-empty-state>
+        <s-empty-state *ngIf="gridData && !gridData.length" title="Nenhum Item encontrado"
+             primaryActionLabel="Adicionar" (primaryAction)="onAdd()"
+            description="Clique no botão abaixo para adicionar"></s-empty-state>
         <div [attr.data-hidden]="!gridData?.length">
             <div class="ui-g">
                 <div class="ui-g-12">
@@ -44,14 +44,12 @@
             </div>
             <div class="ui-g">
                 <div class="ui-g-12">
-                    <p-table #productTable [value]="gridData" [columns]="gridColumns" dataKey="id" [lazy]="true" [scrollable]="true"
+                    <p-table #itemListTable [value]="gridData" [columns]="gridColumns" dataKey="id" [lazy]="true" [scrollable]="true"
                         [resizableColumns]="true" sortMode="multiple" [paginator]="true" [totalRecords]="totalRecords"
                         rows="10" [rowsPerPageOptions]="[10, 20, 50, 100]" [(selection)]="selection" (onLazyLoad)="onGridChange($event)">
                         <ng-template pTemplate="colgroup" let-columns *ngIf="!customGridColgroup else customGridColgroup">
                             <colgroup>
                                 <col *ngFor="let col of columns" [style.width]="col.width">
-                                <!--{CA:GRID_COLGROUP_COLUMNS:START}-->
-                                <!--{CA:GRID_COLGROUP_COLUMNS:END}-->
                             </colgroup>
                         </ng-template>
                         <ng-template pTemplate="header" let-columns *ngIf="!customGridHeader else customGridHeader">
@@ -65,8 +63,6 @@
                                         <p-sortIcon [field]="col.field"></p-sortIcon>
                                     </div>
                                 </th>
-                                <!--{CA:GRID_HEADER_COLUMNS:START}-->
-                                <!--{CA:GRID_HEADER_COLUMNS:END}-->
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-columns *ngIf="!customGridBody else customGridBody">
@@ -80,38 +76,25 @@
                                 </td>
                                 -->
                                 <td (click)="selection = [rowData]" style="width: 200px">
-                                    <span>{{rowData["description"]}}</span>
+                                    <span>{{rowData["quantity"]}}</span>
                                 </td>
                                 <td (click)="selection = [rowData]" style="width: 200px">
-                                    <div [ngSwitch]="rowData['unit']">
-                                        <span *ngSwitchCase="'UN'">{{ "furb.basico.unit_un" | translate }}</span>
-                                        <span *ngSwitchCase="'DZ'">{{ "furb.basico.unit_dz" | translate }}</span>
-                                        <span *ngSwitchCase="'ML'">{{ "furb.basico.unit_ml" | translate }}</span>
-                                        <span *ngSwitchCase="'L'">{{ "furb.basico.unit_l" | translate }}</span>
-                                        <span *ngSwitchCase="'KG'">{{ "furb.basico.unit_kg" | translate }}</span>
-                                        <span *ngSwitchCase="'G'">{{ "furb.basico.unit_g" | translate }}</span>
-                                        <span *ngSwitchCase="'CAIXA'">{{ "furb.basico.unit_caixa" | translate }}</span>
-                                        <span *ngSwitchCase="'EMBALAGEM'">{{ "furb.basico.unit_embalagem" | translate }}</span>
-                                        <span *ngSwitchCase="'GALAO'">{{ "furb.basico.unit_galao" | translate }}</span>
-                                        <span *ngSwitchCase="'GARRAFA'">{{ "furb.basico.unit_garrafa" | translate }}</span>
-                                        <span *ngSwitchCase="'LATA'">{{ "furb.basico.unit_lata" | translate }}</span>
-                                        <span *ngSwitchCase="'PACOTE'">{{ "furb.basico.unit_pacote" | translate }}</span>
-                                    </div>
+                                    <span>{{rowData["price"]}}</span>
                                 </td>
-                                <!--{CA:GRID_BODY_COLUMNS:START}-->
-                                <!--{CA:GRID_BODY_COLUMNS:END}-->
+                                <td (click)="selection = [rowData]" style="width: 200px">
+                                    <p-checkbox [(ngModel)]="rowData['checked']" [disabled]="true" [binary]="true"></p-checkbox>
+                                </td>
+                                <!-- <td (click)="selection = [rowData]" style="width: 200px">
+                                    <span>{{rowData["note"]}}</span>
+                                </td> -->
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="paginatorright">
                             <span>{{ totalRecords }} registros</span>
                         </ng-template>
-                        <!--{CA:GRID_TEMPLATES:START}-->
-                        <!--{CA:GRID_TEMPLATES:END}-->
                     </p-table>
                 </div>
             </div>
         </div>
     </p-panel>
 </div>
-<!--{CA:FILE_CONTENTS:START}-->
-<!--{CA:FILE_CONTENTS:END}-->

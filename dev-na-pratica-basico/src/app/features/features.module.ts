@@ -5,6 +5,8 @@ import { ClienteFeatureModule } from './cliente/cliente.module';
 import { ItemModule } from './item/item.module';
 import { CategoryFeatureModule } from './category/category.module';
 import { RouterModule } from '@angular/router';
+import { ProductFeatureModule } from './product/product-feature.module';
+import { ItemListFeatureModule } from './item-list/item-list-feature.module';
 
 @NgModule({
   declarations: [],
@@ -13,7 +15,9 @@ import { RouterModule } from '@angular/router';
     FeaturesRouterModule,
     ClienteFeatureModule,
     ItemModule,
-    CategoryFeatureModule
+    CategoryFeatureModule,
+    ProductFeatureModule,
+    ItemListFeatureModule
   ],
   exports: [
     RouterModule

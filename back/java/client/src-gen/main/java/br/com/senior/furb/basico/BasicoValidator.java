@@ -164,11 +164,6 @@ public class BasicoValidator {
     			throw new IllegalArgumentException("price is required");
     		}
     	}
-    	if (required) {
-    		if (toValidate.checked == null) {
-    			throw new IllegalArgumentException("checked is required");
-    		}
-    	}
     }
     /**
      * Validates the payload for required fields and valid values.

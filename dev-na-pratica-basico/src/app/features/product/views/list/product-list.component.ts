@@ -10,32 +10,30 @@ import { TranslateService } from "@ngx-translate/core";
 import { Subject, forkJoin, of } from "rxjs";
 import { takeUntil, finalize, catchError, map } from "rxjs/operators";
 import { FormField, FieldType, IToken } from "@seniorsistemas/angular-components";
-import { FiltersStorageService } from "~shared/storage/filters-storage.service";
-
-import { Category } from "~core/entities/category/category";
-import { CategoryService } from "~core/entities/category/category.service";
+import { Product } from "src/app/core/entities/product/product";
+import { ProductService } from "src/app/core/entities/product/product.service";
+import { Unit } from "src/app/core/enums/unit";
 
 @Component({
-    templateUrl: "./category-list.component.html",
+    templateUrl: "./product-list.component.html",
     styleUrls: [],
     providers: [ConfirmationService]
 })
-export class CategoryListComponent implements OnInit, OnDestroy {
+export class ProductListComponent implements OnInit, OnDestroy {
     public currentListParams: ListParams = { page: 0, size: 10, sort: [], filterData: {} };
-    public gridData: Category[];
+    public gridData: Product[];
     public gridColumns: any[];
     public showLoader: boolean;
     public totalRecords: number;
-    public selection: Category[];
+    public selection: Product[];
 
     public filterFields: FormField[];
     public filterFormGroup: FormGroup;
     public filtersPanelCollapsed = true;
     public searchTokens: IToken[] = [];
     public serverError: boolean = false;
-    public filtersLoaded = false;
 
-    @ViewChild("categoryTable")
+    @ViewChild("productTable")
     public table: Table;
 
     @ViewChild("customTemplate")
@@ -58,74 +56,35 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     constructor(
         private router: Router,
         private route: ActivatedRoute,
-        private categoryService: CategoryService,
+        private productService: ProductService,
         private confirmationService: ConfirmationService,
         private translate: TranslateService,
         private messageService: MessageService,
         private hotkeysService: HotkeysService,
-        private formBuilder: FormBuilder,
-        private filtersStorageService: FiltersStorageService
+        private formBuilder: FormBuilder
     ) {}
 
     public ngOnInit() {
-        this.route.data
-            .pipe(takeUntil(this.ngUnsubscribe))
-            .subscribe((data: any) => this.onRouteDataChange(data));
+        this.route.data.pipe(takeUntil(this.ngUnsubscribe)).subscribe((data: any) => this.onRouteDataChange(data));
 
         this.filterFormGroup = this.formBuilder.group({
             id: [undefined, Validators.compose([])],
-            description: [undefined, Validators.compose([])]
+            description: [undefined, Validators.compose([])],
+            unit: [undefined, Validators.compose([])]
         });
 
-        this.setStorageFiltersIntoForm(this.filterFormGroup);
+        this.setShowLoader();
         this.gridColumns = this.getGridColumns();
         this.filterFields = this.getFilterFields();
+    }
 
-        this.setHotkeys();
+    private async setShowLoader() {
+        this.showLoader = true;
     }
 
     public ngOnDestroy() {
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
-    }
-
-    public setHotkeys() {
-        this.hotkeysService.add(
-            new Hotkey(
-                "alt+shift+e",
-                () => {
-                    if (this.selection && this.selection.length === 1) {
-                        this.onEdit();
-                    }
-                    return false;
-                },
-                ["INPUT", "SELECT", "TEXTAREA"]
-            )
-        );
-
-        this.hotkeysService.add(
-            new Hotkey(
-                "alt+shift+x",
-                () => {
-                    if (this.selection && this.selection.length) {
-                        this.onDelete();
-                    }
-                    return false;
-                },
-                ["INPUT", "SELECT", "TEXTAREA"]
-            )
-        );
-
-        this.hotkeysService.add(
-            new Hotkey(
-                "alt+shift+n",
-                () => {
-                    this.onAdd();
-                    return false;
-                },
-                ["INPUT", "SELECT", "TEXTAREA"]
-            )
-        );
     }
 
     public onRouteDataChange(data: any) {}
@@ -144,7 +103,6 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         } else {
             this.filtersPanelCollapsed = true;
             this.resetGrid({ filterData });
-            this.filtersStorageService.storeFilters(this.constructor.name, filterData);
         }
     }
 
@@ -158,7 +116,6 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         this.filterFormGroup.get(token.id).setValue(undefined);
         const filterData = this.filterFormGroup.getRawValue();
         this.resetGrid({ filterData });
-        this.filtersStorageService.storeFilters(this.constructor.name, filterData);
     }
 
     public onGridChange(event: LazyLoadEvent) {
@@ -182,7 +139,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
             message: "Se o registro for removido, ele não poderá ser restaurado",
             header: "Deseja remover este registro?",
             accept: () => {
-                forkJoin(this.selection.map(category => this.categoryService.delete(category.id)))
+                forkJoin(this.selection.map(product => this.productService.delete(product.id)))
                     .pipe(takeUntil(this.ngUnsubscribe))
                     .subscribe(() => {
                         this.messageService.add({
@@ -200,12 +157,9 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     private getGridColumns() {
         const gridColumns = [
             // { field: "id", header: "Código" },
-            {
-                field: "description",
-                header: "Descrição da categoria"
-            }
+            { field: "description", header: "Produto" },
+            { field: "unit", header: "Unidade de medida" }
         ];
-
         return gridColumns;
     }
 
@@ -218,34 +172,40 @@ export class CategoryListComponent implements OnInit, OnDestroy {
             }),
             new FormField({
                 name: "description",
-                label: "Descrição da categoria",
+                label: "Produto",
                 type: FieldType.String
+            }),
+            new FormField({
+                name: "unit",
+                label: "Unidade de medida",
+                type: FieldType.Enum,
+                placeholder: "Unidade de medida",
+                options: [
+                    { label: "Unidade", value: Unit.UN },
+                    { label: "Dúzia", value: Unit.DZ },
+                    { label: "ml", value: Unit.ML },
+                    { label: "L", value: Unit.L },
+                    { label: "kg", value: Unit.KG },
+                    { label: "g", value: Unit.G },
+                    { label: "Caixa", value: Unit.CAIXA },
+                    { label: "Embalagem", value: Unit.EMBALAGEM },
+                    { label: "Galão", value: Unit.GALAO },
+                    { label: "Garrafa", value: Unit.GARRAFA },
+                    { label: "Lata", value: Unit.LATA },
+                    { label: "Pacote", value: Unit.PACOTE }
+                ],
+                multiple: false
             })
         ];
 
         return filterFields;
     }
 
-    private async setStorageFiltersIntoForm(form: FormGroup) {
-        this.showLoader = true;
-        const filters = await this.filtersStorageService.getFilters(this.constructor.name);
-
-        Object.keys(form.controls).forEach(field => form.get(field).setValue(filters[field]));
-
-        this.filtersLoaded = true;
-        const filterData = this.filterFormGroup.getRawValue();
-        this.resetGrid({ filterData });
-    }
-
     private getEnumQuery(name: string, value: any, multiple: boolean) {
-        return multiple
-            ? `(${value.map((selected: any) => `${name} eq ${selected}`).join(" or ")})`
-            : `${name} eq ${value}`;
+        return multiple ? `(${value.map((selected: any) => `${name} eq ${selected}`).join(" or ")})` : `${name} eq ${value}`;
     }
 
     private updateGrid(listParams: ListParams = {}) {
-        if (!this.filtersLoaded) return;
-
         this.showLoader = true;
         this.currentListParams = { ...this.currentListParams, ...listParams };
         const { page, size, sort, filterData } = this.currentListParams;
@@ -270,14 +230,10 @@ export class CategoryListComponent implements OnInit, OnDestroy {
                 const value = filterData[name];
 
                 if (typeof value == "number") return `${name} eq ${value}`;
-                else if (type == FieldType.Date)
-                    return `${name} eq '${moment(value).format("YYYY-MM-DD")}'`;
-                else if (type == FieldType.Time)
-                    return `${name} eq '${moment(value).format("HH:mm:ss")}'`;
-                else if (type == FieldType.DateTime)
-                    return `${name} eq '${moment(value).format()}'`;
-                else if (type == FieldType.String)
-                    return `containing(lower(${name}), lower('${value}'))`;
+                else if (type == FieldType.Date) return `${name} eq '${moment(value).format("YYYY-MM-DD")}'`;
+                else if (type == FieldType.Time) return `${name} eq '${moment(value).format("HH:mm:ss")}'`;
+                else if (type == FieldType.DateTime) return `${name} eq '${moment(value).format()}'`;
+                else if (type == FieldType.String) return `containing(lower(${name}), lower('${value}'))`;
                 else if (type == FieldType.Enum) return this.getEnumQuery(name, value, multiple);
                 else return `${name} eq '${value}'`;
             })
@@ -285,8 +241,8 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 
         const displayFields = this.gridColumns.map(column => column.field);
 
-        this.categoryService
-            .list({ page, size, sort, filterQuery, displayFields })
+        this.productService
+            .listWithParams({ page, size, sort, filterQuery, displayFields })
             .pipe(
                 takeUntil(this.ngUnsubscribe),
                 catchError((err: any) => {

@@ -1,5 +1,5 @@
 <div *ngIf="!customTemplate else customTemplate">
-    <p-confirmDialog acceptLabel="{{'yes' | translate}}" acceptIcon="" rejectLabel="{{'no' | translate}}"
+    <p-confirmDialog acceptLabel="Sim" acceptIcon="" rejectLabel="Não"
         rejectIcon="">
     </p-confirmDialog>
     <form [formGroup]="formGroup" novalidate>
@@ -17,12 +17,12 @@
                         <label for="description">{{"furb.basico.product_description" | translate}}</label>
                         <input type="text" id="description" name="description" pInputText formControlName="description" autocomplete="off"
                         />
-                        <s-control-errors [control]="formGroup.controls['description']" [errorMessages]="{ required: 'error_required' | translate }"></s-control-errors>
+                        <s-control-errors [control]="formGroup.controls['description']" [errorMessages]="{ required: 'Informação obrigatória' }"></s-control-errors>
                     </div>
                     <div class="ui-g-12 ui-md-6 required">
                         <label for="unit">{{"furb.basico.product_unit" | translate}}</label>
                         <p-dropdown inputId="unit" name="unit" [options]="unit" formControlName="unit" [autoWidth]="false" placeholder="{{'furb.basico.product_unit_placeholder' | translate}}"></p-dropdown>
-                        <s-control-errors [control]="formGroup.controls['unit']" [errorMessages]="{ required: 'error_required' | translate }"></s-control-errors>
+                        <s-control-errors [control]="formGroup.controls['unit']" [errorMessages]="{ required: 'Informação obrigatória' }"></s-control-errors>
                     </div>
                     <div [attr.data-hidden]="!allPermissions?.category.visualizar" class="ui-g-12 ui-md-6 required">
                         <label for="category">{{"furb.basico.product_category" | translate}}</label>
@@ -31,19 +31,19 @@
                             [multiple]="false" [lookupSuggestions]="categoryLookupSuggestions" (onLookupRequest)="onCategoryLookupRequest($event)"
                             (onSearchRequest)="onCategorySearchRequest($event)" lookupDisplayField="id" [searchTotalRecords]=categorySearchTotalRecords
                             [searchTitle]="'furb.basico.product_category_search_title' | translate" [searchEmptyTitle]="'nothing_found' | translate"
-                            [filterLabel]="'filter' | translate" [clearLabel]="'clear' | translate" [cancelLabel]="'cancel' | translate"
-                            [selectLabel]="'select' | translate" [searchTotalRecordsLabel]="'total_records' | translate: {value: categorySearchTotalRecords}"></s-lookup>
-                        <s-control-errors [control]="formGroup.controls['category']" [errorMessages]="{ required: 'error_required' | translate }"></s-control-errors>
+                            filterLabel="Filtrar" clearLabel="Limpar" cancelLabel="Cancelar"
+                            selectLabel="Selecionar" searchTotalRecordsLabel="Registos encontrados: {{ categorySearchTotalRecords }}"></s-lookup>
+                        <s-control-errors [control]="formGroup.controls['category']" [errorMessages]="{ required: 'Informação obrigatória' }"></s-control-errors>
                     </div>
                 </div>
             </div>
             <p-footer>
-                <button id="save-button" title="{{'save' | translate}} (Alt + Shift + S)" type="submit" pButton label="{{'save' | translate}}"
-                    (click)="onSave()" *ngIf="isNew() || permissions.editar"></button>
-                <button id="delete-button" title="{{'delete' | translate}} (Alt + Shift + X)" type="button" class="ui-button-secondary"
-                    pButton label="{{'delete' | translate}}" (click)="onDelete()" *ngIf="!isNew() && permissions.excluir && !loading"></button>
-                <button id="cancel-button" title="{{'cancel' | translate}} (Alt + Shift + C)" type="button" class="ui-button-link"
-                    pButton label="{{'cancel' | translate}}" (click)="onCancel()"></button>
+                <button id="save-button" title="Salvar" type="submit" pButton label="Salvar"
+                    (click)="onSave()"></button>
+                <button id="delete-button" title="Excluir" type="button" class="ui-button-secondary"
+                    pButton label="Excluir" (click)="onDelete()" *ngIf="!isNew() && !loading"></button>
+                <button id="cancel-button" title="Cancelar" type="button" class="ui-button-link"
+                    pButton label="Cancelar" (click)="onCancel()"></button>
             </p-footer>
         </p-panel>
     </form>

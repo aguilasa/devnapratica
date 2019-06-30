@@ -5,10 +5,6 @@ body {
   margin: 0;
 }
 
-.ui-card-header {
-  text-align: center;
-}
-
 .navBar {
   background-color: #273033;
   height: 4rem;
@@ -43,67 +39,16 @@ body {
     z-index: 9999;
   }
 
-  body .logo-img {
-    text-align: center;
-  }
-
-  body .menu-button {
-    display: inline-block;
-  }
 }
 
 .navBar .ui-g{
   display: inherit;
 }
 
-.layout-mask {
-  z-index: 9998;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 100px;
-  left: 0;
-  display: none;
-  background-color: #4c5254;
-  opacity: .7;
-}
-
-.menu-button {
-  display: none;
-  color: #fff;
-  font-size: 24px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 74px;
-  height: 28px;
-  line-height: 67px;
-  text-align: center;
-  transition: background-color .2s;
-}
-
-// .menu-button :hover {
-//   color: #009688;
-// }
-
 .layout-wrapper {
   margin-left: 260px;
   margin-top: 50px;
   padding: 0 1rem 1rem;
-}
-
-.logo-img {
-  text-align: left;
-  padding-left: 2rem;
-}
-
-.logo-img-nav {
-  width: 10rem;
-  float: right;
-}
-
-.logo-img img {
-  height: 3rem;
 }
 
 .nav {
@@ -157,102 +102,6 @@ body {
   text-transform: uppercase;
   right: -1px;
   top: 8px;
-}
-
-
-body .group-button button {
-  margin-right: 1rem;
-}
-
-.group-button {
-  text-align: right;
-}
-
-.ui-fluid .ui-dropdown {
-  width: 100% !important;
-}
-
-p-dropdown {
-  width: 100%;
-}
-
-.ui-fluid .ui-calendar {
-  width: 100% !important;
-}
-
-p-calendar {
-  width: 100%;
-}
-
-.ui-panel-title {
-  font-size: 14px;
-  font-weight: 500;
-  text-transform: uppercase;
-  color: #FFFFFF;
-}
-
-.ui-card-header {
-  border-bottom: #d6d4d4 solid 1px;
-  background-color: #428bca;
-  margin: auto;
-  height: 2.4rem;
-}
-
-body .ui-helper-clearfix {
-  zoom: 1;
-}
-
-.title-card-header{
-  padding-top: 0.5rem;
-}
-
-.centralized {
-  margin: auto;
-}
-
-.ui-inputgroup {
-  padding-top: 0.3rem;
-  padding-bottom: 0.3rem;
-}
-
-label.required:after {
-  content: " *";
-  color: red;
-}
-
-.radio-align {
-  display: flex;
-  flex-wrap: nowrap;
-  width: 60%
-}
-
-.outOfDate {
-  color: #ca8913;
-}
-
-body .ui-breadcrumb {
-  background-color: #f5f7f8 !important;
-}
-
-.ui-card .ui-card-body {
-  padding: 0 2rem;
-}
-
-body .ui-button {
-  margin: 0.5rem !important;
-}
-
-.ui-table .ui-widget .ui-table-responsive {
-  text-align: center;
-}
-
-body .ui-table .ui-table-summary {
-  background-color: white !important;
-  border: 0 !important;
-}
-
-.ui-table {
-  text-align: center;
 }
 
 .nav-open{

@@ -9,7 +9,7 @@ service basico {
         enumeration unit {
             "Unidade"
             UN
-            "Dezena"
+            "Dúzia"
             DZ
             "Mililitro"
             ML
@@ -66,7 +66,7 @@ service basico {
             "Preço"
             price : double
             "Checado"
-            checked : boolean
+            checked : boolean?
             "Observação"
             note : string?
         }

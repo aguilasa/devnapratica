@@ -5,16 +5,13 @@ import { ConfirmationService } from "primeng/api";
 import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms";
 import { Subject } from "rxjs";
 import { tap, takeUntil } from "rxjs/operators";
-import { CategoryService } from 'src/app/core/entities/category/category.service';
-import { Category } from 'src/app/core/entities/category/category';
+import { CategoryService } from "src/app/core/entities/category/category.service";
+import { Category } from "src/app/core/entities/category/category";
 
 @Component({
     templateUrl: "./category-form.component.html",
-    styleUrls: [
-    ],
-    providers: [
-        ConfirmationService,
-    ],
+    styleUrls: [],
+    providers: [ConfirmationService]
 })
 export class CategoryFormComponent implements OnInit, OnDestroy {
     public formGroup: FormGroup;
@@ -37,24 +34,19 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
-        private formBuilder: FormBuilder,
-    ) {
-    }
+        private formBuilder: FormBuilder
+    ) {}
 
     public ngOnInit() {
-
         this.formGroup = this.getFormGroup();
 
         this.route.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe((params: any) => this.onRouteParamsChange(params));
         this.route.data.pipe(takeUntil(this.ngUnsubscribe)).subscribe((data: any) => this.onRouteDataChange(data));
-
     }
 
     public ngOnDestroy() {
-
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
-
     }
 
     public isNew() {
@@ -87,7 +79,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
                 this.messageService.add({
                     severity: "success",
                     summary: "Registro salvo com sucesso",
-                    detail: "Sucesso",
+                    detail: "Sucesso"
                 });
                 this.goBack();
             });
@@ -100,14 +92,14 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
             accept: () =>
                 this.getDeleteObservable()
                     .pipe(takeUntil(this.ngUnsubscribe))
-                    .subscribe(),
+                    .subscribe()
         });
     }
 
     private getFormGroup() {
         const formGroup = this.formBuilder.group({
             id: [{ value: undefined, disabled: true }, Validators.compose([])],
-            description: [{ value: undefined, disabled: false }, Validators.compose([Validators.required])],
+            description: [{ value: undefined, disabled: false }, Validators.compose([Validators.required])]
         });
         return formGroup;
     }
@@ -147,11 +139,10 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
                 this.messageService.add({
                     severity: "success",
                     summary: "Sucesso",
-                    detail: "Registro(s) excluído(s) com sucesso",
+                    detail: "Registro(s) excluído(s) com sucesso"
                 });
                 this.goBack();
             })
         );
     }
-
 }

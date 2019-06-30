@@ -10,8 +10,8 @@ import { TranslateService } from "@ngx-translate/core";
 import { Subject, forkJoin, of } from "rxjs";
 import { takeUntil, finalize, catchError, map } from "rxjs/operators";
 import { FormField, FieldType, IToken } from "@seniorsistemas/angular-components";
-import { Category } from 'src/app/core/entities/category/category';
-import { CategoryService } from 'src/app/core/entities/category/category.service';
+import { Category } from "src/app/core/entities/category/category";
+import { CategoryService } from "src/app/core/entities/category/category.service";
 
 @Component({
     templateUrl: "./category-list.component.html",
@@ -31,7 +31,6 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     public filtersPanelCollapsed = true;
     public searchTokens: IToken[] = [];
     public serverError: boolean = false;
-    public filtersLoaded = false;
 
     @ViewChild("categoryTable")
     public table: Table;
@@ -60,20 +59,23 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         private confirmationService: ConfirmationService,
         private messageService: MessageService,
         private formBuilder: FormBuilder
-    ) { }
+    ) {}
 
     public ngOnInit() {
-        this.route.data
-            .pipe(takeUntil(this.ngUnsubscribe))
-            .subscribe((data: any) => this.onRouteDataChange(data));
+        this.route.data.pipe(takeUntil(this.ngUnsubscribe)).subscribe((data: any) => this.onRouteDataChange(data));
 
         this.filterFormGroup = this.formBuilder.group({
             id: [undefined, Validators.compose([])],
             description: [undefined, Validators.compose([])]
         });
 
+        this.setShowLoader();
         this.gridColumns = this.getGridColumns();
         this.filterFields = this.getFilterFields();
+    }
+
+    private async setShowLoader() {
+        this.showLoader = true;
     }
 
     public ngOnDestroy() {
@@ -81,8 +83,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
         this.ngUnsubscribe.complete();
     }
 
-
-    public onRouteDataChange(data: any) { }
+    public onRouteDataChange(data: any) {}
 
     // Verifica se o objeto possui um valor que foi alterado para "" (String vazia) ao inves de null ou undefined
     private hasEmpty(target: any) {
@@ -151,7 +152,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 
     private getGridColumns() {
         const gridColumns = [
-            { field: "id", header: "Código" },
+            // { field: "id", header: "Código" },
             {
                 field: "description",
                 header: "Descrição da categoria"
@@ -179,14 +180,10 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     }
 
     private getEnumQuery(name: string, value: any, multiple: boolean) {
-        return multiple
-            ? `(${value.map((selected: any) => `${name} eq ${selected}`).join(" or ")})`
-            : `${name} eq ${value}`;
+        return multiple ? `(${value.map((selected: any) => `${name} eq ${selected}`).join(" or ")})` : `${name} eq ${value}`;
     }
 
     private updateGrid(listParams: ListParams = {}) {
-        if (!this.filtersLoaded) return;
-
         this.showLoader = true;
         this.currentListParams = { ...this.currentListParams, ...listParams };
         const { page, size, sort, filterData } = this.currentListParams;
@@ -211,14 +208,10 @@ export class CategoryListComponent implements OnInit, OnDestroy {
                 const value = filterData[name];
 
                 if (typeof value == "number") return `${name} eq ${value}`;
-                else if (type == FieldType.Date)
-                    return `${name} eq '${moment(value).format("YYYY-MM-DD")}'`;
-                else if (type == FieldType.Time)
-                    return `${name} eq '${moment(value).format("HH:mm:ss")}'`;
-                else if (type == FieldType.DateTime)
-                    return `${name} eq '${moment(value).format()}'`;
-                else if (type == FieldType.String)
-                    return `containing(lower(${name}), lower('${value}'))`;
+                else if (type == FieldType.Date) return `${name} eq '${moment(value).format("YYYY-MM-DD")}'`;
+                else if (type == FieldType.Time) return `${name} eq '${moment(value).format("HH:mm:ss")}'`;
+                else if (type == FieldType.DateTime) return `${name} eq '${moment(value).format()}'`;
+                else if (type == FieldType.String) return `containing(lower(${name}), lower('${value}'))`;
                 else if (type == FieldType.Enum) return this.getEnumQuery(name, value, multiple);
                 else return `${name} eq '${value}'`;
             })

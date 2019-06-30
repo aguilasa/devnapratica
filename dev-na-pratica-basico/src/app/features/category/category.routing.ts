@@ -1,26 +1,57 @@
-import { Routes, RouterModule } from '@angular/router';
-import { CategoryFormComponent } from './views/form/category-form.component';
-import { CategoryListComponent } from './views/list/category-list.component';
-import { CategoryResolver } from './views/form/category.resolver';
-import { NgModule } from '@angular/core';
+import { Routes, RouterModule, ActivatedRouteSnapshot } from "@angular/router";
+import { CategoryFormComponent } from "./views/form/category-form.component";
+import { CategoryListComponent } from "./views/list/category-list.component";
+import { NgModule, Component, Injectable } from "@angular/core";
+import { CategoryService } from "src/app/core/entities/category/category.service";
 
+@Injectable()
+export class CategoryFeatureRoutingEntityResolver {
+    constructor(private categoryService: CategoryService) {}
 
-const routes: Routes = [{
-    path: 'category', children: [
-        {
-            path: 'create', component: CategoryFormComponent
-        },
-        {
-            path: 'list', component: CategoryListComponent
-        },
-        {
-            path: 'edit/:id', component: CategoryFormComponent, resolve: [CategoryResolver]
-        }
-    ]
-}];
+    public resolve(route: ActivatedRouteSnapshot) {
+        if (route.params.category === "new") return;
+
+        return this.categoryService.get(route.params.category);
+    }
+}
+
+@Component({
+    template: `
+        <router-outlet></router-outlet>
+    `
+})
+export class EmptyComponent {}
+
+const routes: Routes = [
+    {
+        path: "category",
+        component: EmptyComponent,
+        children: [
+            {
+                path: "",
+                component: CategoryListComponent
+            },
+            {
+                path: ":category",
+                component: EmptyComponent,
+                resolve: {
+                    entity: CategoryFeatureRoutingEntityResolver
+                },
+                children: [
+                    {
+                        path: "",
+                        component: CategoryFormComponent
+                    }
+                ]
+            }
+        ]
+    }
+];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
+    providers: [CategoryFeatureRoutingEntityResolver],
+    declarations: [EmptyComponent]
 })
-export class CategoryRouterModule { }
+export class CategoryRouterModule {}

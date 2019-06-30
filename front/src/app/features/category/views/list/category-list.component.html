@@ -1,5 +1,5 @@
 <div *ngIf="!customTemplate else customTemplate">
-    <p-confirmDialog [acceptLabel]="'yes' " acceptIcon="" [rejectLabel]="'no' " rejectIcon=""></p-confirmDialog>
+    <p-confirmDialog acceptLabel="Sim" acceptIcon="" rejectLabel="Não" rejectIcon=""></p-confirmDialog>
     <form [formGroup]="filterFormGroup" autocomplete="off">
         <p-panel styleClass="form-group" [toggleable]="true" [(collapsed)]="filtersPanelCollapsed">
             <p-header>
@@ -12,8 +12,8 @@
             <p-footer>
                 <div class="ui-g">
                     <div class="ui-g-12">
-                        <button id="filter-button" class="ui-button" type="submit" pButton [label]="'filter' " (click)="onSearch()"></button>
-                        <button id="clear-button" class="ui-button ui-button-link" type="button" pButton [label]="'clear' "
+                        <button id="filter-button" class="ui-button" type="submit" pButton label="Filtro" (click)="onSearch()"></button>
+                        <button id="clear-button" class="ui-button ui-button-link" type="button" pButton label="Limpar"
                             (click)="onClear()"></button>
                     </div>
                 </div>
@@ -22,24 +22,24 @@
     </form>
     <p-panel *sLoadingState="showLoader">
         <p-header>
-            {{"furb.basico.category_list_grid_title" }}
+            Lista de Categorias
         </p-header>
-        <s-empty-state *ngIf="serverError" iconClass="fa fa-exclamation-triangle" title="{{'error_server_title' }}"
-            primaryActionLabel="{{'error_server_try_again' }}" (primaryAction)="resetGrid()" description="{{'error_server_description' }}"></s-empty-state>
-        <s-empty-state *ngIf="gridData && !gridData.length" [title]="'furb.basico.category_empty_state_title' "
-            [showPrimaryAction]="true" [primaryActionLabel]="'add' " (primaryAction)="onAdd()"
-            [description]="'furb.basico.category_empty_state_description' "></s-empty-state>
+        <s-empty-state *ngIf="serverError" iconClass="fa fa-exclamation-triangle" title="Erro na busca das informações"
+            primaryActionLabel="Atualizar" (primaryAction)="resetGrid()" description="Atualize a página e caso o erro continue, entre em contato com o Administrador do sistema"></s-empty-state>
+        <s-empty-state *ngIf="gridData && !gridData.length" title="Não há categorias cadastradas"
+            [showPrimaryAction]="true" primaryActionLabel="Adicionar" (primaryAction)="onAdd()"
+            description="Clique no botão abaixo para adicionar"></s-empty-state>
         <div [attr.data-hidden]="!gridData?.length">
             <div class="ui-g">
                 <div class="ui-g-12">
-                    <button id="add-button" type="button" pButton [label]="'add' " title="{{'add' }} (Alt + Shift + N)"
-                        *ngIf="true" (click)="onAdd()"></button>
-                    <button id="edit-button" type="button" class="ui-button-secondary" pButton [label]="'edit' "
-                        title="{{'edit' }} (Alt + Shift + E)" [disabled]="!selection || selection.length !== 1"
+                    <button id="add-button" type="button" pButton label="Adicionar" title="Adicionar"
+                         (click)="onAdd()"></button>
+                    <button id="edit-button" type="button" class="ui-button-secondary" pButton label="Alterar"
+                        title="Alterar" [disabled]="!selection || selection.length !== 1"
                         (click)="onEdit()"></button>
-                    <button id="delete-button" type="button" class="ui-button-secondary" pButton [label]="'delete' "
-                        title="{{'delete' }} (Alt + Shift + X)" (click)="onDelete()" [disabled]="!selection || !selection.length"
-                        *ngIf="true"></button>
+                    <button id="delete-button" type="button" class="ui-button-secondary" pButton label="Excluir"
+                        title="Excluir" (click)="onDelete()" [disabled]="!selection || !selection.length"
+                        ></button>
                 </div>
             </div>
             <div class="ui-g">
@@ -70,16 +70,18 @@
                                 <td style="width: 40px">
                                     <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                                 </td>
+                                <!--
                                 <td (click)="selection = [rowData]" style="width: 200px">
                                     <span>{{rowData["id"]}}</span>
                                 </td>
+                                -->
                                 <td (click)="selection = [rowData]" style="width: 200px">
                                     <span>{{rowData["description"]}}</span>
                                 </td>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="paginatorright">
-                            <span [translate]="'total_records'" [translateParams]="{value: totalRecords}"></span>
+                            <span>{{ totalRecords }} registros</span>
                         </ng-template>
                     </p-table>
                 </div>

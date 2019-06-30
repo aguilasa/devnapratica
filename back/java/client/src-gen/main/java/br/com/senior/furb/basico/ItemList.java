@@ -138,11 +138,10 @@ public class ItemList {
     /** 
      * This convenience constructor allows initialization of all required fields.
      */
-    public ItemList(Product product, Double quantity, Double price, Boolean checked) {
+    public ItemList(Product product, Double quantity, Double price) {
         this.product = product;
         this.quantity = quantity;
         this.price = price;
-        this.checked = checked;
     }
     
     public void normalize(Map<String, Object> headers) {
