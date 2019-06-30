@@ -10,35 +10,15 @@ import { TranslateService } from "@ngx-translate/core";
 import { Subject, forkJoin, of } from "rxjs";
 import { takeUntil, finalize, catchError, map } from "rxjs/operators";
 import { FormField, FieldType, IToken } from "@seniorsistemas/angular-components";
-import { FiltersStorageService } from "~shared/storage/filters-storage.service";
-/*{CA:EXTERNAL_IMPORTS:START}*/
-/*{CA:EXTERNAL_IMPORTS:END}*/
-
-import { ShoppingList } from "~core/entities/shopping-list/shopping-list";
-import { ShoppingListService } from "~core/entities/shopping-list/shopping-list.service";
-
-/*{CA:PROJECT_IMPORTS:START}*/
-/*{CA:PROJECT_IMPORTS:END}*/
+import { ShoppingList } from "src/app/core/entities/shopping-list/shopping-list";
+import { ShoppingListService } from "src/app/core/entities/shopping-list/shopping-list.service";
 
 @Component({
     templateUrl: "./shopping-list-list.component.html",
-    styleUrls: [
-        /*{CA:COMPONENT_STYLE_URLS:START}*/
-        /*{CA:COMPONENT_STYLE_URLS:END}*/
-    ],
-    providers: [
-        ConfirmationService,
-        /*{CA:COMPONENT_PROVIDERS:START}*/
-        /*{CA:COMPONENT_PROVIDERS:END}*/
-    ],
-    /*{CA:COMPONENT_CONFIG:START}*/
-    /*{CA:COMPONENT_CONFIG:END}*/
+    styleUrls: [],
+    providers: [ConfirmationService]
 })
-export class ShoppingListListComponent implements OnInit, OnDestroy /*{CA:CLASS_INTERFACES:START}*/ /*{CA:CLASS_INTERFACES:END}*/ {
-    public allPermissions: any = {};
-    public permissions: any = {};
-    public localeConfig: any = {};
-
+export class ShoppingListListComponent implements OnInit, OnDestroy {
     public currentListParams: ListParams = { page: 0, size: 10, sort: [], filterData: {} };
     public gridData: ShoppingList[];
     public gridColumns: any[];
@@ -51,7 +31,6 @@ export class ShoppingListListComponent implements OnInit, OnDestroy /*{CA:CLASS_
     public filtersPanelCollapsed = true;
     public searchTokens: IToken[] = [];
     public serverError: boolean = false;
-    public filtersLoaded = false;
 
     @ViewChild("shoppingListTable")
     public table: Table;
@@ -71,14 +50,9 @@ export class ShoppingListListComponent implements OnInit, OnDestroy /*{CA:CLASS_
     @ViewChild("customGridBody")
     public customGridBody: TemplateRef<any>;
 
-    /*{CA:CLASS_ATTRIBUTES:START}*/
-    /*{CA:CLASS_ATTRIBUTES:END}*/
-
     private ngUnsubscribe = new Subject();
 
     constructor(
-        /*{CA:INJECTIONS:START}*/
-        /*{CA:INJECTIONS:END}*/
         private router: Router,
         private route: ActivatedRoute,
         private shoppingListService: ShoppingListService,
@@ -86,101 +60,32 @@ export class ShoppingListListComponent implements OnInit, OnDestroy /*{CA:CLASS_
         private translate: TranslateService,
         private messageService: MessageService,
         private hotkeysService: HotkeysService,
-        private formBuilder: FormBuilder,
-        private filtersStorageService: FiltersStorageService
-    ) {
-        /*{CA:CONSTRUCTOR_END:START}*/
-        /*{CA:CONSTRUCTOR_END:END}*/
-    }
+        private formBuilder: FormBuilder
+    ) {}
 
     public ngOnInit() {
-        /*{CA:ON_INIT_START:START}*/
-        /*{CA:ON_INIT_START:END}*/
-
         this.route.data.pipe(takeUntil(this.ngUnsubscribe)).subscribe((data: any) => this.onRouteDataChange(data));
 
         this.filterFormGroup = this.formBuilder.group({
             id: [undefined, Validators.compose([])],
-            description: [undefined, Validators.compose([])],
+            description: [undefined, Validators.compose([])]
         });
 
-        this.setStorageFiltersIntoForm(this.filterFormGroup);
+        this.setShowLoader();
         this.gridColumns = this.getGridColumns();
         this.filterFields = this.getFilterFields();
+    }
 
-        this.setHotkeys();
-
-        /*{CA:ON_INIT_END:START}*/
-        /*{CA:ON_INIT_END:END}*/
+    private async setShowLoader() {
+        this.showLoader = true;
     }
 
     public ngOnDestroy() {
-        /*{CA:ON_DESTROY_START:START}*/
-        /*{CA:ON_DESTROY_START:END}*/
-
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
-
-        /*{CA:ON_DESTROY_END:START}*/
-        /*{CA:ON_DESTROY_END:END}*/
     }
 
-    public setHotkeys() {
-        /*{CA:SET_HOTKEYS_START:START}*/
-        /*{CA:SET_HOTKEYS_START:END}*/
-
-        this.hotkeysService.add(
-            new Hotkey(
-                "alt+shift+e",
-                () => {
-                    if (this.selection && this.selection.length === 1) {
-                        this.onEdit();
-                    }
-                    return false;
-                },
-                ["INPUT", "SELECT", "TEXTAREA"]
-            )
-        );
-
-        this.hotkeysService.add(
-            new Hotkey(
-                "alt+shift+x",
-                () => {
-                    if (this.selection && this.selection.length && this.permissions.excluir) {
-                        this.onDelete();
-                    }
-                    return false;
-                },
-                ["INPUT", "SELECT", "TEXTAREA"]
-            )
-        );
-
-        this.hotkeysService.add(
-            new Hotkey(
-                "alt+shift+n",
-                () => {
-                    if (this.permissions.incluir) this.onAdd();
-                    return false;
-                },
-                ["INPUT", "SELECT", "TEXTAREA"]
-            )
-        );
-
-        /*{CA:SET_HOTKEYS_END:START}*/
-        /*{CA:SET_HOTKEYS_END:END}*/
-    }
-
-    public onRouteDataChange(data: any) {
-        /*{CA:ON_ROUTE_DATA_CHANGE_START:START}*/
-        /*{CA:ON_ROUTE_DATA_CHANGE_START:END}*/
-
-        this.allPermissions = data.allPermissions;
-        this.permissions = data.allPermissions.shoppingList;
-        this.localeConfig = data.localeConfig;
-
-        /*{CA:ON_ROUTE_DATA_CHANGE_END:START}*/
-        /*{CA:ON_ROUTE_DATA_CHANGE_END:END}*/
-    }
+    public onRouteDataChange(data: any) {}
 
     // Verifica se o objeto possui um valor que foi alterado para "" (String vazia) ao inves de null ou undefined
     private hasEmpty(target: any) {
@@ -188,9 +93,6 @@ export class ShoppingListListComponent implements OnInit, OnDestroy /*{CA:CLASS_
     }
 
     public onSearch() {
-        /*{CA:ON_SEARCH_START:START}*/
-        /*{CA:ON_SEARCH_START:END}*/
-
         const filterData = this.filterFormGroup.getRawValue();
 
         if (this.hasEmpty(filterData)) {
@@ -199,76 +101,38 @@ export class ShoppingListListComponent implements OnInit, OnDestroy /*{CA:CLASS_
         } else {
             this.filtersPanelCollapsed = true;
             this.resetGrid({ filterData });
-            this.filtersStorageService.storeFilters(this.constructor.name, filterData);
         }
-
-        /*{CA:ON_SEARCH_END:START}*/
-        /*{CA:ON_SEARCH_END:END}*/
     }
 
     public onClear() {
-        /*{CA:ON_CLEAR_START:START}*/
-        /*{CA:ON_CLEAR_START:END}*/
-
         this.filterFormGroup.reset();
         const filterData = this.filterFormGroup.getRawValue();
         this.resetGrid({ filterData });
-
-        /*{CA:ON_CLEAR_END:START}*/
-        /*{CA:ON_CLEAR_END:END}*/
     }
 
     public onRemoveToken(token: IToken) {
-        /*{CA:ON_REMOVE_TOKEN_START:START}*/
-        /*{CA:ON_REMOVE_TOKEN_START:END}*/
-
         this.filterFormGroup.get(token.id).setValue(undefined);
         const filterData = this.filterFormGroup.getRawValue();
         this.resetGrid({ filterData });
-        this.filtersStorageService.storeFilters(this.constructor.name, filterData);
-
-        /*{CA:ON_REMOVE_TOKEN_END:START}*/
-        /*{CA:ON_REMOVE_TOKEN_END:END}*/
     }
 
     public onGridChange(event: LazyLoadEvent) {
-        /*{CA:ON_GRID_CHANGE_START:START}*/
-        /*{CA:ON_GRID_CHANGE_START:END}*/
-
         const size = event.rows;
         const page = event.first / size;
         const sort = event.multiSortMeta;
 
         return this.updateGrid({ page, size, sort });
-
-        /*{CA:ON_GRID_CHANGE_END:START}*/
-        /*{CA:ON_GRID_CHANGE_END:END}*/
     }
 
     public onAdd() {
-        /*{CA:ON_ADD_START:START}*/
-        /*{CA:ON_ADD_START:END}*/
-
         this.router.navigate(["new"], { relativeTo: this.route });
-
-        /*{CA:ON_ADD_END:START}*/
-        /*{CA:ON_ADD_END:END}*/
     }
 
     public onEdit() {
-        /*{CA:ON_EDIT_START:START}*/
-        /*{CA:ON_EDIT_START:END}*/
-
         this.router.navigate([this.selection[0].id], { relativeTo: this.route });
-
-        /*{CA:ON_EDIT_END:START}*/
-        /*{CA:ON_EDIT_END:END}*/
     }
 
     public onDelete() {
-        /*{CA:ON_DELETE_START:START}*/
-        /*{CA:ON_DELETE_START:END}*/
-
         this.confirmationService.confirm({
             message: "Se o registro for removido, ele não poderá ser restaurado",
             header: "Deseja remover este registro?",
@@ -279,26 +143,17 @@ export class ShoppingListListComponent implements OnInit, OnDestroy /*{CA:CLASS_
                         this.messageService.add({
                             severity: "success",
                             summary: "Sucesso",
-                            detail: "Registro(s) excluído(s) com sucesso",
+                            detail: "Registro(s) excluído(s) com sucesso"
                         });
 
                         this.resetGrid();
                     });
-            },
+            }
         });
-
-        /*{CA:ON_DELETE_END:START}*/
-        /*{CA:ON_DELETE_END:END}*/
     }
 
     private getGridColumns() {
-        const gridColumns = [
-            { field: "id", header: this.translate.instant("furb.basico.shopping_list_id") },
-            { field: "description", header: this.translate.instant("furb.basico.shopping_list_description") },
-        ];
-
-        /*{CA:GET_GRID_COLUMNS:START}*/
-        /*{CA:GET_GRID_COLUMNS:END}*/
+        const gridColumns = [{ field: "id", header: "Código" }, { field: "description", header: "Descrição" }];
 
         return gridColumns;
     }
@@ -307,34 +162,16 @@ export class ShoppingListListComponent implements OnInit, OnDestroy /*{CA:CLASS_
         const filterFields = [
             new FormField({
                 name: "id",
-                label: this.translate.instant("furb.basico.shopping_list_id"),
-                type: FieldType.String,
+                label: "Código",
+                type: FieldType.String
             }),
             new FormField({
                 name: "description",
-                label: this.translate.instant("furb.basico.shopping_list_description"),
-                type: FieldType.String,
-            }),
+                label: "Descrição",
+                type: FieldType.String
+            })
         ];
-
-        /*{CA:GET_SEARCH_FIELDS:START}*/
-        /*{CA:GET_SEARCH_FIELDS:END}*/
-
         return filterFields;
-    }
-
-    private async setStorageFiltersIntoForm(form: FormGroup) {
-        this.showLoader = true;
-        const filters = await this.filtersStorageService.getFilters(this.constructor.name);
-
-        Object.keys(form.controls).forEach(field => form.get(field).setValue(filters[field]));
-
-        this.filtersLoaded = true;
-        const filterData = this.filterFormGroup.getRawValue();
-        this.resetGrid({ filterData });
-
-        /*{CA:GET_FILTER_FORM_GROUP:START}*/
-        /*{CA:GET_FILTER_FORM_GROUP:END}*/
     }
 
     private getEnumQuery(name: string, value: any, multiple: boolean) {
@@ -342,8 +179,6 @@ export class ShoppingListListComponent implements OnInit, OnDestroy /*{CA:CLASS_
     }
 
     private updateGrid(listParams: ListParams = {}) {
-        if (!this.filtersLoaded) return;
-
         this.showLoader = true;
         this.currentListParams = { ...this.currentListParams, ...listParams };
         const { page, size, sort, filterData } = this.currentListParams;
@@ -380,7 +215,7 @@ export class ShoppingListListComponent implements OnInit, OnDestroy /*{CA:CLASS_
         const displayFields = this.gridColumns.map(column => column.field);
 
         this.shoppingListService
-            .list({ page, size, sort, filterQuery, displayFields })
+            .listWithParams({ page, size, sort, filterQuery, displayFields })
             .pipe(
                 takeUntil(this.ngUnsubscribe),
                 catchError((err: any) => {
@@ -412,9 +247,6 @@ export class ShoppingListListComponent implements OnInit, OnDestroy /*{CA:CLASS_
             else if (control instanceof FormGroup) this.validateAllFormFields(control);
         });
     }
-
-    /*{CA:CLASS_METHODS:START}*/
-    /*{CA:CLASS_METHODS:END}*/
 }
 
 interface ListParams {
@@ -423,6 +255,3 @@ interface ListParams {
     sort?: SortMeta[];
     filterData?: any;
 }
-
-/*{CA:FILE_CONTENTS:START}*/
-/*{CA:FILE_CONTENTS:END}*/

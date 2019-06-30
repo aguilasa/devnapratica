@@ -1,54 +1,24 @@
 import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { TranslationsModule } from "@seniorsistemas/platform-components";
-
-import * as fallback from "../../locale/pt-BR.json";
-import { MainModule } from "~features/main/main.module";
-
-export const routes: Routes = [
-    {
-        path: "",
-        redirectTo: "/main",
-        pathMatch: "full"
-    },
-    {
-        path: "",
-        loadChildren: "~features/category/category-feature.module#CategoryFeatureModule"
-    },
-    {
-        path: "",
-        loadChildren: "~features/product/product-feature.module#ProductFeatureModule"
-    },
-    {
-        path: "",
-        loadChildren: "~features/item-list/item-list-feature.module#ItemListFeatureModule"
-    },
-    {
-        path: "",
-        loadChildren:
-            "~features/shopping-list/shopping-list-feature.module#ShoppingListFeatureModule"
-    },
-
-    {
-        path: "**",
-        redirectTo: "/not-found"
-    }
-];
+import { CommonModule } from "@angular/common";
+import { FeaturesRouterModule } from "./features.routing";
+import { ClienteFeatureModule } from "./cliente/cliente.module";
+import { CategoryFeatureModule } from "./category/category.module";
+import { RouterModule } from "@angular/router";
+import { ProductFeatureModule } from "./product/product-feature.module";
+import { ItemListFeatureModule } from "./item-list/item-list-feature.module";
+import { ShoppingListFeatureModule } from "./shopping-list/shopping-list-feature.module";
 
 @NgModule({
-    imports: [
-        MainModule,
-        TranslationsModule.forChild([
-            {
-                domain: "furb",
-                service: "basico",
-                fallback
-            }
-        ]),
-        RouterModule.forChild(routes)
-    ],
-    providers: [],
     declarations: [],
+    imports: [
+        CommonModule,
+        FeaturesRouterModule,
+        ClienteFeatureModule,
+        CategoryFeatureModule,
+        ProductFeatureModule,
+        ItemListFeatureModule,
+        ShoppingListFeatureModule
+    ],
     exports: [RouterModule]
 })
 export class FeaturesModule {}

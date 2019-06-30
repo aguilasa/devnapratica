@@ -1,7 +1,6 @@
-<s-loading-state [loading]="pageLoading" [blockWindow]="true">
-    <div class="sds-container" *ngIf="!customTemplate else customTemplate">
-        <p-growl></p-growl>
-        <s-breadcrumb></s-breadcrumb>
-        <router-outlet></router-outlet>
-    </div>
-</s-loading-state>
+<!-- <app-top-bar></app-top-bar> -->
+<app-side-nav></app-side-nav>
+<div class="layout-wrapper">
+    <p-growl></p-growl>
+    <router-outlet></router-outlet>
+</div>

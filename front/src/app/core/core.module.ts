@@ -1,22 +1,22 @@
-import { NgModule } from "@angular/core";
-import { CategoryModule } from "~core/entities/category/category.module";
-import { ProductModule } from "~core/entities/product/product.module";
-import { ItemListModule } from "~core/entities/item-list/item-list.module";
-import { ShoppingListModule } from "~core/entities/shopping-list/shopping-list.module";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ClienteModule } from './entities/cliente/cliente.module';
+import { ItemModule } from './entities/item/item.module';
+import { CategoryModule } from './entities/category/category.module';
+import { ProductModule } from './entities/product/product.module';
+import { ItemListModule } from './entities/item-list/item-list.module';
+import { ShoppingListModule } from './entities/shopping-list/shopping-list.module';
 
 @NgModule({
-    imports: [
-        CategoryModule,
-        ProductModule,
-        ItemListModule,
-        ShoppingListModule,
-    ],
-    providers: [
-    ],
-    declarations: [
-    ],
-    exports: [
-    ],
+  declarations: [],
+  imports: [
+    CommonModule,
+    ClienteModule,
+    ItemModule,
+    CategoryModule,
+    ProductModule,
+    ItemListModule,
+    ShoppingListModule,
+  ]
 })
-export class CoreModule {}
-
+export class CoreModule { }

@@ -1,23 +1,59 @@
-import {HttpParams, HttpClient, HttpHeaders} from "@angular/common/http";
-import {MessageService} from "primeng/components/common/messageservice";
-import {SortMeta} from "primeng/components/common/api";
-import {throwError} from "rxjs";
-import {catchError} from "rxjs/operators";
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { SortMeta } from "primeng/components/common/api";
+import { catchError } from 'rxjs/operators/';
+import { throwError } from 'rxjs';
 
 export class EntityService<T> {
-  public headers: HttpHeaders;
+    public headers: HttpHeaders;
 
-    constructor(protected http: HttpClient, protected messageService: MessageService, protected entityUrl: string) {
+    constructor(
+        protected http: HttpClient,
+        protected entityUrl: string,
+    ) {
         this.http = http;
-        this.messageService = messageService;
-        this.entityUrl = entityUrl;
-	this.headers = new HttpHeaders().set('Authorization', 'Bearer 01711ff85eb35e31a4a16f2e3fba06fe');
+        this.entityUrl = `https://platform-homologx.senior.com.br/t/senior.com.br/bridge/1.0/rest/furb/basico/entities/${entityUrl}`;
+        this.headers = new HttpHeaders().set('Authorization', 'Bearer 5a724b88b74660f00289163fe2717bfa');
+    }
 
-        this.defaultCatch = this.defaultCatch.bind(this);
+    public listWithParams(listParams: ListParams) {
+        return this.http.get<T[]>(this.entityUrl, {
+            headers: this.headers, params: this.getListQueryParams(listParams)
+        }).pipe(this.defaultCatch());
+    }
+
+    public list() {
+        return this.http.get<T[]>(this.entityUrl, { headers: this.headers }).pipe(this.defaultCatch());
+    }
+
+    public get(id: any) {
+        return this.http.get<T[]>(`${this.entityUrl}/${id}`, { headers: this.headers }).pipe(this.defaultCatch());
+    }
+
+    public insert(entity: T) {
+        return this.http.post<T[]>(this.entityUrl, entity, { headers: this.headers }).pipe(this.defaultCatch());
+    }
+
+    public update(id: any, entity: T) {
+        return this.http.put<T[]>(`${this.entityUrl}/${id}`, entity, { headers: this.headers }).pipe(this.defaultCatch());
+    }
+
+    public delete(id: any) {
+        return this.http.delete<T[]>(`${this.entityUrl}/${id}`, { headers: this.headers }).pipe(this.defaultCatch());
+    }
+
+    public defaultCatch() {
+        return catchError((err: any) => {
+            if (err) {
+                const summary = err.status ? String(err.status) : 'Error';
+                const detail = (err.error && err.error.message) || err.statusText || err.message || 'Error';
+                console.log(summary, detail);
+            }
+            return throwError(err);
+        });
     }
 
     public getListQueryParams(listParams: ListParams) {
-        const {page = 0, size = 10, sort = [], filterQuery = "", displayFields = []} = listParams;
+        const { page = 0, size = 10, sort = [], filterQuery = "", displayFields = [] } = listParams;
 
         let params = new HttpParams();
         params = params.append("size", String(size));
@@ -45,43 +81,6 @@ export class EntityService<T> {
 
         return params;
     }
-
-    public defaultCatch() {
-        return catchError((err: any) => {
-            if (err) {
-                const summary = err.status ? String(err.status) : "Error";
-                const detail = (err.error && err.error.message) || err.statusText || err.message || "Error";
-
-                this.messageService.add({
-                    severity: "error",
-                    summary,
-                    detail,
-                });
-            }
-
-            return throwError(err);
-        });
-    }
-
-    public list(listParams: ListParams) {
-        return this.http.get<T[]>(this.entityUrl, {headers: this.headers, params: this.getListQueryParams(listParams)}).pipe(this.defaultCatch());
-    }
-
-    public get(id: any) {
-        return this.http.get<T>(`${this.entityUrl}/${id}`).pipe(this.defaultCatch());
-    }
-
-    public insert(entity: T) {
-        return this.http.post<T>(`${this.entityUrl}`, entity).pipe(this.defaultCatch());
-    }
-
-    public update(id: any, entity: T) {
-        return this.http.put<T>(`${this.entityUrl}/${id}`, entity).pipe(this.defaultCatch());
-    }
-
-    public delete(id: any) {
-        return this.http.delete<T>(`${this.entityUrl}/${id}`).pipe(this.defaultCatch());
-    }
 }
 
 export interface ListParams {
@@ -91,4 +90,3 @@ export interface ListParams {
     filterQuery?: string;
     displayFields?: string[];
 }
-

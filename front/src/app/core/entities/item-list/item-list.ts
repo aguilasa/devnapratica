@@ -1,10 +1,5 @@
-/*{CA:PACKAGE_IMPORTS:START}*/
-/*{CA:PACKAGE_IMPORTS:END}*/
-
-import { ItemListDto } from "~core/entities/item-list/item-list-dto";
-import { Product } from "~core/entities/product/product";
-/*{CA:PROJECT_IMPORTS:START}*/
-/*{CA:PROJECT_IMPORTS:END}*/
+import { Product } from '../product/product';
+import { ItemListDto } from './item-list-dto';
 
 export class ItemList {
     public id?: string;
@@ -14,8 +9,6 @@ export class ItemList {
     public checked: boolean = false;
     public note?: string;
 
-    /*{CA:CLASS_ATTRIBUTES:START}*/
-    /*{CA:CLASS_ATTRIBUTES:END}*/
 
     public static fromDto(itemListDto: ItemListDto): ItemList {
         const model: any = { ...itemListDto };
@@ -29,9 +22,4 @@ export class ItemList {
         return dto;
     }
 
-    /*{CA:CLASS_METHODS:START}*/
-    /*{CA:CLASS_METHODS:END}*/
 }
-
-/*{CA:FILE_CONTENTS:START}*/
-/*{CA:FILE_CONTENTS:END}*/

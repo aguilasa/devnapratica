@@ -5,35 +5,35 @@
     <form [formGroup]="formGroup" novalidate>
         <p-panel styleClass="form-group" [toggleable]="false" [collapsed]="mainPanelCollapsed">
             <p-header>
-                {{"furb.basico.product_form_general_title" | translate}}
+                Produto
             </p-header>
             <div class="ui-fluid" *ngIf="!customFormFields else customFormFields">
                 <div class="ui-g">
                     <div [attr.data-hidden]="true" class="ui-g-12 ui-md-6">
-                        <label for="id">{{"furb.basico.product_id" | translate}}</label>
+                        <label for="id">Código</label>
                         <input type="text" id="id" name="id" pInputText formControlName="id" autocomplete="off" />
                     </div>
                     <div class="ui-g-12 ui-md-6 required">
-                        <label for="description">{{"furb.basico.product_description" | translate}}</label>
+                            <label for="category">Categoria</label>
+                            <s-lookup dataKey="id" id="category" name="category" formControlName="category" [searchFields]="categorySearchFields"
+                                [searchGridFields]="categorySearchGridFields" [searchGridData]="categorySearchGridData"
+                                [multiple]="false" [lookupSuggestions]="categoryLookupSuggestions" (onLookupRequest)="onCategoryLookupRequest($event)"
+                                (onSearchRequest)="onCategorySearchRequest($event)" lookupDisplayField="description" [searchTotalRecords]=categorySearchTotalRecords
+                                searchTitle="Buscar Categoria" searchEmptyTitle="Nenhuma Categoria encontrada"
+                                filterLabel="Filtrar" clearLabel="Limpar" cancelLabel="Cancelar"
+                                selectLabel="Selecionar" searchTotalRecordsLabel="Registos encontrados: {{ categorySearchTotalRecords }}"></s-lookup>
+                            <s-control-errors [control]="formGroup.controls['category']" [errorMessages]="{ required: 'Informação obrigatória' }"></s-control-errors>
+                    </div>
+                    <div class="ui-g-12 ui-md-8 required">
+                        <label for="description">Descrição</label>
                         <input type="text" id="description" name="description" pInputText formControlName="description" autocomplete="off"
                         />
                         <s-control-errors [control]="formGroup.controls['description']" [errorMessages]="{ required: 'Informação obrigatória' }"></s-control-errors>
                     </div>
-                    <div class="ui-g-12 ui-md-6 required">
-                        <label for="unit">{{"furb.basico.product_unit" | translate}}</label>
-                        <p-dropdown inputId="unit" name="unit" [options]="unit" formControlName="unit" [autoWidth]="false" placeholder="{{'furb.basico.product_unit_placeholder' | translate}}"></p-dropdown>
+                    <div class="ui-g-12 ui-md-4 required">
+                        <label for="unit">Unidade de medida</label>
+                        <p-dropdown inputId="unit" name="unit" [options]="unit" formControlName="unit" [autoWidth]="false" placeholder="Escolha a unidade de medida"></p-dropdown>
                         <s-control-errors [control]="formGroup.controls['unit']" [errorMessages]="{ required: 'Informação obrigatória' }"></s-control-errors>
-                    </div>
-                    <div [attr.data-hidden]="!allPermissions?.category.visualizar" class="ui-g-12 ui-md-6 required">
-                        <label for="category">{{"furb.basico.product_category" | translate}}</label>
-                        <s-lookup dataKey="id" id="category" name="category" formControlName="category" [searchFields]="categorySearchFields"
-                            [searchGridFields]="categorySearchGridFields" [searchGridData]="categorySearchGridData"
-                            [multiple]="false" [lookupSuggestions]="categoryLookupSuggestions" (onLookupRequest)="onCategoryLookupRequest($event)"
-                            (onSearchRequest)="onCategorySearchRequest($event)" lookupDisplayField="id" [searchTotalRecords]=categorySearchTotalRecords
-                            [searchTitle]="'furb.basico.product_category_search_title' | translate" [searchEmptyTitle]="'nothing_found' | translate"
-                            filterLabel="Filtrar" clearLabel="Limpar" cancelLabel="Cancelar"
-                            selectLabel="Selecionar" searchTotalRecordsLabel="Registos encontrados: {{ categorySearchTotalRecords }}"></s-lookup>
-                        <s-control-errors [control]="formGroup.controls['category']" [errorMessages]="{ required: 'Informação obrigatória' }"></s-control-errors>
                     </div>
                 </div>
             </div>
@@ -48,5 +48,3 @@
         </p-panel>
     </form>
 </div>
-<!--{CA:FILE_CONTENTS:START}-->
-<!--{CA:FILE_CONTENTS:END}-->

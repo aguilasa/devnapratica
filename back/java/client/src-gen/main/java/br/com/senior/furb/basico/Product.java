@@ -7,7 +7,7 @@ import br.com.senior.messaging.model.EntityDescription;
 import br.com.senior.messaging.model.EntityId;
 
 /**
- * Item da lista
+ * Produto
  */
 @EntityDescription
 public class Product {

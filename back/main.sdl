@@ -43,7 +43,7 @@ service basico {
             description : string
         }
 
-        "Item da lista"
+        "Produto"
         fixed entity product {
             "Código"
             id : uuid?

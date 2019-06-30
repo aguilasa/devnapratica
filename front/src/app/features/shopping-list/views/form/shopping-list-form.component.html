@@ -5,29 +5,29 @@
     <form [formGroup]="formGroup" novalidate>
         <p-panel styleClass="form-group" [toggleable]="false" [collapsed]="mainPanelCollapsed">
             <p-header>
-                {{"furb.basico.shopping_list_form_general_title" | translate}}
+                Lista de Compras
             </p-header>
             <div class="ui-fluid" *ngIf="!customFormFields else customFormFields">
                 <div class="ui-g">
                     <div [attr.data-hidden]="true" class="ui-g-12 ui-md-6">
-                        <label for="id">{{"furb.basico.shopping_list_id" | translate}}</label>
+                        <label for="id">Código</label>
                         <input type="text" id="id" name="id" pInputText formControlName="id" autocomplete="off" />
                     </div>
                     <div class="ui-g-12 ui-md-6 required">
-                        <label for="description">{{"furb.basico.shopping_list_description" | translate}}</label>
+                        <label for="description">Descrição</label>
                         <input type="text" id="description" name="description" pInputText formControlName="description" autocomplete="off"
                         />
                         <s-control-errors [control]="formGroup.controls['description']" [errorMessages]="{ required: 'Informação obrigatória' }"></s-control-errors>
                     </div>
-                    <div [attr.data-hidden]="!allPermissions?.itemList.visualizar" class="ui-g-12 ui-md-6 required">
-                        <label for="items">{{"furb.basico.shopping_list_items" | translate}}</label>
+                    <div class="ui-g-12 ui-md-6 required">
+                        <label for="items">Items</label>
                         <s-lookup dataKey="id" id="items" name="items" formControlName="items" [searchFields]="itemsSearchFields"
                             [searchGridFields]="itemsSearchGridFields" [searchGridData]="itemsSearchGridData"
                             [multiple]="true" [lookupSuggestions]="itemsLookupSuggestions" (onLookupRequest)="onItemsLookupRequest($event)"
                             (onSearchRequest)="onItemsSearchRequest($event)" lookupDisplayField="id" [searchTotalRecords]=itemsSearchTotalRecords
-                            [searchTitle]="'furb.basico.shopping_list_items_search_title' | translate" [searchEmptyTitle]="'nothing_found' | translate"
+                            searchTitle="Buscar Lista de compras" searchEmptyTitle="Nenhuma lista de compras encontrada"
                             filterLabel="Filtrar" clearLabel="Limpar" cancelLabel="Cancelar"
-                            [selectLabel]="'select' | translate" [searchTotalRecordsLabel]="'total_records' | translate: {value: itemsSearchTotalRecords}"></s-lookup>
+                            selectLabel="Selecionar" searchTotalRecordsLabel="Registos encontrados: {{ itemsSearchTotalRecords }}"></s-lookup>
                         <s-control-errors [control]="formGroup.controls['items']" [errorMessages]="{ required: 'Informação obrigatória' }"></s-control-errors>
                     </div>
                 </div>
@@ -43,5 +43,3 @@
         </p-panel>
     </form>
 </div>
-<!--{CA:FILE_CONTENTS:START}-->
-<!--{CA:FILE_CONTENTS:END}-->

@@ -1,16 +1,13 @@
-import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {MessageService} from "primeng/components/common/messageservice";
-
-import {environment} from "~environments/environment";
-import {ItemListDto} from "~core/entities/item-list/item-list-dto";
-import {EntityService} from "~core/entities/entity-service";
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { EntityService } from '../entity-service';
+import { ItemListDto } from './item-list-dto';
 
 @Injectable()
 export class ItemListService extends EntityService<ItemListDto> {
 
-    constructor(protected http: HttpClient, protected messageService: MessageService) {
-        super(http, messageService, `${environment.project.urlBase}/entities/itemList`);
+    constructor(protected http: HttpClient) {
+        super(http, 'itemList');
     }
 }
 

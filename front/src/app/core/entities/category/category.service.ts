@@ -1,15 +1,13 @@
-import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {MessageService} from "primeng/components/common/messageservice";
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { EntityService } from '../entity-service';
+import { CategoryDto } from './category-dto';
 
-import {environment} from "~environments/environment";
-import {CategoryDto} from "~core/entities/category/category-dto";
-import {EntityService} from "~core/entities/entity-service";
 
 @Injectable()
 export class CategoryService extends EntityService<CategoryDto> {
 
-    constructor(protected http: HttpClient, protected messageService: MessageService) {
-        super(http, messageService, `${environment.project.urlBase}/entities/category`);
+    constructor(protected http: HttpClient) {
+        super(http, 'category');
     }
 }
