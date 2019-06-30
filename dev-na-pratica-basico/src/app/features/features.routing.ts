@@ -5,10 +5,6 @@ const routes: Routes = [
     {
         path: "clientes",
         redirectTo: "cliente/list"
-    },
-    {
-        path: "items",
-        redirectTo: "item/list"
     }
 ];
 

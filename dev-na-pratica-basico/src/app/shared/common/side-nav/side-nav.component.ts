@@ -12,10 +12,6 @@ export class SideNavComponent implements OnInit {
             routerLink: "/clientes"
         },
         {
-            label: "Items",
-            routerLink: "/items"
-        },
-        {
             label: "Categoria",
             routerLink: "/category"
         },
