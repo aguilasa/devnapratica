@@ -8,3 +8,5 @@
 /RetrieveClienteImpl.java
 /UpdateClienteImpl.java
 /UpdateMergeClienteImpl.java
+/PersistShoppingListImpl.java
+/ReturnShoppingListImpl.java

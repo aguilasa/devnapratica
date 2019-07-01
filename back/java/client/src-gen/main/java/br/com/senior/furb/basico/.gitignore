@@ -18,3 +18,10 @@
 /ImportClienteEvent.java
 /ImportClienteEventPayload.java
 /Cliente.java
+/PersistShoppingListInput.java
+/PersistShoppingListOutput.java
+/PersistShoppingListResponse.java
+/ReturnShoppingListInput.java
+/ReturnShoppingListOutput.java
+/ReturnShoppingListResponse.java
+/PersistStatus.java

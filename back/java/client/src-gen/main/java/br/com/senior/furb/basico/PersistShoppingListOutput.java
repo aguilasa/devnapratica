@@ -12,7 +12,7 @@ public class PersistShoppingListOutput {
     /**
      * Lista de compras
      */
-    public ShoppingList shoppingList;
+    public ShoppingListDto shoppingList;
     
     public PersistShoppingListOutput() {
     }
@@ -20,7 +20,7 @@ public class PersistShoppingListOutput {
     /** 
      * This constructor allows initialization of all fields, required and optional.
      */
-    public PersistShoppingListOutput(ShoppingList shoppingList) {
+    public PersistShoppingListOutput(ShoppingListDto shoppingList) {
         this.shoppingList = shoppingList;
     }
     

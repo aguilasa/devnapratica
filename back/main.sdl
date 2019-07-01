@@ -7,11 +7,11 @@ service basico {
         action persistShoppingList {
             in {
                 "Lista de compras"
-                shoppingList : shoppingList
+                shoppingList : shoppingListDto
             }
             out {
                 "Lista de compras"
-                shoppingList : shoppingList?
+                shoppingList : shoppingListDto?
             }
         }
 
@@ -23,7 +23,7 @@ service basico {
             }
             out {
                 "Lista de compras"
-                shoppingList : shoppingList?
+                shoppingList : shoppingListDto?
             }
         }
     }
@@ -56,10 +56,50 @@ service basico {
             PACOTE
         }
 
-        "Status da persistência"
-        record persistStatus {
-            "Processado"
-            processed : boolean
+        "Categoria"
+        record categoryDto {
+            "Código"
+            id : string?
+            "Descrição da categoria"
+            description : string
+        }
+
+        "Produto"
+        record productDto {
+            "Código"
+            id : string?
+            "Descrição do produto"
+            description : string
+            "Unidade de medida"
+            unit : unit
+            "Categoria"
+            category : categoryDto
+        }
+
+        "Item da lista"
+        record itemListDto {
+            "Código"
+            id : string?
+            "Produto"
+            product : productDto
+            "Quantidade"
+            quantity : double
+            "Preço"
+            price : double
+            "Checado"
+            checked : boolean?
+            "Observação"
+            note : string?
+        }
+
+        "Lista de compras"
+        record shoppingListDto {
+            "Código"
+            id : string?
+            "Descrição da lista"
+            description : string
+            "Itens da lista"
+            items : itemListDto*
         }
     }
     entities {

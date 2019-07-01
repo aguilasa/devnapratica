@@ -12,7 +12,7 @@ public class ReturnShoppingListOutput {
     /**
      * Lista de compras
      */
-    public ShoppingList shoppingList;
+    public ShoppingListDto shoppingList;
     
     public ReturnShoppingListOutput() {
     }
@@ -20,7 +20,7 @@ public class ReturnShoppingListOutput {
     /** 
      * This constructor allows initialization of all fields, required and optional.
      */
-    public ReturnShoppingListOutput(ShoppingList shoppingList) {
+    public ReturnShoppingListOutput(ShoppingListDto shoppingList) {
         this.shoppingList = shoppingList;
     }
     
