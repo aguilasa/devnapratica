@@ -11,6 +11,10 @@ import br.com.senior.messaging.utils.DtoJsonConverter;
 import br.com.senior.sdl.user.UserIdentifier;
 
 import java.util.concurrent.CompletableFuture;
+import br.com.senior.furb.basico.PersistShoppingListInput;
+import br.com.senior.furb.basico.PersistShoppingListOutput;
+import br.com.senior.furb.basico.ReturnShoppingListInput;
+import br.com.senior.furb.basico.ReturnShoppingListOutput;
 import br.com.senior.furb.basico.GetMetadataInput;
 import br.com.senior.furb.basico.GetMetadataOutput;
 import br.com.senior.furb.basico.ImportCategoryInput;
@@ -94,6 +98,72 @@ public class BasicoStubImpl  implements BasicoStub {
 		this.messageSupplier = messageSupplier;
 	}
 
+	/**
+	 * Chamada síncrona para o método persistShoppingList
+	 * Warning: this operation is PRIVATE and may have its behavior changed at any time without notice
+	 * Salva os items da lista de compra
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public PersistShoppingListOutput persistShoppingList(PersistShoppingListInput input, long timeout) {
+		br.com.senior.furb.basico.impl.PersistShoppingListImpl impl = new br.com.senior.furb.basico.impl.PersistShoppingListImpl(messengerSupplier, userId, messageSupplier);
+		return impl.persistShoppingList(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método persistShoppingList
+	 * Warning: this operation is PRIVATE and may have its behavior changed at any time without notice
+	 * Salva os items da lista de compra
+	 */
+	@Override
+	public void persistShoppingList(PersistShoppingListInput input) {
+		br.com.senior.furb.basico.impl.PersistShoppingListImpl impl = new br.com.senior.furb.basico.impl.PersistShoppingListImpl(messengerSupplier, userId, messageSupplier);
+		impl.persistShoppingList(input);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método persistShoppingList
+	 * Warning: this operation is PRIVATE and may have its behavior changed at any time without notice
+	 * Salva os items da lista de compra
+	 */
+	@Override
+	public CompletableFuture<PersistShoppingListOutput> persistShoppingListRequest(PersistShoppingListInput input) {
+		br.com.senior.furb.basico.impl.PersistShoppingListImpl impl = new br.com.senior.furb.basico.impl.PersistShoppingListImpl(messengerSupplier, userId, messageSupplier);
+		return impl.persistShoppingListRequest(input);
+	}
+	/**
+	 * Chamada síncrona para o método returnShoppingList
+	 * Warning: this operation is PRIVATE and may have its behavior changed at any time without notice
+	 * Obtém a quantidade de itens no estoque de acordo com um pedido
+	 * @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
+	 */
+	@Override
+	public ReturnShoppingListOutput returnShoppingList(ReturnShoppingListInput input, long timeout) {
+		br.com.senior.furb.basico.impl.ReturnShoppingListImpl impl = new br.com.senior.furb.basico.impl.ReturnShoppingListImpl(messengerSupplier, userId, messageSupplier);
+		return impl.returnShoppingList(input, timeout);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método returnShoppingList
+	 * Warning: this operation is PRIVATE and may have its behavior changed at any time without notice
+	 * Obtém a quantidade de itens no estoque de acordo com um pedido
+	 */
+	@Override
+	public void returnShoppingList(ReturnShoppingListInput input) {
+		br.com.senior.furb.basico.impl.ReturnShoppingListImpl impl = new br.com.senior.furb.basico.impl.ReturnShoppingListImpl(messengerSupplier, userId, messageSupplier);
+		impl.returnShoppingList(input);
+	}
+	
+	/**
+	 * Chamada assíncrona para o método returnShoppingList
+	 * Warning: this operation is PRIVATE and may have its behavior changed at any time without notice
+	 * Obtém a quantidade de itens no estoque de acordo com um pedido
+	 */
+	@Override
+	public CompletableFuture<ReturnShoppingListOutput> returnShoppingListRequest(ReturnShoppingListInput input) {
+		br.com.senior.furb.basico.impl.ReturnShoppingListImpl impl = new br.com.senior.furb.basico.impl.ReturnShoppingListImpl(messengerSupplier, userId, messageSupplier);
+		return impl.returnShoppingListRequest(input);
+	}
 	/**
 	 * Chamada síncrona para o método getMetadata
 	 * Warning: this operation is PRIVATE and may have its behavior changed at any time without notice

@@ -12,6 +12,42 @@ public interface BasicoConstants {
     
     interface Commands {
     	/**
+    	 * Salva os items da lista de compra
+    	 * @see PersistShoppingListInput the request payload
+    	 */
+    	String PERSIST_SHOPPING_LIST = "persistShoppingList";
+    	/**
+    	 * The success response primitive for persistShoppingList.
+    	 *
+    	 * @see #PERSIST_SHOPPING_LIST the request primitive
+    	 * @see PersistShoppingListOutput the response payload
+    	 */
+    	String PERSIST_SHOPPING_LIST_RESPONSE = "persistShoppingListResponse";
+    	/**
+    	 * An error response primitive for persistShoppingList.
+    	 *
+    	 * @see #PERSIST_SHOPPING_LIST the request primitive
+    	 */
+    	String PERSIST_SHOPPING_LIST_ERROR = "persistShoppingListError";
+    	/**
+    	 * Obtém a quantidade de itens no estoque de acordo com um pedido
+    	 * @see ReturnShoppingListInput the request payload
+    	 */
+    	String RETURN_SHOPPING_LIST = "returnShoppingList";
+    	/**
+    	 * The success response primitive for returnShoppingList.
+    	 *
+    	 * @see #RETURN_SHOPPING_LIST the request primitive
+    	 * @see ReturnShoppingListOutput the response payload
+    	 */
+    	String RETURN_SHOPPING_LIST_RESPONSE = "returnShoppingListResponse";
+    	/**
+    	 * An error response primitive for returnShoppingList.
+    	 *
+    	 * @see #RETURN_SHOPPING_LIST the request primitive
+    	 */
+    	String RETURN_SHOPPING_LIST_ERROR = "returnShoppingListError";
+    	/**
     	 * Default 'getMetadata' query. Every service must handle this command and return metadata in the format requested.
     	 * @see GetMetadataInput the request payload
     	 */

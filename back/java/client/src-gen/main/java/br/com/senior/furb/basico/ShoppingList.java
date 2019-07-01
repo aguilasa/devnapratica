@@ -123,9 +123,8 @@ public class ShoppingList {
     /** 
      * This convenience constructor allows initialization of all required fields.
      */
-    public ShoppingList(String description, java.util.List<ItemList> items) {
+    public ShoppingList(String description) {
         this.description = description;
-        this.items = items;
     }
     
     public void normalize(Map<String, Object> headers) {

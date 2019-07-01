@@ -5,6 +5,10 @@ package br.com.senior.furb.basico;
 
 import java.util.concurrent.CompletableFuture;
 
+import br.com.senior.furb.basico.PersistShoppingListInput;
+import br.com.senior.furb.basico.PersistShoppingListOutput;
+import br.com.senior.furb.basico.ReturnShoppingListInput;
+import br.com.senior.furb.basico.ReturnShoppingListOutput;
 import br.com.senior.furb.basico.GetMetadataInput;
 import br.com.senior.furb.basico.GetMetadataOutput;
 import br.com.senior.furb.basico.ImportCategoryInput;
@@ -61,6 +65,48 @@ import br.com.senior.furb.basico.ExportClienteEventPayload;
 */
 public interface BasicoStub {
 
+	/**
+	 * Warning: this operation is PRIVATE and may have its behavior changed at any time without notice
+	 * Salva os items da lista de compra
+	 * Chamada síncrona, o valor de timeout deve ser informado em ms 
+	 */
+	PersistShoppingListOutput persistShoppingList(PersistShoppingListInput input, long timeout);
+	
+	/**
+	 * Warning: this operation is PRIVATE and may have its behavior changed at any time without notice
+	 * Salva os items da lista de compra
+	 * Chamada assíncrona
+	 */
+	void persistShoppingList(PersistShoppingListInput input);
+	
+	/**
+	 * Warning: this operation is PRIVATE and may have its behavior changed at any time without notice
+	 * Salva os items da lista de compra
+	 * Chamada assíncrona utilizando request
+	 */
+	CompletableFuture<PersistShoppingListOutput> persistShoppingListRequest(PersistShoppingListInput input);
+	
+	/**
+	 * Warning: this operation is PRIVATE and may have its behavior changed at any time without notice
+	 * Obtém a quantidade de itens no estoque de acordo com um pedido
+	 * Chamada síncrona, o valor de timeout deve ser informado em ms 
+	 */
+	ReturnShoppingListOutput returnShoppingList(ReturnShoppingListInput input, long timeout);
+	
+	/**
+	 * Warning: this operation is PRIVATE and may have its behavior changed at any time without notice
+	 * Obtém a quantidade de itens no estoque de acordo com um pedido
+	 * Chamada assíncrona
+	 */
+	void returnShoppingList(ReturnShoppingListInput input);
+	
+	/**
+	 * Warning: this operation is PRIVATE and may have its behavior changed at any time without notice
+	 * Obtém a quantidade de itens no estoque de acordo com um pedido
+	 * Chamada assíncrona utilizando request
+	 */
+	CompletableFuture<ReturnShoppingListOutput> returnShoppingListRequest(ReturnShoppingListInput input);
+	
 	/**
 	 * Warning: this operation is PRIVATE and may have its behavior changed at any time without notice
 	 * Default 'getMetadata' query. Every service must handle this command and return metadata in the format requested.

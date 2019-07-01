@@ -3,6 +3,29 @@ domain furb
 "Trabalho Final"
 service basico {
     endpoints {
+        "Salva os items da lista de compra"
+        action persistShoppingList {
+            in {
+                "Lista de compras"
+                shoppingList : shoppingList
+            }
+            out {
+                "Status da persistência"
+                status : persistStatus
+            }
+        }
+
+        "Obtém a quantidade de itens no estoque de acordo com um pedido"
+        query returnShoppingList {
+            in {
+                "Código"
+                id : string?
+            }
+            out {
+                "Lista de compras"
+                shoppingList : shoppingList?
+            }
+        }
     }
     types {
         "Unidade de medida"
@@ -31,6 +54,38 @@ service basico {
             LATA
             "Pacote"
             PACOTE
+        }
+        
+        "Status da persistência"
+        record persistStatus {
+        	"Processado"
+        	processed: boolean
+        }
+        
+        "Lista de compras"
+        record shoppingListDto {
+            "Código"
+            id : string?
+            "Descrição da lista"
+            description : string
+            "Itens da lista"
+            items : itemListDto?*
+        }
+        
+        "Item da lista"
+        record itemListDto {
+            "Código"
+            id : string?
+            "Produto"
+            product : product
+            "Quantidade"
+            quantity : double
+            "Preço"
+            price : double
+            "Checado"
+            checked : boolean?
+            "Observação"
+            note : string?
         }
     }
     entities {
@@ -78,23 +133,23 @@ service basico {
             "Descrição da lista"
             description : string
             "Itens da lista"
-            items : itemList*
+            items : itemList?*
         }
-        
+
         "Entidade que representa o cliente"
-		fixed entity cliente{
-		    "Chave primaria"
-		    id: uuid?
-		    "Nome do cliente"
-		    nome: string
-		    "Data de nascimento"
-		    dataNascimento: date
-		    "Tem credito habilitado"
-		    creditoHabilitado: boolean? default: false
-		    "CPF do cliente"
-		    cpf: string
-		    "id da foto"
-		    idFoto: string?
-		}
+        fixed entity cliente {
+            "Chave primaria"
+            id : uuid?
+            "Nome do cliente"
+            nome : string
+            "Data de nascimento"
+            dataNascimento : date
+            "Tem credito habilitado"
+            creditoHabilitado : boolean? default : false
+            "CPF do cliente"
+            cpf : string
+            "id da foto"
+            idFoto : string?
+        }
     }
 }

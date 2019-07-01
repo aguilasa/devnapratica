@@ -153,7 +153,10 @@ export class ShoppingListListComponent implements OnInit, OnDestroy {
     }
 
     private getGridColumns() {
-        const gridColumns = [{ field: "id", header: "Código" }, { field: "description", header: "Descrição" }];
+        const gridColumns = [
+            // { field: "id", header: "Código" },
+            { field: "description", header: "Descrição" }
+        ];
 
         return gridColumns;
     }

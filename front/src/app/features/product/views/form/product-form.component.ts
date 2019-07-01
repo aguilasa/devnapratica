@@ -157,8 +157,10 @@ export class ProductFormComponent implements OnInit, OnDestroy {
                 else if (type == FieldType.Time) return `${name} eq '${moment(value).format("HH:mm:ss")}'`;
                 else if (type == FieldType.DateTime) return `${name} eq '${moment(value).format()}'`;
                 else if (type == FieldType.Enum) return `${name} eq ${value}`;
-                else if (type == FieldType.String) return `containing(lower(${name}), lower('${value}'))`;
-                else return `${name} eq '${value}'`;
+                else if (type == FieldType.String) {
+                    if (name === "id") return `${name} eq '${value}'`;
+                    return `containing(lower(${name}), lower('${value}'))`;
+                } else return `${name} eq '${value}'`;
             })
             .join(" and ");
 
