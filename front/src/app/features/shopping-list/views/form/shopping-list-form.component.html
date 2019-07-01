@@ -30,6 +30,24 @@
                             selectLabel="Selecionar" searchTotalRecordsLabel="Registos encontrados: {{ itemsSearchTotalRecords }}"></s-lookup>
                         <s-control-errors [control]="formGroup.controls['items']" [errorMessages]="{ required: 'Informação obrigatória' }"></s-control-errors>
                     </div>
+                    <div class="ui-g-12" [attr.data-hidden]="true">
+                        <p-table [columns]="tableColumns" [value]="tableValues">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th *ngFor="let col of columns">
+                                        {{col.header}}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                <tr>
+                                    <td *ngFor="let col of columns">
+                                            {{rowData[col.field]}}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
                 </div>
             </div>
             <p-footer>

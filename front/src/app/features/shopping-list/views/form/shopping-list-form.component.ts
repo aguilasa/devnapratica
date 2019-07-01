@@ -34,6 +34,8 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy {
     public itemsSearchGridFields: FormField[];
     public itemsSearchGridData: ItemList[];
     public itemsSearchTotalRecords: number;
+    public tableValues = [];
+    public tableColumns = [];
 
     @ViewChild("customTemplate")
     public customTemplate: TemplateRef<any>;
@@ -63,6 +65,7 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy {
         this.route.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe((params: any) => this.onRouteParamsChange(params));
         this.route.data.pipe(takeUntil(this.ngUnsubscribe)).subscribe((data: any) => this.onRouteDataChange(data));
 
+        this.tableColumns = this.getTableColumns();
         this.itemsSearchFields = this.getItemsSearchFields();
         this.itemsSearchGridFields = this.getItemsSearchGridFields();
     }
@@ -81,13 +84,17 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy {
     }
 
     public onRouteDataChange(data: any) {
+        let tableValues = [];
         if (data.entity) {
             const canEdit = true;
             if (!canEdit) this.formGroup.disable();
-            this.formGroup.patchValue(ShoppingList.fromDto(data.entity));
+            const dto: ShoppingList = ShoppingList.fromDto(data.entity);
+            this.formGroup.patchValue(dto);
+            tableValues = dto.items;
         } else {
             this.formGroup.patchValue(new ShoppingList());
         }
+        this.tableValues = tableValues;
     }
 
     public onCancel() {
@@ -273,5 +280,16 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy {
                 this.goBack();
             })
         );
+    }
+
+    private getTableColumns() {
+        const gridColumns = [
+            { field: "product.description", header: "Produto" },
+            { field: "quantity", header: "Quantidade" },
+            { field: "price", header: "Preço" },
+            { field: "checked", header: "Checado" }
+        ];
+
+        return gridColumns;
     }
 }

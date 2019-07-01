@@ -8,10 +8,6 @@ import { Component, OnInit } from "@angular/core";
 export class SideNavComponent implements OnInit {
     items = [
         {
-            label: "Cliente",
-            routerLink: "/clientes"
-        },
-        {
             label: "Categoria",
             routerLink: "/category"
         },

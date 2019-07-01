@@ -1,21 +1,13 @@
 package br.com.senior.furb.basico.handler;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import br.com.senior.furb.basico.PersistShoppingList;
 import br.com.senior.furb.basico.PersistShoppingListInput;
 import br.com.senior.furb.basico.PersistShoppingListOutput;
-import br.com.senior.furb.basico.ShoppingListCrudService;
-import br.com.senior.furb.basico.ShoppingListEntity;
-import br.com.senior.furb.basico.ShoppingList.Id;
-import br.com.senior.furb.basico.repositories.ItemListRepository;
-import br.com.senior.furb.basico.repositories.ShoppingListRepository;
-import br.com.senior.messaging.ErrorCategory;
+import br.com.senior.furb.basico.ShoppingList;
+import br.com.senior.furb.basico.ShoppingListHandler;
 import br.com.senior.messaging.model.HandlerImpl;
-import br.com.senior.messaging.model.ServiceException;
 
 @HandlerImpl
 public class PersistShoppingListHandler implements PersistShoppingList {
@@ -25,13 +17,7 @@ public class PersistShoppingListHandler implements PersistShoppingList {
 	private PersistShoppingListOutput output = new PersistShoppingListOutput();
 
 	@Autowired
-	private ShoppingListRepository shoppingListRepository;
-
-	@Autowired
-	private ItemListRepository itemListRepository;
-
-	@Autowired
-	private ShoppingListCrudService shoppingListCrud;
+	private ShoppingListHandler shoppingListHandler;
 
 	@Override
 	public PersistShoppingListOutput persistShoppingList(PersistShoppingListInput request) {
@@ -40,17 +26,17 @@ public class PersistShoppingListHandler implements PersistShoppingList {
 		return output;
 	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	private ShoppingListEntity retrieveShoppingList(String id) {
-		if (!StringUtils.isEmpty(id)) {
-			return this.shoppingListRepository.findOne(java.util.UUID.fromString(id));
-		}
-		return null;
-	}
-
 	private void persist() {
+		this.output.shoppingList = null;
 		String id = input.shoppingList.id;
-		ShoppingListEntity entity = retrieveShoppingList(id);
+		try {
+			this.shoppingListHandler.deleteShoppingList(new ShoppingList.Id(id));
+		} catch (Exception e) {
+		}
+		try {
+			this.output.shoppingList = this.shoppingListHandler.createShoppingList(input.shoppingList);
+		} catch (Exception e) {
+		}
 	}
 
 }

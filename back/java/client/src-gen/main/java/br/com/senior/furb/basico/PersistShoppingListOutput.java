@@ -10,9 +10,9 @@ import br.com.senior.furb.basico.*;
 public class PersistShoppingListOutput {
     
     /**
-     * Status da persistência
+     * Lista de compras
      */
-    public PersistStatus status;
+    public ShoppingList shoppingList;
     
     public PersistShoppingListOutput() {
     }
@@ -20,8 +20,8 @@ public class PersistShoppingListOutput {
     /** 
      * This constructor allows initialization of all fields, required and optional.
      */
-    public PersistShoppingListOutput(PersistStatus status) {
-        this.status = status;
+    public PersistShoppingListOutput(ShoppingList shoppingList) {
+        this.shoppingList = shoppingList;
     }
     
     public void validate() {
@@ -42,8 +42,8 @@ public class PersistShoppingListOutput {
     @Override
     public int hashCode() {
         int ret = 1;
-        if (status != null) {
-            ret = 31 * ret + status.hashCode();
+        if (shoppingList != null) {
+            ret = 31 * ret + shoppingList.hashCode();
         }
         return ret;
     }
@@ -57,10 +57,10 @@ public class PersistShoppingListOutput {
             return false;
         }
         PersistShoppingListOutput other = (PersistShoppingListOutput) obj;
-        if ((status == null) != (other.status == null)) {
+        if ((shoppingList == null) != (other.shoppingList == null)) {
             return false;
         }
-        if ((status != null) && !status.equals(other.status)) {
+        if ((shoppingList != null) && !shoppingList.equals(other.shoppingList)) {
             return false;
         }
         return true;
@@ -80,11 +80,11 @@ public class PersistShoppingListOutput {
     		return;
     	}
     	appended.add(this);
-    	sb.append("status=<");
-    	if (status == null) {
+    	sb.append("shoppingList=<");
+    	if (shoppingList == null) {
     		sb.append("null");
     	} else {
-    		status.toString(sb, appended);
+    		shoppingList.toString(sb, appended);
     	}
     	sb.append('>');
     	sb.append(']');

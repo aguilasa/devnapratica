@@ -10,8 +10,8 @@ service basico {
                 shoppingList : shoppingList
             }
             out {
-                "Status da persistência"
-                status : persistStatus
+                "Lista de compras"
+                shoppingList : shoppingList?
             }
         }
 
@@ -55,37 +55,11 @@ service basico {
             "Pacote"
             PACOTE
         }
-        
+
         "Status da persistência"
         record persistStatus {
-        	"Processado"
-        	processed: boolean
-        }
-        
-        "Lista de compras"
-        record shoppingListDto {
-            "Código"
-            id : string?
-            "Descrição da lista"
-            description : string
-            "Itens da lista"
-            items : itemListDto?*
-        }
-        
-        "Item da lista"
-        record itemListDto {
-            "Código"
-            id : string?
-            "Produto"
-            product : product
-            "Quantidade"
-            quantity : double
-            "Preço"
-            price : double
-            "Checado"
-            checked : boolean?
-            "Observação"
-            note : string?
+            "Processado"
+            processed : boolean
         }
     }
     entities {
