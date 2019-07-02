@@ -29,7 +29,7 @@ export class ShoppingListFeatureRoutingEntityResolver {
     public resolve(route: ActivatedRouteSnapshot) {
         if (route.params.shoppingList === "new") return;
 
-        return this.shoppingListService.get(route.params.shoppingList);
+        return this.shoppingListService.shoppingListQuery(route.params.shoppingList);
     }
 }
 

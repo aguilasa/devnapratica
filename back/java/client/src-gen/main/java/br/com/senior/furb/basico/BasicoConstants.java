@@ -31,22 +31,22 @@ public interface BasicoConstants {
     	String PERSIST_SHOPPING_LIST_ERROR = "persistShoppingListError";
     	/**
     	 * Obtém a quantidade de itens no estoque de acordo com um pedido
-    	 * @see ReturnShoppingListInput the request payload
+    	 * @see ShoppingListQueryInput the request payload
     	 */
-    	String RETURN_SHOPPING_LIST = "returnShoppingList";
+    	String SHOPPING_LIST_QUERY = "shoppingListQuery";
     	/**
-    	 * The success response primitive for returnShoppingList.
+    	 * The success response primitive for shoppingListQuery.
     	 *
-    	 * @see #RETURN_SHOPPING_LIST the request primitive
-    	 * @see ReturnShoppingListOutput the response payload
+    	 * @see #SHOPPING_LIST_QUERY the request primitive
+    	 * @see ShoppingListQueryOutput the response payload
     	 */
-    	String RETURN_SHOPPING_LIST_RESPONSE = "returnShoppingListResponse";
+    	String SHOPPING_LIST_QUERY_RESPONSE = "shoppingListQueryResponse";
     	/**
-    	 * An error response primitive for returnShoppingList.
+    	 * An error response primitive for shoppingListQuery.
     	 *
-    	 * @see #RETURN_SHOPPING_LIST the request primitive
+    	 * @see #SHOPPING_LIST_QUERY the request primitive
     	 */
-    	String RETURN_SHOPPING_LIST_ERROR = "returnShoppingListError";
+    	String SHOPPING_LIST_QUERY_ERROR = "shoppingListQueryError";
     	/**
     	 * Default 'getMetadata' query. Every service must handle this command and return metadata in the format requested.
     	 * @see GetMetadataInput the request payload

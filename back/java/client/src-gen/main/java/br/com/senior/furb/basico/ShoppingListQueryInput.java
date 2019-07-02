@@ -7,20 +7,20 @@ import java.util.Map;
 import br.com.senior.furb.basico.BasicoValidator;
 import br.com.senior.furb.basico.*;
 
-public class ReturnShoppingListInput {
+public class ShoppingListQueryInput {
     
     /**
      * Código
      */
     public String id;
     
-    public ReturnShoppingListInput() {
+    public ShoppingListQueryInput() {
     }
     
     /** 
      * This constructor allows initialization of all fields, required and optional.
      */
-    public ReturnShoppingListInput(String id) {
+    public ShoppingListQueryInput(String id) {
         this.id = id;
     }
     
@@ -53,10 +53,10 @@ public class ReturnShoppingListInput {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof ReturnShoppingListInput)) {
+        if (!(obj instanceof ShoppingListQueryInput)) {
             return false;
         }
-        ReturnShoppingListInput other = (ReturnShoppingListInput) obj;
+        ShoppingListQueryInput other = (ShoppingListQueryInput) obj;
         if ((id == null) != (other.id == null)) {
             return false;
         }

@@ -9,8 +9,8 @@ export class ShoppingListService extends EntityService<ShoppingListDto> {
         super(http, "shoppingList");
     }
 
-    public returnShoppingList(idList: string) {
-        const url = "https://platform-homologx.senior.com.br/t/senior.com.br/bridge/1.0/rest/furb/basico/queries/returnShoppingList";
+    public shoppingListQuery(idList: string) {
+        const url = `${this.baseUrl}/queries/shoppingListQuery`;
         return this.http.post<ShoppingListDto[]>(url, { id: idList }, { headers: this.headers }).pipe(this.defaultCatch());
     }
 }

@@ -18,13 +18,13 @@ import java.util.concurrent.CompletableFuture;
 import br.com.senior.messaging.model.ServiceContext;
 import br.com.senior.messaging.model.ServiceException;
 import br.com.senior.messaging.model.ServiceRunner;
-import br.com.senior.furb.basico.ReturnShoppingListInput;
-import br.com.senior.furb.basico.ReturnShoppingListOutput;
+import br.com.senior.furb.basico.ShoppingListQueryInput;
+import br.com.senior.furb.basico.ShoppingListQueryOutput;
 
 /**
  * Trabalho Final
  */
-public class ReturnShoppingListImpl {
+public class ShoppingListQueryImpl {
 
 	private final Supplier<IMessenger> messengerSupplier;
 
@@ -32,34 +32,34 @@ public class ReturnShoppingListImpl {
 
 	private final Supplier<Message> messageSupplier;
 
-	public ReturnShoppingListImpl(Supplier<IMessenger> messengerSupplier, UserIdentifier userId, Supplier<Message> messageSupplier) {
+	public ShoppingListQueryImpl(Supplier<IMessenger> messengerSupplier, UserIdentifier userId, Supplier<Message> messageSupplier) {
 		this.messengerSupplier = messengerSupplier;
 		this.userId = userId;
 		this.messageSupplier = messageSupplier;
 	}
 
-	private Message createMessage(ReturnShoppingListInput input) {
+	private Message createMessage(ShoppingListQueryInput input) {
 		if (messageSupplier != null && messageSupplier.get() != null) {
 			return messageSupplier.get().followUp( //
 				BasicoConstants.DOMAIN, //
 				BasicoConstants.SERVICE, //
-				BasicoConstants.Commands.RETURN_SHOPPING_LIST, //
+				BasicoConstants.Commands.SHOPPING_LIST_QUERY, //
 				DtoJsonConverter.toJSON(input));
 		}
 		return new Message(userId.getTenant(), //
 			BasicoConstants.DOMAIN, //
 			BasicoConstants.SERVICE, //
-			BasicoConstants.Commands.RETURN_SHOPPING_LIST, //
+			BasicoConstants.Commands.SHOPPING_LIST_QUERY, //
 			DtoJsonConverter.toJSON(input));
 	}
 	
 	/**
-	* Chamada síncrona para o método returnShoppingList
+	* Chamada síncrona para o método shoppingListQuery
 	* Warning: this operation is PRIVATE and may have its behavior changed at any time without notice
 	* Obtém a quantidade de itens no estoque de acordo com um pedido 
 	* @throws BasicoMessageException quando um erro com payload for retornado pela mensageria
 	*/
-	public ReturnShoppingListOutput returnShoppingList(ReturnShoppingListInput input, long timeout) {
+	public ShoppingListQueryOutput shoppingListQuery(ShoppingListQueryInput input, long timeout) {
 		BasicoValidator.validate(input);
 		
 		Message message = createMessage(input);
@@ -80,7 +80,7 @@ public class ReturnShoppingListImpl {
 			ErrorPayload error = DtoJsonConverter.toDTO(resultMessage.getContent(), ErrorPayload.class);
 			throw new BasicoMessageException(resultMessage.getErrorCategory(), error.getMessage(), error.getErrorCode());
 		}
-		ReturnShoppingListOutput output = DtoJsonConverter.toDTO(resultMessage.getContent(), ReturnShoppingListOutput.class);
+		ShoppingListQueryOutput output = DtoJsonConverter.toDTO(resultMessage.getContent(), ShoppingListQueryOutput.class);
 		if (output == null) {
 			throw new BasicoException("Contéudo do retorno inválido");
 		}
@@ -88,11 +88,11 @@ public class ReturnShoppingListImpl {
 	}
 	
 	/**
-	* Chamada assíncrona para o método returnShoppingList
+	* Chamada assíncrona para o método shoppingListQuery
 	* Warning: this operation is PRIVATE and may have its behavior changed at any time without notice
 	* Obtém a quantidade de itens no estoque de acordo com um pedido
 	*/
-	public void returnShoppingList(ReturnShoppingListInput input) {
+	public void shoppingListQuery(ShoppingListQueryInput input) {
 		BasicoValidator.validate(input);
 		
 		Message message = createMessage(input);
@@ -105,11 +105,11 @@ public class ReturnShoppingListImpl {
 	}
 	
 	/**
-	* Chamada assíncrona para o método returnShoppingList
+	* Chamada assíncrona para o método shoppingListQuery
 	* Warning: this operation is PRIVATE and may have its behavior changed at any time without notice
 	* Obtém a quantidade de itens no estoque de acordo com um pedido
 	*/
-	public CompletableFuture<ReturnShoppingListOutput> returnShoppingListRequest(ReturnShoppingListInput input) {
+	public CompletableFuture<ShoppingListQueryOutput> shoppingListQueryRequest(ShoppingListQueryInput input) {
 		BasicoValidator.validate(input);
 	
 		if (ServiceContext.get() == null) {
@@ -118,7 +118,7 @@ public class ReturnShoppingListImpl {
 		ServiceRunner serviceRunner = ServiceContext.get().getCurrentServiceRunner();
 		Message message = createMessage(input);
 		addMessageHeaders(message);
-		return serviceRunner.request(message, ReturnShoppingListOutput.class);
+		return serviceRunner.request(message, ShoppingListQueryOutput.class);
 	}
 	private void addMessageHeaders(Message message) {
 		message.setUsername(userId.getUsername());

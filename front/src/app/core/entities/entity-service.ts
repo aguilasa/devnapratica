@@ -11,8 +11,12 @@ export class EntityService<T> {
         protected entityUrl: string,
     ) {
         this.http = http;
-        this.entityUrl = `https://platform-homologx.senior.com.br/t/senior.com.br/bridge/1.0/rest/furb/basico/entities/${entityUrl}`;
-        this.headers = new HttpHeaders().set('Authorization', 'Bearer 5a724b88b74660f00289163fe2717bfa');
+        this.entityUrl = `${this.baseUrl}/entities/${entityUrl}`;
+        this.headers = new HttpHeaders().set('Authorization', 'Bearer 516ccea37fe22f8e58f793d1ed27413c');
+    }
+
+    public get baseUrl() {
+        return 'https://platform-homologx.senior.com.br/t/senior.com.br/bridge/1.0/rest/furb/basico';
     }
 
     public listWithParams(listParams: ListParams) {

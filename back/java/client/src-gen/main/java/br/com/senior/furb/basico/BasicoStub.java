@@ -7,8 +7,8 @@ import java.util.concurrent.CompletableFuture;
 
 import br.com.senior.furb.basico.PersistShoppingListInput;
 import br.com.senior.furb.basico.PersistShoppingListOutput;
-import br.com.senior.furb.basico.ReturnShoppingListInput;
-import br.com.senior.furb.basico.ReturnShoppingListOutput;
+import br.com.senior.furb.basico.ShoppingListQueryInput;
+import br.com.senior.furb.basico.ShoppingListQueryOutput;
 import br.com.senior.furb.basico.GetMetadataInput;
 import br.com.senior.furb.basico.GetMetadataOutput;
 import br.com.senior.furb.basico.ImportCategoryInput;
@@ -91,21 +91,21 @@ public interface BasicoStub {
 	 * Obtém a quantidade de itens no estoque de acordo com um pedido
 	 * Chamada síncrona, o valor de timeout deve ser informado em ms 
 	 */
-	ReturnShoppingListOutput returnShoppingList(ReturnShoppingListInput input, long timeout);
+	ShoppingListQueryOutput shoppingListQuery(ShoppingListQueryInput input, long timeout);
 	
 	/**
 	 * Warning: this operation is PRIVATE and may have its behavior changed at any time without notice
 	 * Obtém a quantidade de itens no estoque de acordo com um pedido
 	 * Chamada assíncrona
 	 */
-	void returnShoppingList(ReturnShoppingListInput input);
+	void shoppingListQuery(ShoppingListQueryInput input);
 	
 	/**
 	 * Warning: this operation is PRIVATE and may have its behavior changed at any time without notice
 	 * Obtém a quantidade de itens no estoque de acordo com um pedido
 	 * Chamada assíncrona utilizando request
 	 */
-	CompletableFuture<ReturnShoppingListOutput> returnShoppingListRequest(ReturnShoppingListInput input);
+	CompletableFuture<ShoppingListQueryOutput> shoppingListQueryRequest(ShoppingListQueryInput input);
 	
 	/**
 	 * Warning: this operation is PRIVATE and may have its behavior changed at any time without notice

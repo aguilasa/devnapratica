@@ -25,3 +25,7 @@
 /ReturnShoppingListOutput.java
 /ReturnShoppingListResponse.java
 /PersistStatus.java
+/CategoryDto.java
+/ItemListDto.java
+/ProductDto.java
+/ShoppingListDto.java

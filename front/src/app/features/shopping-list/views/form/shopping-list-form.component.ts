@@ -9,19 +9,15 @@ import { Subject } from "rxjs";
 import { tap, takeUntil } from "rxjs/operators";
 import * as moment from "moment";
 import { FormField, FieldType } from "@seniorsistemas/angular-components";
-import { ItemList } from 'src/app/core/entities/item-list/item-list';
-import { ShoppingListService } from 'src/app/core/entities/shopping-list/shopping-list.service';
-import { ItemListService } from 'src/app/core/entities/item-list/item-list.service';
-import { ShoppingList } from 'src/app/core/entities/shopping-list/shopping-list';
-
+import { ItemList } from "src/app/core/entities/item-list/item-list";
+import { ShoppingListService } from "src/app/core/entities/shopping-list/shopping-list.service";
+import { ItemListService } from "src/app/core/entities/item-list/item-list.service";
+import { ShoppingList } from "src/app/core/entities/shopping-list/shopping-list";
 
 @Component({
     templateUrl: "./shopping-list-form.component.html",
-    styleUrls: [
-    ],
-    providers: [
-        ConfirmationService,
-    ],
+    styleUrls: [],
+    providers: [ConfirmationService]
 })
 export class ShoppingListFormComponent implements OnInit, OnDestroy {
     public formGroup: FormGroup;
@@ -34,8 +30,8 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy {
     public itemsSearchGridFields: FormField[];
     public itemsSearchGridData: ItemList[];
     public itemsSearchTotalRecords: number;
-    public tableValues = [];
-    public tableColumns = [];
+    public itemListValues = [];
+    public itemListColumns = [];
 
     @ViewChild("customTemplate")
     public customTemplate: TemplateRef<any>;
@@ -56,8 +52,7 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy {
         private translate: TranslateService,
         private hotkeysService: HotkeysService,
         private itemListService: ItemListService
-    ) {
-    }
+    ) {}
 
     public ngOnInit() {
         this.formGroup = this.getFormGroup();
@@ -65,7 +60,7 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy {
         this.route.params.pipe(takeUntil(this.ngUnsubscribe)).subscribe((params: any) => this.onRouteParamsChange(params));
         this.route.data.pipe(takeUntil(this.ngUnsubscribe)).subscribe((data: any) => this.onRouteDataChange(data));
 
-        this.tableColumns = this.getTableColumns();
+        this.itemListColumns = this.getItemListColumns();
         this.itemsSearchFields = this.getItemsSearchFields();
         this.itemsSearchGridFields = this.getItemsSearchGridFields();
     }
@@ -88,13 +83,13 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy {
         if (data.entity) {
             const canEdit = true;
             if (!canEdit) this.formGroup.disable();
-            const dto: ShoppingList = ShoppingList.fromDto(data.entity);
+            const dto: ShoppingList = ShoppingList.fromDto(data.entity.result);
             this.formGroup.patchValue(dto);
             tableValues = dto.items;
         } else {
             this.formGroup.patchValue(new ShoppingList());
         }
-        this.tableValues = tableValues;
+        this.itemListValues = tableValues;
     }
 
     public onCancel() {
@@ -109,7 +104,7 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy {
                 this.messageService.add({
                     severity: "success",
                     summary: "Registro salvo com sucesso",
-                    detail: "Sucesso",
+                    detail: "Sucesso"
                 });
                 this.goBack();
             });
@@ -122,7 +117,7 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy {
             accept: () =>
                 this.getDeleteObservable()
                     .pipe(takeUntil(this.ngUnsubscribe))
-                    .subscribe(),
+                    .subscribe()
         });
     }
 
@@ -171,7 +166,7 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy {
         const formGroup = this.formBuilder.group({
             id: [{ value: undefined, disabled: true }, Validators.compose([])],
             description: [{ value: undefined, disabled: false }, Validators.compose([Validators.required])],
-            items: [{ value: undefined, disabled: false }, Validators.compose([Validators.required])],
+            items: [{ value: undefined, disabled: false }, Validators.compose([Validators.required])]
         });
         return formGroup;
     }
@@ -181,28 +176,28 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy {
             new FormField({
                 name: "id",
                 label: "Código",
-                type: FieldType.String,
+                type: FieldType.String
             }),
             new FormField({
                 name: "quantity",
                 label: "Quantidade",
-                type: FieldType.Double,
+                type: FieldType.Double
             }),
             new FormField({
                 name: "price",
                 label: "Preço",
-                type: FieldType.Double,
+                type: FieldType.Double
             }),
             new FormField({
                 name: "checked",
                 label: "Marcado",
-                type: FieldType.Boolean,
+                type: FieldType.Boolean
             }),
             new FormField({
                 name: "note",
                 label: "Observação",
-                type: FieldType.String,
-            }),
+                type: FieldType.String
+            })
         ];
 
         return searchFields;
@@ -213,28 +208,28 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy {
             new FormField({
                 name: "id",
                 label: "Código",
-                type: FieldType.String,
+                type: FieldType.String
             }),
             new FormField({
                 name: "quantity",
                 label: "Quantidade",
-                type: FieldType.Double,
+                type: FieldType.Double
             }),
             new FormField({
                 name: "price",
                 label: "Preço",
-                type: FieldType.Double,
+                type: FieldType.Double
             }),
             new FormField({
                 name: "checked",
                 label: "Marcado",
-                type: FieldType.Boolean,
+                type: FieldType.Boolean
             }),
             new FormField({
                 name: "note",
                 label: "Observação",
-                type: FieldType.String,
-            }),
+                type: FieldType.String
+            })
         ];
 
         return searchGridFields;
@@ -275,21 +270,25 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy {
                 this.messageService.add({
                     severity: "success",
                     summary: "Sucesso",
-                    detail: "Registro(s) excluído(s) com sucesso",
+                    detail: "Registro(s) excluído(s) com sucesso"
                 });
                 this.goBack();
             })
         );
     }
 
-    private getTableColumns() {
+    private getItemListColumns() {
         const gridColumns = [
-            { field: "product.description", header: "Produto" },
+            { field: "product", subfield: "description", header: "Produto" },
             { field: "quantity", header: "Quantidade" },
             { field: "price", header: "Preço" },
             { field: "checked", header: "Checado" }
         ];
 
         return gridColumns;
+    }
+
+    public getRowData(rowData: any, column: any) {
+        return column.subfield ? rowData[column.field][column.subfield] : rowData[column.field];
     }
 }

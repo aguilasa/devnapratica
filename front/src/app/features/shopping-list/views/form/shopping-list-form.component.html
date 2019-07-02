@@ -24,14 +24,14 @@
                         <s-lookup dataKey="id" id="items" name="items" formControlName="items" [searchFields]="itemsSearchFields"
                             [searchGridFields]="itemsSearchGridFields" [searchGridData]="itemsSearchGridData"
                             [multiple]="true" [lookupSuggestions]="itemsLookupSuggestions" (onLookupRequest)="onItemsLookupRequest($event)"
-                            (onSearchRequest)="onItemsSearchRequest($event)" lookupDisplayField="id" [searchTotalRecords]=itemsSearchTotalRecords
+                            (onSearchRequest)="onItemsSearchRequest($event)" lookupDisplayField="product.description" [searchTotalRecords]=itemsSearchTotalRecords
                             searchTitle="Buscar Lista de compras" searchEmptyTitle="Nenhuma lista de compras encontrada"
                             filterLabel="Filtrar" clearLabel="Limpar" cancelLabel="Cancelar"
                             selectLabel="Selecionar" searchTotalRecordsLabel="Registos encontrados: {{ itemsSearchTotalRecords }}"></s-lookup>
                         <s-control-errors [control]="formGroup.controls['items']" [errorMessages]="{ required: 'Informação obrigatória' }"></s-control-errors>
                     </div>
-                    <div class="ui-g-12" [attr.data-hidden]="true">
-                        <p-table [columns]="tableColumns" [value]="tableValues">
+                    <div class="ui-g-12">
+                        <p-table [columns]="itemListColumns" [value]="itemListValues">
                             <ng-template pTemplate="header" let-columns>
                                 <tr>
                                     <th *ngFor="let col of columns">
@@ -42,7 +42,7 @@
                             <ng-template pTemplate="body" let-rowData let-columns="columns">
                                 <tr>
                                     <td *ngFor="let col of columns">
-                                            {{rowData[col.field]}}
+                                        {{ getRowData(rowData, col) }}
                                     </td>
                                 </tr>
                             </ng-template>

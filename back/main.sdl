@@ -16,14 +16,14 @@ service basico {
         }
 
         "Obtém a quantidade de itens no estoque de acordo com um pedido"
-        query returnShoppingList {
+        query shoppingListQuery {
             in {
                 "Código"
                 id : string?
             }
             out {
                 "Lista de compras"
-                shoppingList : shoppingListDto?
+                result : shoppingListDto?
             }
         }
     }

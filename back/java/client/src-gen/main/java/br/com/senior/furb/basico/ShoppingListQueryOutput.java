@@ -7,21 +7,21 @@ import java.util.Map;
 import br.com.senior.furb.basico.BasicoValidator;
 import br.com.senior.furb.basico.*;
 
-public class ReturnShoppingListOutput {
+public class ShoppingListQueryOutput {
     
     /**
      * Lista de compras
      */
-    public ShoppingListDto shoppingList;
+    public ShoppingListDto result;
     
-    public ReturnShoppingListOutput() {
+    public ShoppingListQueryOutput() {
     }
     
     /** 
      * This constructor allows initialization of all fields, required and optional.
      */
-    public ReturnShoppingListOutput(ShoppingListDto shoppingList) {
-        this.shoppingList = shoppingList;
+    public ShoppingListQueryOutput(ShoppingListDto result) {
+        this.result = result;
     }
     
     public void validate() {
@@ -42,8 +42,8 @@ public class ReturnShoppingListOutput {
     @Override
     public int hashCode() {
         int ret = 1;
-        if (shoppingList != null) {
-            ret = 31 * ret + shoppingList.hashCode();
+        if (result != null) {
+            ret = 31 * ret + result.hashCode();
         }
         return ret;
     }
@@ -53,14 +53,14 @@ public class ReturnShoppingListOutput {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof ReturnShoppingListOutput)) {
+        if (!(obj instanceof ShoppingListQueryOutput)) {
             return false;
         }
-        ReturnShoppingListOutput other = (ReturnShoppingListOutput) obj;
-        if ((shoppingList == null) != (other.shoppingList == null)) {
+        ShoppingListQueryOutput other = (ShoppingListQueryOutput) obj;
+        if ((result == null) != (other.result == null)) {
             return false;
         }
-        if ((shoppingList != null) && !shoppingList.equals(other.shoppingList)) {
+        if ((result != null) && !result.equals(other.result)) {
             return false;
         }
         return true;
@@ -80,11 +80,11 @@ public class ReturnShoppingListOutput {
     		return;
     	}
     	appended.add(this);
-    	sb.append("shoppingList=<");
-    	if (shoppingList == null) {
+    	sb.append("result=<");
+    	if (result == null) {
     		sb.append("null");
     	} else {
-    		shoppingList.toString(sb, appended);
+    		result.toString(sb, appended);
     	}
     	sb.append('>');
     	sb.append(']');
