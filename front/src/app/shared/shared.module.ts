@@ -10,7 +10,8 @@ import {
     EmptyStateModule,
     DynamicFormModule,
     TokenListModule,
-    LoadingStateModule
+    LoadingStateModule,
+    SidebarModule
 } from "@seniorsistemas/angular-components";
 import { PanelModule } from "primeng/panel";
 import { CheckboxModule } from "primeng/checkbox";
@@ -38,6 +39,7 @@ import { ToastModule } from 'primeng/toast';
         TranslateModule,
         CustomFieldsModule,
         ControlErrorsModule,
+        SidebarModule,
         EmptyStateModule,
         DynamicFormModule,
         TokenListModule,

@@ -1,3 +1,19 @@
+<s-sidebar [visible]="visible" header="Título do Sidebar" (visibleChange)="close()">
+        <s-footer>
+                <div class="ui-fluid">
+                    <div class="ui-g">
+                        <div class="ui-sm-12 ui-md-6 ui-lg-4">
+                            <button id="close-button" type="button" pButton label="Continuar" title="Continuar"
+                                 (click)="close()"></button>
+                        </div>
+                        <div class="ui-sm-12 ui-md-6 ui-lg-4">
+                            <button id="cancela-button" type="button" pButton label="Cancelar" title="Cancelar"
+                                 (click)="close()" priority="link"></button>
+                        </div>
+                    </div>
+                </div>
+            </s-footer>
+</s-sidebar>
 <div *ngIf="!customTemplate else customTemplate">
     <p-confirmDialog acceptLabel="Sim" acceptIcon="" rejectLabel="Não"
         rejectIcon="">
@@ -30,6 +46,14 @@
                             selectLabel="Selecionar" searchTotalRecordsLabel="Registos encontrados: {{ itemsSearchTotalRecords }}"></s-lookup>
                         <s-control-errors [control]="formGroup.controls['items']" [errorMessages]="{ required: 'Informação obrigatória' }"></s-control-errors>
                     </div>
+                </div>
+                <div class="ui-g">
+                        <div class="ui-g-2">
+                            <button id="add-button" type="button" pButton label="Adicionar" title="Adicionar"
+                                 (click)="addItem()"></button>
+                        </div>
+                    </div>
+                <div class="ui-g">
                     <div class="ui-g-12">
                         <p-table [columns]="itemListColumns" [value]="itemListValues">
                             <ng-template pTemplate="header" let-columns>

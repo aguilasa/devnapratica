@@ -11,6 +11,11 @@ export class ShoppingListService extends EntityService<ShoppingListDto> {
 
     public shoppingListQuery(idList: string) {
         const url = `${this.baseUrl}/queries/shoppingListQuery`;
-        return this.http.post<ShoppingListDto[]>(url, { id: idList }, { headers: this.headers }).pipe(this.defaultCatch());
+        return this.http.post<any>(url, { id: idList }, { headers: this.headers }).pipe(this.defaultCatch());
+    }
+
+    public persistShoppingList(dto: ShoppingListDto) {
+        const url = `${this.baseUrl}/actions/persistShoppingList`;
+        return this.http.post<any>(url, { shoppingList: dto }, { headers: this.headers }).pipe(this.defaultCatch());
     }
 }

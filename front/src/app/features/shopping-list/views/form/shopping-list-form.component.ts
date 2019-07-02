@@ -20,6 +20,7 @@ import { ShoppingList } from "src/app/core/entities/shopping-list/shopping-list"
     providers: [ConfirmationService]
 })
 export class ShoppingListFormComponent implements OnInit, OnDestroy {
+    public visible = false;
     public formGroup: FormGroup;
     public loading: boolean;
 
@@ -248,18 +249,31 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy {
         });
     }
 
+    // private getSaveObservable() {
+    //     const { value } = this.formGroup;
+    //     const shoppingListDto = ShoppingList.toDto(value);
+
+    //     let observable;
+
+    //     if (this.isNew()) {
+    //         observable = this.shoppingListService.insert(shoppingListDto);
+    //     } else {
+    //         const id = this.routeParams.shoppingList;
+    //         observable = this.shoppingListService.update(id, shoppingListDto);
+    //     }
+
+    //     return observable;
+    // }
+
     private getSaveObservable() {
         const { value } = this.formGroup;
         const shoppingListDto = ShoppingList.toDto(value);
 
-        let observable;
-
-        if (this.isNew()) {
-            observable = this.shoppingListService.insert(shoppingListDto);
-        } else {
-            const id = this.routeParams.shoppingList;
-            observable = this.shoppingListService.update(id, shoppingListDto);
+        if (!this.isNew()) {
+            shoppingListDto.id = this.routeParams.shoppingList;
         }
+
+        const observable = this.shoppingListService.persistShoppingList(shoppingListDto);
 
         return observable;
     }
@@ -290,5 +304,13 @@ export class ShoppingListFormComponent implements OnInit, OnDestroy {
 
     public getRowData(rowData: any, column: any) {
         return column.subfield ? rowData[column.field][column.subfield] : rowData[column.field];
+    }
+
+    public addItem() {
+        this.visible = true;
+    }
+
+    public close() {
+        this.visible = false;
     }
 }
